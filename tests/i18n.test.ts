@@ -15,6 +15,9 @@ test('all 24 packaged dictionaries are complete and retain substitution fields',
     assert.deepEqual(Object.keys(dictionaries[code]).sort(),expected,code);
     for(const source of expected){
       assert(dictionaries[code][source]?.trim(),code+': '+source);
+      if (code !== 'en' && source.split(/\s+/).length > 3 && source !== 'Lot / batch (AI 10)') {
+        assert.notEqual(dictionaries[code][source], source, code + ': untranslated message ' + source);
+      }
       assert.deepEqual(placeholders(dictionaries[code][source]),placeholders(source),code+': '+source);
     }
   }
