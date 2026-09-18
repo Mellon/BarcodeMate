@@ -1,0 +1,17 @@
+node_modules/
+dist/
+dist-electron/
+release/
+test-results/
+playwright-report/
+.env*
+.DS_Store
+*.pem
+*.p12
+*.pfx
+
+# Local review and owner-specific working notes
+website-preview/
+docs/WORKING_RULES.md
+docs/WEBSITE_DOWNLOAD_PLAN.md
+*.log

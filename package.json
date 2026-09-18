@@ -1,0 +1,104 @@
+{
+  "name": "barcodemate",
+  "productName": "BarcodeMate",
+  "version": "0.1.0",
+  "description": "Offline barcode design, batch generation and label printing for macOS and Windows.",
+  "private": true,
+  "type": "module",
+  "main": "dist-electron/main.cjs",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc --noEmit && node scripts/build.mjs",
+    "start": "npm run build && electron .",
+    "test": "node --import tsx --test tests/*.test.ts",
+    "test:app": "playwright test",
+    "pack": "npm run build && electron-builder --dir --publish never",
+    "dist:mac": "npm run build && electron-builder --mac --publish never",
+    "dist:win": "npm run build && electron-builder --win --publish never"
+  },
+  "dependencies": {
+    "@bwip-js/generic": "4.11.4",
+    "@fontsource-variable/dm-sans": "5.3.0",
+    "@fontsource-variable/manrope": "5.3.0",
+    "fflate": "0.8.3",
+    "gifenc": "1.0.3",
+    "lucide-react": "^0.577.0",
+    "papaparse": "5.5.3",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "zxing-wasm": "3.1.4"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^24.0.0",
+    "@types/papaparse": "^5.3.16",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "electron": "44.4.1",
+    "electron-builder": "26.15.3",
+    "esbuild": "0.28.1",
+    "prettier": "3.9.8",
+    "tsx": "^4.23.13",
+    "typescript": "^6.0.3"
+  },
+  "build": {
+    "appId": "com.barcodemate.app",
+    "productName": "BarcodeMate",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**",
+      "dist-electron/**",
+      "package.json",
+      "LICENSE"
+    ],
+    "asar": true,
+    "mac": {
+      "category": "public.app-category.productivity",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "arm64",
+            "x64"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "arm64",
+            "x64"
+          ]
+        }
+      ],
+      "identity": null
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "artifactName": "BarcodeMate-${version}-${os}-${arch}.${ext}",
+    "icon": "public/icon.png"
+  },
+  "author": "BarcodeMate contributors",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Mellon/BarcodeMate.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Mellon/BarcodeMate/issues"
+  },
+  "homepage": "https://barcodemate.com"
+}
