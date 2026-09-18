@@ -1,0 +1,96 @@
+name: Publish validated desktop packages
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: Successful desktop validation run ID
+        required: true
+        type: string
+      commit:
+        description: Exact source commit validated by that run
+        required: true
+        type: string
+permissions:
+  actions: read
+  contents: write
+jobs:
+  publish:
+    if: github.repository == 'Mellon/BarcodeMate'
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      SOURCE_RUN: ${{ inputs.run_id }}
+      SOURCE_SHA: ${{ inputs.commit }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - name: Verify source run and download validated artifacts
+        run: |
+          python3 - <<'PY'
+          import json,os,re,subprocess
+          assert os.environ['GITHUB_REPOSITORY']=='Mellon/BarcodeMate'
+          run_id=os.environ['SOURCE_RUN']; sha=os.environ['SOURCE_SHA']
+          assert re.fullmatch(r'[0-9]+',run_id) and re.fullmatch(r'[a-f0-9]{40}',sha)
+          run=json.loads(subprocess.check_output(['gh','api',f'repos/Mellon/BarcodeMate/actions/runs/{run_id}']))
+          assert run['conclusion']=='success' and run['head_sha']==sha and run['event']=='push' and run['head_branch']=='main'
+          assert run['path']=='.github/workflows/desktop.yml'
+          subprocess.run(['gh','run','download',run_id,'--repo','Mellon/BarcodeMate','--dir','release-artifacts'],check=True)
+          PY
+      - run: npm ci --ignore-scripts
+      - name: Inspect packages, extract notices, and stage checksums
+        run: |
+          python3 - <<'PY'
+          import json,pathlib,shutil,zipfile
+          root=pathlib.Path('release-artifacts'); out=pathlib.Path('publish-assets');out.mkdir()
+          version=json.loads(pathlib.Path('package.json').read_text())['version']
+          names={f'BarcodeMate-{version}-'+suffix for suffix in ['win-x64.exe','mac-arm64.dmg','mac-arm64.zip','mac-x64.dmg','mac-x64.zip']}
+          files=[p for p in root.glob('*/release/*') if p.name in names]
+          assert len(files)==5 and {p.name for p in files}==names
+          for p in files:shutil.copyfile(p,out/p.name)
+          archive=out/f'BarcodeMate-{version}-mac-arm64.zip'
+          with zipfile.ZipFile(archive) as z:
+            data=z.read('BarcodeMate.app/Contents/Resources/app.asar')
+          pathlib.Path('package.asar').write_bytes(data)
+          PY
+          node --input-type=module <<'JS'
+          import asar from '@electron/asar';
+          import fs from 'node:fs';
+          const pkg=JSON.parse(asar.extractFile('package.asar','package.json'));
+          const expected=JSON.parse(fs.readFileSync('package.json'));
+          if(pkg.version!==expected.version||pkg.license!=='MIT'||pkg.repository.url!=='https://github.com/Mellon/BarcodeMate.git')throw Error('Unexpected package metadata');
+          const paths=asar.listPackage('package.asar');
+          if(paths.some(p=>/(?:^|\/)(?:\.env[^/]*|\.git|\.ssh|[^/]+\.(?:pem|key|p12|pfx))$/.test(p)))throw Error('Unexpected private files');
+          for(const p of paths.filter(p=>/^\/(dist|dist-electron)\/.*\.(js|cjs|json|html)$/.test(p))){
+            if(/gh[pousr]_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{30,}|-----BEGIN (?:RSA |OPENSSH )?PRIVATE KEY-----/.test(asar.extractFile('package.asar',p.slice(1)).toString()))throw Error('Potential credential');
+          }
+          fs.writeFileSync('publish-assets/THIRD-PARTY-NOTICES.txt',asar.extractFile('package.asar','dist/THIRD_PARTY_NOTICES.txt'));
+          JS
+      - name: Upload, verify asset digests, and publish
+        run: |
+          python3 - <<'PY'
+          import json,pathlib,hashlib,subprocess,os
+          out=pathlib.Path('publish-assets');version=json.loads(pathlib.Path('package.json').read_text())['version'];tag='v'+version
+          out.joinpath('SHA256SUMS.txt').write_text(''.join(hashlib.sha256(p.read_bytes()).hexdigest()+'  '+p.name+'\n' for p in sorted(out.iterdir())))
+          releases=json.loads(subprocess.check_output(['gh','api','repos/Mellon/BarcodeMate/releases']))
+          existing=next((r for r in releases if r['tag_name']==tag),None)
+          assert not existing or existing['draft'], 'Refuse to overwrite a public release'
+          notes=pathlib.Path('docs/releases/'+version+'.md').read_text()
+          notes=notes.replace('SOURCE_COMMIT',os.environ['SOURCE_SHA']).replace('SOURCE_RUN',os.environ['SOURCE_RUN'])
+          pathlib.Path('release-notes.md').write_text(notes)
+          if not existing:
+            subprocess.run(['gh','release','create',tag,'--repo','Mellon/BarcodeMate','--draft','--target',os.environ['SOURCE_SHA'],'--title','BarcodeMate '+version,'--notes-file','release-notes.md'],check=True)
+          else:
+            subprocess.run(['gh','release','edit',tag,'--repo','Mellon/BarcodeMate','--target',os.environ['SOURCE_SHA'],'--title','BarcodeMate '+version+' - 24 languages','--notes-file','release-notes.md'],check=True)
+          subprocess.run(['gh','release','upload',tag,'--repo','Mellon/BarcodeMate','--clobber',*[str(p) for p in sorted(out.iterdir())]],check=True)
+          releases=json.loads(subprocess.check_output(['gh','api','repos/Mellon/BarcodeMate/releases']))
+          release=next(r for r in releases if r['tag_name']==tag)
+          assert {a['name'] for a in release['assets']}=={p.name for p in out.iterdir()}
+          for asset in release['assets']:
+            p=out/asset['name'];assert asset['state']=='uploaded' and asset['size']==p.stat().st_size
+            assert asset['digest']=='sha256:'+hashlib.sha256(p.read_bytes()).hexdigest()
+          subprocess.run(['gh','release','edit',tag,'--repo','Mellon/BarcodeMate','--draft=false','--latest'],check=True)
+          print('Published '+release['html_url'])
+          PY
