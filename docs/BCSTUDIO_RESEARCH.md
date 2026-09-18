@@ -42,7 +42,7 @@ The new design uses a stable left navigation, a large independent preview, numbe
 | EPS / AI, CMYK and overprint                     | Not implemented                                                                                               | Needed before claiming full professional prepress parity                                     |
 | Command-line barcode generation                  | Not implemented                                                                                               | Separate future acceptance item                                                              |
 | Image recognition                                | Added local ZXing-WASM decoding, drag/drop and paste                                                          | Recognition covers a subset of generation formats                                            |
-| Localized consistent desktop                     | English/Chinese, light/dark, common UI                                                                        | Other website languages not yet carried into desktop                                         |
+| Localized consistent desktop                     | 24 languages, native menu localization, RTL, light/dark, common UI                                                                        | Native OS dialogs follow the operating system language; translation review continues                                         |
 
 ## Release constraints
 

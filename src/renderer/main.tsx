@@ -41,6 +41,7 @@ import {
 import "@fontsource-variable/dm-sans";
 import "@fontsource-variable/manrope";
 import "./style.css";
+import { languages, negotiateLanguage, translate, diagnostic, direction } from "../i18n";
 import {
   catalog,
   newProject,
@@ -137,12 +138,22 @@ const presets = [
     guides: false,
   },
 ];
+function initialLanguage() {
+  const saved = localStorage.getItem("language");
+  return saved && languages.some(l => l.code === saved) ? saved : negotiateLanguage(navigator.languages);
+}
+function freshProject(language: string) {
+  const project = newProject();
+  project.name = translate(language, "Untitled project");
+  project.design.name = translate(language, "Inventory label");
+  return project;
+}
 function App() {
-  const [project, setProject] = useState(newProject),
+  const [project, setProject] = useState(() => freshProject(initialLanguage())),
     [tab, setTab] = useState<Tab>("design"),
     [modal, setModal] = useState<Modal>(null),
     [language, setLanguage] = useState(
-      localStorage.getItem("language") || "en",
+      initialLanguage,
     ),
     [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
   const [toast, setToast] = useState(""),
@@ -151,7 +162,7 @@ function App() {
     [library, setLibrary] = useState<Project[]>([]),
     [saveState, setSaveState] = useState(""),
     [info, setInfo] = useState({
-      version: "0.1.0",
+      version: "0.2.0",
       platform: "",
       dataPath: "",
     }),
@@ -193,6 +204,7 @@ function App() {
       { format: string; text: string }[]
     >([]),
     [scanBusy, setScanBusy] = useState(false);
+  const savedLanguageAtLaunch = useRef(localStorage.getItem("language"));
   const undo = useRef<Project[]>([]),
     redo = useRef<Project[]>([]),
     current = useRef(project),
@@ -201,7 +213,8 @@ function App() {
     fileInput = useRef<HTMLInputElement>(null),
     logoInput = useRef<HTMLInputElement>(null),
     toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const L = (en: string, zh: string) => (language === "zh-Hans" ? zh : en);
+  const L = (en: string, _zh?: string, values?: Record<string, string | number>) => translate(language, en, values);
+  const D = (text: string) => diagnostic(language, text);
   const notify = (text: string) => {
     setToast(text);
     if (toastTimer.current) clearTimeout(toastTimer.current);
@@ -278,7 +291,7 @@ function App() {
     });
   const printLabels = (pdf: boolean) =>
     run(async () => {
-      setBusy(L("Preparing pages…", "正在准备页面…"));
+      setBusy("Preparing pages…");
       try {
         const html = labelDocument(project);
         const result = await window.desktop.print({
@@ -302,8 +315,7 @@ function App() {
     run(async () => {
       const i = await window.desktop.info();
       setInfo(i);
-      if (!localStorage.getItem("language"))
-        setLanguage(i.locale.startsWith("zh") ? "zh-Hans" : "en");
+      if (!savedLanguageAtLaunch.current) setLanguage(i.language || negotiateLanguage([i.locale]));
       const [p, projects] = await Promise.all([
         window.desktop.recover(),
         window.desktop.loadLibrary(),
@@ -311,6 +323,10 @@ function App() {
       if (p) {
         current.current = p;
         setProject(p);
+      } else if (!savedLanguageAtLaunch.current) {
+        const fresh = freshProject(i.language || negotiateLanguage([i.locale]));
+        current.current = fresh;
+        setProject(fresh);
       }
       setLibrary(projects);
       initialized.current = true;
@@ -320,6 +336,8 @@ function App() {
     document.documentElement.dataset.theme = theme;
     localStorage.setItem("theme", theme);
     document.documentElement.lang = language;
+    document.documentElement.dir = direction(language);
+    void window.desktop.setLanguage(language).catch(e => setFailure(errorText(e)));
     localStorage.setItem("language", language);
   }, [theme, language]);
   useEffect(() => {
@@ -341,7 +359,7 @@ function App() {
     () =>
       window.desktop.menu((action) => {
         if (action === "new") {
-          change(newProject());
+          change(freshProject(language));
           setTab("design");
         }
         if (action === "open") open();
@@ -470,7 +488,7 @@ function App() {
   }, [seq]);
   const type = catalog.find((t) => t.id === project.design.type)!;
   const filtered = catalog.filter((t) =>
-    `${t.name} ${t.usage} ${t.category}`
+    `${t.name} ${t.usage} ${t.category} ${L(t.usage)} ${L(t.category)}`
       .toLowerCase()
       .includes(search.toLowerCase()),
   );
@@ -516,7 +534,7 @@ function App() {
         setTab("labels");
         return;
       }
-      setBusy(L("Exporting batch", "正在批量导出"));
+      setBusy("Exporting batch");
       setProgress(0);
       abort.current = new AbortController();
       try {
@@ -761,6 +779,12 @@ function App() {
             <span />
             {L("Offline & private", "离线使用 · 数据私有")}
           </div>
+          <label className="app-language-picker" title={L("Language follows your system on first launch.")}>
+            <Globe size={18} />
+            <select id="language-select" aria-label={L("Language")} value={language} onChange={e => setLanguage(e.target.value)}>
+              {languages.map(choice => <option key={choice.code} value={choice.code} lang={choice.code}>{choice.name}</option>)}
+            </select>
+          </label>
           <div className="rail-controls">
             <button
               title={L("Switch appearance", "切换外观")}
@@ -768,13 +792,7 @@ function App() {
             >
               {theme === "light" ? <Moon size={18} /> : <Sun size={18} />}
             </button>
-            <button
-              title="English / 简体中文"
-              onClick={() => setLanguage(language === "en" ? "zh-Hans" : "en")}
-            >
-              <Globe size={18} />
-              <span>{language === "en" ? "EN" : "中文"}</span>
-            </button>
+
             <button
               onClick={() => setModal("about")}
               title={L("About BarcodeMate", "关于 BarcodeMate")}
@@ -889,7 +907,7 @@ function App() {
               <button
                 className="secondary"
                 onClick={() => {
-                  change(newProject());
+                  change(freshProject(language));
                   setTab("design");
                 }}
               >
@@ -920,8 +938,8 @@ function App() {
           {failure && (
             <div role="alert" className="error-banner">
               <AlertTriangle size={18} />
-              <span>{failure}</span>
-              <button onClick={() => setFailure("")} aria-label="Close">
+              <span>{D(failure)}</span>
+              <button onClick={() => setFailure("")} aria-label={L("Close")}>
                 <X size={17} />
               </button>
             </div>
@@ -988,7 +1006,7 @@ function App() {
                       </option>
                     ))}
                   </select>
-                  <small>{type.usage}</small>
+                  <small>{L(type.usage)}</small>
                 </label>
                 <label className="field">
                   <span>
@@ -1008,7 +1026,7 @@ function App() {
                     rows={3}
                     spellCheck={false}
                   />
-                  <small>{type.hint}</small>
+                  <small>{L(type.hint)}</small>
                 </label>
                 <label className="field">
                   <span>{L("File / label name", "文件 / 标签名称")}</span>
@@ -1254,13 +1272,13 @@ function App() {
                         <h3>
                           {L("Let’s check that data", "检查一下输入数据")}
                         </h3>
-                        <p>{result.error}</p>
+                        <p>{D(result.error)}</p>
                       </div>
                     )}
                     <div className="zoom-controls">
                       <button
                         onClick={() => setZoom(Math.max(0.25, zoom - 0.25))}
-                        aria-label="Zoom out"
+                        aria-label={L("Zoom out")}
                       >
                         <ZoomOut size={16} />
                       </button>
@@ -1269,7 +1287,7 @@ function App() {
                       </button>
                       <button
                         onClick={() => setZoom(Math.min(3, zoom + 0.25))}
-                        aria-label="Zoom in"
+                        aria-label={L("Zoom in")}
                       >
                         <ZoomIn size={16} />
                       </button>
@@ -1316,7 +1334,7 @@ function App() {
                     </h3>
                     <p>
                       {result.value?.warnings.length
-                        ? result.value.warnings.join(" ")
+                        ? result.value.warnings.map(D).join(" ")
                         : L(
                             "Your preview is ready. Validate a real printed sample before production.",
                             "预览已生成。批量生产前，请验证真实打印样张。",
@@ -1555,7 +1573,7 @@ function App() {
                             <th>
                               <input
                                 type="checkbox"
-                                aria-label="Select visible rows"
+                                aria-label={L("Select visible rows")}
                                 checked={
                                   visibleRows.length > 0 &&
                                   visibleRows.every((r) => selected.has(r.id))
@@ -1600,7 +1618,7 @@ function App() {
                               <td>
                                 <input
                                   type="checkbox"
-                                  aria-label={`Select row ${batchPage * 100 + i + 1}`}
+                                  aria-label={L("Select row {number}", undefined, {number: batchPage * 100 + i + 1})}
                                   checked={selected.has(row.id)}
                                   onChange={(e) =>
                                     setSelected((s) => {
@@ -1618,7 +1636,7 @@ function App() {
                               </td>
                               <td>
                                 <input
-                                  aria-label={`Data row ${batchPage * 100 + i + 1}`}
+                                  aria-label={L("Data row {number}", undefined, {number: batchPage * 100 + i + 1})}
                                   value={row.data}
                                   onChange={(e) =>
                                     updateRow(row.id, { data: e.target.value })
@@ -1627,7 +1645,7 @@ function App() {
                               </td>
                               <td>
                                 <input
-                                  aria-label={`Name row ${batchPage * 100 + i + 1}`}
+                                  aria-label={L("Name row {number}", undefined, {number: batchPage * 100 + i + 1})}
                                   value={row.name}
                                   placeholder="—"
                                   onChange={(e) =>
@@ -1642,7 +1660,7 @@ function App() {
                                   min="1"
                                   max="10000"
                                   value={row.quantity}
-                                  aria-label={`Copies row ${batchPage * 100 + i + 1}`}
+                                  aria-label={L("Copies row {number}", undefined, {number: batchPage * 100 + i + 1})}
                                   onChange={(e) =>
                                     updateRow(row.id, {
                                       quantity: Number(e.target.value),
@@ -1653,7 +1671,7 @@ function App() {
                               <td>
                                 <select
                                   value={row.type}
-                                  aria-label={`Format row ${batchPage * 100 + i + 1}`}
+                                  aria-label={L("Format row {number}", undefined, {number: batchPage * 100 + i + 1})}
                                   onChange={(e) =>
                                     updateRow(row.id, { type: e.target.value })
                                   }
@@ -1670,10 +1688,10 @@ function App() {
                                 {rowStatuses[batchPage * 100 + i] ? (
                                   <span
                                     className="row-error"
-                                    title={rowStatuses[batchPage * 100 + i]}
+                                    title={D(rowStatuses[batchPage * 100 + i])}
                                   >
                                     <AlertTriangle size={14} />
-                                    {rowStatuses[batchPage * 100 + i]}
+                                    {D(rowStatuses[batchPage * 100 + i])}
                                   </span>
                                 ) : (
                                   <span className="row-ok">
@@ -1763,7 +1781,7 @@ function App() {
                 </p>
                 <div className="button-row">
                   <select
-                    aria-label="Batch export format"
+                    aria-label={L("Batch export format")}
                     value={format}
                     onChange={(e) => setFormat(e.target.value as ExportFormat)}
                   >
@@ -1803,7 +1821,7 @@ function App() {
                 <label className="field">
                   <span>{L("Start with a layout", "使用预设布局")}</span>
                   <select
-                    aria-label="Label preset"
+                    aria-label={L("Label preset")}
                     defaultValue=""
                     onChange={(e) => {
                       if (e.target.value) {
@@ -1816,7 +1834,7 @@ function App() {
                     <option value="">{L("Custom layout", "自定义布局")}</option>
                     {presets.map((p, i) => (
                       <option value={i} key={p.name}>
-                        {p.name}
+                        {L(p.name)}
                       </option>
                     ))}
                   </select>
@@ -1914,7 +1932,7 @@ function App() {
                       <div className="preview-empty">
                         <AlertTriangle size={32} />
                         <h3>{L("Adjust the layout", "请调整布局")}</h3>
-                        <p>{labelResult.error}</p>
+                        <p>{D(labelResult.error)}</p>
                         <button
                           className="secondary"
                           onClick={() => setTab("design")}
@@ -2202,8 +2220,8 @@ function App() {
         <div className="busy-overlay" role="status">
           <div className="panel busy-card">
             <div className="spinner" />
-            <h3>{busy}</h3>
-            {busy.includes("batch") || busy.includes("批量") ? (
+            <h3>{L(busy)}</h3>
+            {busy === "Exporting batch" ? (
               <>
                 <progress max={batchRows.length} value={progress} />
                 <p>
@@ -2247,7 +2265,7 @@ function App() {
               </h2>
               <button
                 className="icon-button"
-                aria-label="Close"
+                aria-label={L("Close")}
                 onClick={() => setModal(null)}
               >
                 <X size={21} />
@@ -2256,9 +2274,9 @@ function App() {
             {failure && (
               <div role="alert" className="error-banner">
                 <AlertTriangle size={16} />
-                <span>{failure}</span>
+                <span>{D(failure)}</span>
                 <button
-                  aria-label="Dismiss error"
+                  aria-label={L("Dismiss error")}
                   onClick={() => setFailure("")}
                 >
                   <X size={15} />
@@ -2310,7 +2328,7 @@ function App() {
                     {L("Append to current data", "追加到现有数据")}
                   </label>
                 </div>
-                {table.error && <p className="error-text">{table.error}</p>}
+                {table.error && <p className="error-text">{D(table.error)}</p>}
                 <div className="mapping-grid">
                   {(Object.keys(mapping) as (keyof typeof mapping)[]).map(
                     (key, i) => (
@@ -2341,9 +2359,9 @@ function App() {
                               {L("Not mapped", "不映射")}
                             </option>
                           )}
-                          {(table.rows[0] || ["Column 1"]).map((h, j) => (
+                          {(table.rows[0] || ["#1"]).map((h, j) => (
                             <option key={j} value={j}>
-                              {hasHeader ? h : `Column ${j + 1}`}
+                              {hasHeader ? h : `#${j + 1}`}
                             </option>
                           ))}
                         </select>
@@ -2451,7 +2469,7 @@ function App() {
                 <div className="sequence-preview">
                   <strong>{L("Preview", "预览")}</strong>
                   {seqPreview.error ? (
-                    <p className="error-text">{seqPreview.error}</p>
+                    <p className="error-text">{D(seqPreview.error)}</p>
                   ) : (
                     seqPreview.rows.map((r) => <code key={r.id}>{r.data}</code>)
                   )}

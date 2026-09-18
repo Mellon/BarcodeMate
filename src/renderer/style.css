@@ -1414,3 +1414,34 @@ progress {
     max-width: 230px;
   }
 }
+/* Localized controls and bidirectional UI. Barcode art and print geometry stay LTR. */
+.app-language-picker{display:flex;align-items:center;gap:8px;margin:12px 0 8px;min-width:0;color:var(--text)}
+.app-language-picker select{min-width:0;flex:1;padding:9px 7px;font-size:12px}
+.brand small{white-space:normal;line-height:1.5;letter-spacing:.3px}
+.nav-item{text-align:start;min-height:45px;height:auto;line-height:1.4}
+.nav-item span{min-width:0;overflow-wrap:anywhere}
+.rail{overflow-y:auto}
+.rail-controls{justify-content:space-between}
+.rail-bottom{padding-top:12px}
+.page-heading h1{overflow-wrap:anywhere;line-height:1.25}
+.page-heading{gap:18px;flex-wrap:wrap}
+.top-actions{flex-wrap:wrap;justify-content:flex-end}
+.topbar{height:auto;min-height:76px;gap:16px;padding-block:12px}
+.panel-heading h2{min-width:0;overflow-wrap:anywhere}
+.field>span,.check-field{overflow-wrap:anywhere;white-space:normal}
+.batch-toolbar,.batch-footer,.table-footer{flex-wrap:wrap;gap:10px}
+.metrics .metric{min-width:0}
+.metrics .metric span{white-space:normal}
+.preview-stats>div{min-width:0}
+.preview-stats strong{overflow-wrap:anywhere}
+.barcode-paper,.barcode-paper svg,.preview-stage,.paper-stage,.label-preview,.label-sheet,.label svg{direction:ltr}
+.barcode-data,.batch-table input,.scan-result pre,input[type=number]{direction:ltr;text-align:start;unicode-bidi:plaintext}
+[dir=rtl] .rail{inset:0 0 0 auto;border-right:0;border-left:1px solid var(--line)}
+[dir=rtl] main{margin-left:0;margin-right:226px}
+[dir=rtl] .brand{letter-spacing:0}
+[dir=rtl] .nav-item b,[dir=rtl] .panel-heading>.pill{margin-left:0;margin-right:auto}
+[dir=rtl] .field,[dir=rtl] th,[dir=rtl] td{text-align:right}
+[dir=rtl] .toast{left:auto;right:calc(50% + 90px);transform:translateX(50%)}
+[dir=rtl] .breadcrumb>svg,[dir=rtl] .text-button>svg{transform:scaleX(-1)}
+@media(max-width:1200px){[dir=rtl] main{margin-left:0;margin-right:195px}.top-actions .save-state{display:none}}
+.preview-stats strong,.sheet-scale,.sheet-paper,.paper-sheet{direction:ltr;unicode-bidi:isolate}

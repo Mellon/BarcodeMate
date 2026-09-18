@@ -4,9 +4,9 @@ A local desktop workspace for barcode design, batch generation, reusable project
 
 ## Download
 
-[Download for Windows and Mac](https://barcodemate.com/desktop/) · [GitHub release and checksums](https://github.com/Mellon/BarcodeMate/releases/tag/v0.1.0)
+[Download for Windows and Mac](https://barcodemate.com/desktop/) · [GitHub release and checksums](https://github.com/Mellon/BarcodeMate/releases/tag/v0.2.0)
 
-Version 0.1.0 provides Windows x64, Mac Apple Silicon and Intel Mac packages. Windows installation and app workflows, plus macOS packaged app workflows, passed automated tests. Intel Mac physical hardware and real printers remain unverified. App interface: English and Simplified Chinese.
+Version 0.2.0 provides Windows x64, Mac Apple Silicon and Intel Mac packages. Windows installation and app workflows, plus macOS packaged app workflows, passed automated tests. Intel Mac physical hardware and real printers remain unverified. App interface: 24 languages, automatic system-language selection on first launch, a persistent language selector, and right-to-left layouts for Arabic, Persian and Hebrew.
 
 Installers are not publisher-signed; Mac packages are not notarized. The operating system may warn or block installation. Test a printed sample before a large print run.
 
@@ -23,7 +23,7 @@ Installers are not publisher-signed; Mac packages are not notarized. The operati
 - GS1 common-field, Wi-Fi, vCard and URL assistants. Raster logos on selected 2D formats and dot styling where supported.
 - Portable `.barcodemate` project files, local project library, recovery autosave and undo/redo.
 - Local image decoding via ZXing WASM in a worker; file, drop and paste input. Decoder supports fewer formats than generation.
-- English / Simplified Chinese interface and light/dark themes. No telemetry, account, remote fonts or network uploads.
+- 24 interface languages and light/dark themes. No telemetry, account, remote fonts or network uploads.
 
 Generation is not registration of a product number. Design diagnostics are not an ISO/IEC quality grade. Use an actual printed sample and scanner before production.
 
@@ -61,3 +61,9 @@ This build prioritizes import → sequence → layout → print. It is not yet a
 ## License
 
 BarcodeMate is licensed under the [MIT License](LICENSE). Third-party components retain their respective licenses; their notices are bundled at `THIRD_PARTY_NOTICES.txt`. No proprietary BCStudio components or copied templates are included.
+
+## Interface languages
+
+English, Simplified Chinese, Traditional Chinese, Spanish, French, German, Portuguese, Japanese, Korean, Italian, Russian, Arabic, Hindi, Indonesian, Turkish, Vietnamese, Thai, Polish, Dutch, Ukrainian, Malay, Bengali, Persian and Hebrew.
+
+The language selector is at the bottom of the sidebar. Switching language also updates application menus and keeps your project data, barcodes and print geometry unchanged. Native OS dialogs follow OS settings. Dictionaries ship inside the application; language switching works offline. Technical error details from third-party encoders may retain their original wording. Translation corrections are welcome in `src/i18n/`.

@@ -19,11 +19,7 @@ test.beforeEach(async () => {
   });
   page = await app.firstWindow();
   await page.waitForSelector("h1");
-  await page.evaluate(() => {
-    localStorage.setItem("language", "en");
-  });
-  if (await page.getByRole("heading", { name: "设计你的下一个条码。" }).count())
-    await page.getByTitle("English / 简体中文").click();
+  await page.locator("#language-select").selectOption("en");
 });
 test.afterEach(async () => {
   await app?.close();
@@ -154,7 +150,7 @@ test("sandbox and network restrictions are active; bilingual workspace and proje
   await expect(
     page.getByRole("heading", { name: "Untitled project", exact: true }),
   ).toBeVisible();
-  await page.getByTitle("English / 简体中文").click();
+  await page.locator("#language-select").selectOption("zh-Hans");
   await expect(
     page.getByRole("heading", {
       name: "保存好设计，下次直接用。",

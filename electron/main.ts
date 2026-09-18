@@ -15,6 +15,7 @@ import { readFile, writeFile, rename, mkdir, stat } from "node:fs/promises";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { validateProject, type Project } from "../src/core/model";
+import { languages, negotiateLanguage, translate } from "../src/i18n";
 let main: BrowserWindow;
 let saving = Promise.resolve();
 const root = path.join(__dirname, "../dist");
@@ -130,91 +131,107 @@ app.whenReady().then(async () => {
     autoHideMenuBar: process.platform === "win32",
   });
   main.once("ready-to-show", () => main.show());
+  let uiLanguage = negotiateLanguage([app.getLocale()]);
+  try {
+    const saved = await readJSON(dataFile("language.json"));
+    if (languages.some(l => l.code === saved?.language)) uiLanguage = saved.language;
+  } catch { /* A corrupt language preference must not block startup. */ }
+  const M = (source: string) => translate(uiLanguage, source);
   const action = (id: string) => () => main.webContents.send("menu", id);
-  Menu.setApplicationMenu(
+  const updateMenu = () => Menu.setApplicationMenu(
     Menu.buildFromTemplate([
       ...(process.platform === "darwin"
         ? [
             {
               label: "BarcodeMate",
               submenu: [
-                { role: "about" as const },
+                { label: M("About BarcodeMate"), role: "about" as const },
                 { type: "separator" as const },
-                { role: "hide" as const },
-                { role: "quit" as const },
+                { label: M("Hide BarcodeMate"), role: "hide" as const },
+                { label: M("Quit BarcodeMate"), role: "quit" as const },
               ],
             },
           ]
         : []),
       {
-        label: "File",
+        label: M("File"),
         submenu: [
           {
-            label: "New project",
+            label: M("New project"),
             accelerator: "CmdOrCtrl+N",
             click: action("new"),
           },
           {
-            label: "Open project…",
+            label: M("Open project…"),
             accelerator: "CmdOrCtrl+O",
             click: action("open"),
           },
           {
-            label: "Save project…",
+            label: M("Save project…"),
             accelerator: "CmdOrCtrl+S",
             click: action("save"),
           },
           { type: "separator" },
           {
-            label: "Import data…",
+            label: M("Import data…"),
             accelerator: "CmdOrCtrl+I",
             click: action("import"),
           },
           {
-            label: "Print labels…",
+            label: M("Print labels…"),
             accelerator: "CmdOrCtrl+P",
             click: action("print"),
           },
-          ...(process.platform === "darwin" ? [] : [{ role: "quit" as const }]),
+          ...(process.platform === "darwin" ? [] : [{ label: M("Quit BarcodeMate"), role: "quit" as const }]),
         ],
       },
       {
-        label: "Edit",
+        label: M("Edit"),
         submenu: [
-          { label: "Undo", accelerator: "CmdOrCtrl+Z", click: action("undo") },
+          { label: M("Undo"), accelerator: "CmdOrCtrl+Z", click: action("undo") },
           {
-            label: "Redo",
+            label: M("Redo"),
             accelerator: "CmdOrCtrl+Shift+Z",
             click: action("redo"),
           },
           { type: "separator" },
-          { role: "cut" },
-          { role: "copy" },
-          { role: "paste" },
-          { role: "selectAll" },
+          { label: M("Cut"), role: "cut" },
+          { label: M("Copy"), role: "copy" },
+          { label: M("Paste"), role: "paste" },
+          { label: M("Select all"), role: "selectAll" },
         ],
       },
       {
-        label: "View",
+        label: M("View"),
         submenu: [
-          { role: "resetZoom" },
-          { role: "zoomIn" },
-          { role: "zoomOut" },
-          { role: "togglefullscreen" },
+          { label: M("Actual size"), role: "resetZoom" },
+          { label: M("Zoom in"), role: "zoomIn" },
+          { label: M("Zoom out"), role: "zoomOut" },
+          { label: M("Toggle full screen"), role: "togglefullscreen" },
         ],
       },
     ]),
   );
+  updateMenu();
+  let languageSaving = Promise.resolve();
+  safeHandler("language:set", async (language: unknown) => {
+    if (typeof language !== "string" || !languages.some(l => l.code === language)) throw Error("Invalid language.");
+    uiLanguage = language;
+    updateMenu();
+    languageSaving = languageSaving.catch(() => {}).then(() => atomic(dataFile("language.json"), JSON.stringify({language})));
+    await languageSaving;
+  });
   safeHandler("info", () => ({
     platform: process.platform,
     version: app.getVersion(),
     locale: app.getLocale(),
+    language: uiLanguage,
     dataPath: app.getPath("userData"),
   }));
   safeHandler("project:open", async () => {
     const res = await dialog.showOpenDialog(main, {
       filters: [
-        { name: "BarcodeMate project", extensions: ["barcodemate", "json"] },
+        { name: M("BarcodeMate project"), extensions: ["barcodemate", "json"] },
       ],
       properties: ["openFile"],
     });
@@ -231,7 +248,7 @@ app.whenReady().then(async () => {
     const project = validateProject(value);
     const res = await dialog.showSaveDialog(main, {
       defaultPath: project.name.replace(/[<>:"/\\|?*]/g, "-") + ".barcodemate",
-      filters: [{ name: "BarcodeMate project", extensions: ["barcodemate"] }],
+      filters: [{ name: M("BarcodeMate project"), extensions: ["barcodemate"] }],
     });
     if (res.canceled || !res.filePath) return null;
     await atomic(res.filePath, JSON.stringify(project, null, 2));
@@ -263,7 +280,7 @@ app.whenReady().then(async () => {
   safeHandler("table:import", async () => {
     const res = await dialog.showOpenDialog(main, {
       filters: [
-        { name: "CSV / TSV / text", extensions: ["csv", "tsv", "txt"] },
+        { name: M("CSV / TSV / text"), extensions: ["csv", "tsv", "txt"] },
       ],
       properties: ["openFile"],
     });

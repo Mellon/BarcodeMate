@@ -1,5 +1,6 @@
 import type { Project } from "./core/model";
 export interface DesktopAPI {
+  setLanguage(language: string): Promise<void>;
   security(): {
     contextIsolation: boolean;
     sandbox: boolean;
@@ -9,6 +10,7 @@ export interface DesktopAPI {
     platform: string;
     version: string;
     locale: string;
+    language: string;
     dataPath: string;
   }>;
   openProject(): Promise<{ project: Project; name: string } | null>;

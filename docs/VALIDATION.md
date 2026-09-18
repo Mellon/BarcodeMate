@@ -42,3 +42,7 @@ Packages were built from `7d82ce3a3c83387c7b5cb883ebedd8e6b338497d` in [GitHub A
 The final Apple Silicon DMG was independently mounted on the development Mac; all five workflows passed directly from the mounted app. Both Mac DMGs passed `hdiutil verify`. The public SHA-256 checksums refer to the CI-built packages, not the older local preview package above. The CI app archive was inspected for unexpected private files and credential patterns; none were found. License notices were extracted from that archive for the release attachment.
 
 Physical Intel Mac hardware, real printers/scanners and all Windows display scaling configurations remain untested. Download-click counts on the website indicate a click, not a completed installation.
+
+## Version 0.2.0: 24 application languages
+
+All 24 dictionaries contain the same 408 nonempty messages with matching substitution fields. Language negotiation tests cover regional languages, Chinese scripts and legacy language aliases. The real Electron language test switches every locale across all five workspace tabs at 1080 pixels, opens the sequence dialog, checks native menu labels, verifies barcode data is unchanged, and checks language preference persistence. Arabic, Persian and Hebrew use RTL interface layout while barcode art and print positions remain LTR. Automated tests cannot establish native-speaker translation quality or physical printer behavior.

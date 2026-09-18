@@ -46,7 +46,8 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           ARCH=$(node -p 'process.arch')
-          ditto -x -k "release/BarcodeMate-0.1.0-mac-$ARCH.zip" "$RUNNER_TEMP/BarcodeMate-installed"
+          VERSION=$(node -p "require('./package.json').version")
+          ditto -x -k "release/BarcodeMate-$VERSION-mac-$ARCH.zip" "$RUNNER_TEMP/BarcodeMate-installed"
           BARCODEMATE_EXECUTABLE="$RUNNER_TEMP/BarcodeMate-installed/BarcodeMate.app/Contents/MacOS/BarcodeMate" npm run test:app
       - uses: actions/upload-artifact@v4
         if: always()
