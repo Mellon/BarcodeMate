@@ -2,7 +2,13 @@
 
 A local desktop workspace for barcode design, batch generation, reusable projects and label printing. Built with Electron, React and TypeScript for macOS and Windows.
 
-**Early preview:** the main workflows have been tested locally on Apple Silicon. Windows, Intel Mac and physical printer validation are still pending. See the validation record before using this build for production labels.
+## Download
+
+[Download for Windows and Mac](https://barcodemate.com/desktop/) · [GitHub release and checksums](https://github.com/Mellon/BarcodeMate/releases/tag/v0.1.0)
+
+Version 0.1.0 provides Windows x64, Mac Apple Silicon and Intel Mac packages. Windows installation and app workflows, plus macOS packaged app workflows, passed automated tests. Intel Mac physical hardware and real printers remain unverified. App interface: English and Simplified Chinese.
+
+Installers are not publisher-signed; Mac packages are not notarized. The operating system may warn or block installation. Test a printed sample before a large print run.
 
 ## What works
 
@@ -43,7 +49,7 @@ npx electron-builder --mac dmg --arm64 --publish never
 npx electron-builder --win nsis --x64 --publish never
 ```
 
-Build Windows on a Windows runner for representative runtime tests. The included workflow only validates and stores CI artifacts; it does not publish releases. Signing/notarization credentials are not configured. The local Mac package is for review and is not a signed public distribution.
+Build Windows on a Windows runner for representative runtime tests. The included workflow only validates and stores CI artifacts; it does not publish releases. Signing/notarization credentials are not configured. Public releases are published separately after package validation and checksum verification.
 
 ## Scope and status
 

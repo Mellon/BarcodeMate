@@ -22,10 +22,10 @@ These are local artifacts, not committed files. CI regenerates test artifacts fo
 
 ## Not yet verified
 
-- Windows installation, runtime, DPI scaling and real printer behavior.
+- Windows display scaling configurations and real printer behavior.
 - Intel Mac installation/runtime.
 - Physical printer and scanner tests, including thermal media and printer driver margins.
-- Public download, signed/notarized macOS distribution, Windows publisher trust, GitHub release and website integration.
+- Developer ID signing/notarization for macOS and publisher signing for Windows.
 - Every format's independent decoder interoperability. All 108 samples encode, but that is not a claim that each was independently decoded.
 - Complete equivalence to BCStudio; see the feature comparison for missing professional capabilities.
 
@@ -34,3 +34,11 @@ These are local artifacts, not committed files. CI regenerates test artifacts fo
 The built Apple Silicon app was launched directly from `release/mac-arm64/BarcodeMate.app`. A 1,000-row sequence completed background validation with no renderer errors; actual preload isolation/sandbox values were true. Evidence: `test-results/packaged-smoke.json`. The local DMG is `release/BarcodeMate-0.1.0-mac-arm64.dmg`, SHA-256 `9844f83d3982bce398288c95697a6861e9067a254837b062e83112d127a7233e`. It is not developer-signed or notarized.
 
 The standalone website preview `website-preview/index.html` was checked at 1440 px and 390 px: no horizontal overflow and no missing images. Screenshots show the actual packaged application, not a mockup. This is a record of the initial local validation; live website download integration and GitHub binary releases were not part of that check.
+
+## Public release 0.1.0
+
+Packages were built from `7d82ce3a3c83387c7b5cb883ebedd8e6b338497d` in [GitHub Actions run 35301814917](https://github.com/Mellon/BarcodeMate/actions/runs/35301814917). Both Windows and macOS passed all nine core tests and five app workflows. Windows then installed the NSIS package in a temporary directory and passed the five workflows using the installed executable. macOS extracted the built ZIP and passed the same workflows using the packaged executable.
+
+The final Apple Silicon DMG was independently mounted on the development Mac; all five workflows passed directly from the mounted app. Both Mac DMGs passed `hdiutil verify`. The public SHA-256 checksums refer to the CI-built packages, not the older local preview package above. The CI app archive was inspected for unexpected private files and credential patterns; none were found. License notices were extracted from that archive for the release attachment.
+
+Physical Intel Mac hardware, real printers/scanners and all Windows display scaling configurations remain untested. Download-click counts on the website indicate a click, not a completed installation.
