@@ -12,7 +12,9 @@ let app: ElectronApplication, page: Page, temp: string;
 test.beforeEach(async () => {
   temp = await mkdtemp(path.join(os.tmpdir(), "barcodemate-app-"));
   app = await electron.launch({
-    args: ["."],
+    ...(process.env.BARCODEMATE_EXECUTABLE
+      ? { executablePath: process.env.BARCODEMATE_EXECUTABLE, args: [] }
+      : { args: ["."] }),
     env: { ...process.env, BARCODEMATE_TEST_DIR: temp },
   });
   page = await app.firstWindow();

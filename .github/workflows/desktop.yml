@@ -23,12 +23,31 @@ jobs:
       - run: npm run build
       - run: npm test
       - run: npm run test:app
-      - name: Package macOS for local review
+      - name: Package macOS
         if: runner.os == 'macOS'
         run: npx electron-builder --mac dmg zip --arm64 --x64 --publish never
-      - name: Package Windows for local review
+      - name: Package Windows
         if: runner.os == 'Windows'
         run: npx electron-builder --win nsis --x64 --publish never
+      - name: Install and test Windows package
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $installer = Get-ChildItem release/BarcodeMate-*-win-x64.exe | Select-Object -First 1
+          if (!$installer) { throw 'Windows installer missing' }
+          $installDir = Join-Path $env:RUNNER_TEMP 'BarcodeMate-installed'
+          $process = Start-Process -FilePath $installer.FullName -ArgumentList '/S', "/D=$installDir" -Wait -PassThru
+          if ($process.ExitCode -ne 0) { throw "Installer failed: $($process.ExitCode)" }
+          $env:BARCODEMATE_EXECUTABLE = Join-Path $installDir 'BarcodeMate.exe'
+          if (!(Test-Path $env:BARCODEMATE_EXECUTABLE)) { throw 'Installed executable missing' }
+          npm run test:app
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Extract and test macOS package
+        if: runner.os == 'macOS'
+        run: |
+          ARCH=$(node -p 'process.arch')
+          ditto -x -k "release/BarcodeMate-0.1.0-mac-$ARCH.zip" "$RUNNER_TEMP/BarcodeMate-installed"
+          BARCODEMATE_EXECUTABLE="$RUNNER_TEMP/BarcodeMate-installed/BarcodeMate.app/Contents/MacOS/BarcodeMate" npm run test:app
       - uses: actions/upload-artifact@v4
         if: always()
         with:
