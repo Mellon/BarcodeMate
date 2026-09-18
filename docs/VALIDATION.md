@@ -46,3 +46,9 @@ Physical Intel Mac hardware, real printers/scanners and all Windows display scal
 ## Version 0.2.0: 24 application languages
 
 All 24 dictionaries contain the same 408 nonempty messages with matching substitution fields. Language negotiation tests cover regional languages, Chinese scripts and legacy language aliases. The real Electron language test switches every locale across all five workspace tabs at 1080 pixels, opens the sequence dialog, checks native menu labels, verifies barcode data is unchanged, and checks language preference persistence. Arabic, Persian and Hebrew use RTL interface layout while barcode art and print positions remain LTR. Automated tests cannot establish native-speaker translation quality or physical printer behavior.
+
+## Public release 0.2.0 — 2026-09-18
+
+The final translation correction is included in source `b3667ffbab105eeade45c82e6cfef74637b776b7`. [Validation run 35305495373](https://github.com/Mellon/BarcodeMate/actions/runs/35305495373) passed twelve core/localization tests and six Electron workflows on both Windows and macOS, then repeated all six workflows against the installed Windows app and extracted Mac package. Dictionary checks now also reject untranslated English sentences outside an explicit technical-term allowance; native-speaker review is still welcome.
+
+[Publication run 35305836938](https://github.com/Mellon/BarcodeMate/actions/runs/35305836938) downloaded those exact validated artifacts, inspected the Mac app archive and notices, checked every uploaded SHA-256 digest and published [0.2.0](https://github.com/Mellon/BarcodeMate/releases/tag/v0.2.0). The public tag matches the validated source. Anonymous download links and the checksum manifest were independently checked after publication. Existing physical-device and signing limitations above still apply.
