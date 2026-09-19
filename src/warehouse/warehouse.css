@@ -1,0 +1,436 @@
+.wh-root {
+  padding: 24px;
+}
+.wh-root fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+.wh-root .wh-printers {
+  margin: 0 0 20px;
+}
+.wh-printers legend {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.wh-printer-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.wh-printer-card {
+  background: #fff;
+  border: 1px solid #cbd7cc;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.wh-printer-card[data-selected="true"] {
+  border-color: #416d51;
+  box-shadow: inset 0 0 0 1px #416d51;
+  background: #f2f6ef;
+}
+.wh-root .wh-printer-card > button {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-align: start;
+  padding: 14px 18px;
+  width: 100%;
+  min-height: 86px;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+}
+.wh-root .wh-printer-card > button[aria-pressed="true"] {
+  background: transparent;
+  box-shadow: none;
+}
+.wh-printer-icon {
+  flex: none;
+  color: #576574;
+}
+.wh-printer-copy {
+  display: grid;
+  gap: 4px;
+}
+.wh-printer-copy strong {
+  font-size: 15px;
+  font-weight: 650;
+}
+.wh-printer-copy > span {
+  display: grid;
+  gap: 3px;
+  font-size: 12px;
+  color: #5c6d63;
+}
+.wh-printer-thermal {
+  display: flex;
+  align-items: center;
+}
+.wh-root .wh-printer-thermal > button {
+  flex: 1;
+  min-width: 0;
+  width: auto;
+}
+.wh-root .wh-protocol {
+  flex: 0 1 180px;
+  margin: 12px 14px 12px 0;
+}
+.wh-diagnostics {
+  margin-top: 12px;
+}
+.wh-check-status {
+  font-weight: 600;
+}
+.wh-diagnostics[data-state="ready"] {
+  border-color: #416d51;
+}
+.wh-device {
+  display: grid;
+  gap: 8px;
+  margin: 16px 0;
+  font-size: 13px;
+}
+.wh-device > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+}
+.wh-device dt {
+  min-width: 150px;
+  color: #4c6055;
+}
+.wh-device dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 1100px) {
+  .wh-printer-options {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 480px) {
+  .wh-root .wh-printer-card > button {
+    padding: 12px;
+    gap: 8px;
+  }
+  .wh-printer-thermal .wh-printer-icon {
+    width: 40px;
+  }
+  .wh-root .wh-protocol {
+    flex-basis: 125px;
+    margin-inline-end: 10px;
+  }
+}
+.wh-paper-settings {
+  margin-top: 12px;
+}
+.wh-paper-settings > summary {
+  cursor: pointer;
+  font-size: 12px;
+  color: #4c6055;
+  font-weight: 600;
+}
+.wh-root button[aria-pressed="true"] {
+  background: #e5eedf;
+  border-color: #416d51;
+  box-shadow: inset 0 0 0 1px #416d51;
+}
+.wh-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+.wh-preview-panel {
+  grid-column: 2;
+  grid-row: 1;
+  position: sticky;
+  top: 16px;
+  min-width: 0;
+}
+.wh-editor {
+  grid-column: 1;
+  grid-row: 1;
+  display: grid;
+  gap: 16px;
+}
+.wh-panel {
+  background: #fff;
+  border: 1px solid #dce4d9;
+  border-radius: 12px;
+  padding: 18px;
+  min-width: 0;
+}
+.wh-panel h2 {
+  font-size: 17px;
+  margin-bottom: 12px;
+}
+.wh-root label {
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  gap: 4px;
+  color: #4c6055;
+  min-width: 0;
+}
+.wh-root input,
+.wh-root select,
+.wh-root textarea {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid #cbd7cc;
+  border-radius: 6px;
+  background: #fff;
+  color: #203c32;
+  padding: 8px;
+  font: inherit;
+  font-size: 13px;
+  min-height: 36px;
+}
+.wh-root button {
+  font-size: 13px;
+  min-height: 36px;
+  padding: 7px 11px;
+}
+.wh-root button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.wh-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 12px 0;
+}
+.wh-root .hm-check {
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  margin: 12px 0;
+  gap: 8px;
+}
+.wh-root .hm-check input {
+  width: 16px;
+  min-height: 16px;
+  flex: none;
+  margin: 3px 0;
+}
+.wh-preview-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  align-items: baseline;
+}
+.wh-preview-heading span {
+  font-size: 11px;
+  color: #5c6d63;
+}
+.wh-preview {
+  padding: 16px;
+  overflow: auto;
+  background: #e9eee8;
+  border-radius: 7px;
+  max-height: 65vh;
+  direction: ltr;
+}
+.wh-preview > div {
+  /* Contain the original iframe box when CSS transforms shrink its display. */
+  overflow: hidden;
+  margin: auto;
+  position: relative;
+  flex-shrink: 0;
+}
+.wh-preview-roll {
+  background: #eef2ef;
+}
+.wh-preview.wh-preview-roll iframe {
+  background: transparent;
+}
+.wh-preview iframe {
+  display: block;
+  border: 0;
+  transform-origin: top left;
+  background: #fff;
+}
+.wh-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin: 10px 0;
+  font-size: 12px;
+}
+.wh-output {
+  margin-top: 12px;
+}
+.wh-error,
+.wh-notice {
+  padding: 10px 12px;
+  background: #fff0df;
+  border: 1px solid #eac69d;
+  border-radius: 7px;
+  font-size: 13px;
+}
+.wh-root .wh-notice {
+  margin-bottom: 16px;
+}
+.wh-root .hm-hint {
+  font-size: 12px;
+  color: #5c6d63;
+  margin-top: 10px;
+}
+.wh-import {
+  margin: 14px 0;
+}
+.wh-import summary {
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.wh-import textarea {
+  font-family: monospace;
+  resize: vertical;
+}
+.wh-table-scroll {
+  overflow: auto;
+  margin: 12px 0;
+  max-height: 440px;
+}
+.wh-root table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 12px;
+}
+.wh-root td,
+.wh-root th {
+  padding: 5px 3px;
+  border-bottom: 1px solid #edf0e9;
+  text-align: start;
+  max-width: 240px;
+  overflow-wrap: anywhere;
+}
+.wh-items input {
+  padding: 6px;
+  min-width: 70px;
+}
+.wh-items th:first-child {
+  width: 27%;
+}
+.wh-items th:nth-child(2) {
+  width: 27%;
+}
+.wh-items th:nth-child(3) {
+  width: 24%;
+}
+.wh-items td:nth-child(4) input {
+  min-width: 48px;
+  width: 55px;
+}
+.wh-items td:last-child button {
+  padding: 4px 9px;
+}
+.wh-root .hm-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.wh-device {
+  font-size: 13px;
+  padding: 8px 0;
+}
+.wh-root a {
+  color: #285b44;
+  text-decoration: underline;
+}
+@media (max-width: 1050px) {
+  .wh-root {
+    padding: 16px;
+  }
+  .wh-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .wh-preview-panel {
+    grid-column: 1;
+    grid-row: 1;
+    position: static;
+  }
+  .wh-editor {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .wh-preview {
+    max-height: 48vh;
+  }
+  .wh-printer-options {
+    grid-template-columns: 1fr;
+  }
+  .wh-printer-options button {
+    padding: 8px 12px;
+  }
+  .wh-root .hm-heading {
+    flex-wrap: wrap;
+  }
+  .wh-panel {
+    padding: 14px;
+  }
+}
+
+.wh-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.wh-label-panel {
+  position: relative;
+  isolation: isolate;
+}
+.wh-label-panel > :not(.wh-rack-diagram) {
+  position: relative;
+  z-index: 1;
+}
+.wh-sequence-fields {
+  align-items: start;
+}
+/* Leave the upper-right field slot empty without giving the illustration a grid row. */
+.wh-sequence-fields > label:nth-of-type(2) {
+  grid-column: 1;
+}
+.wh-sequence-fields > label {
+  background: #fff;
+}
+.wh-rack-diagram {
+  position: absolute;
+  inset-inline-end: 16px;
+  top: 14px;
+  width: min(40%, 230px);
+  margin: 0;
+  padding: 0;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+}
+.wh-rack-diagram svg {
+  display: block;
+  width: 100%;
+  direction: ltr;
+}
+.wh-rack-diagram svg > :not(:last-child) {
+  opacity: 0.6;
+}
+@media (max-width: 600px) {
+  .wh-rack-diagram {
+    opacity: 0.65;
+  }
+}

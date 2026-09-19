@@ -7,12 +7,14 @@ import "./home.css";
 export function UseCases({
   language,
   onHome,
+  onWarehouse,
   shortcuts,
   onAdd,
   focusCase,
 }: {
   language: string;
   onHome: () => void;
+  onWarehouse: () => void;
   shortcuts: ShortcutId[];
   onAdd: (id: ShortcutId) => void;
   focusCase: ShortcutId | null;
@@ -80,6 +82,7 @@ export function UseCases({
           {pin("home")}
         </article>
         <article className="hm-case-card" id="case-warehouse" tabIndex={-1}>
+          <button type="button" className="hm-case-open hm-case-ready" onClick={onWarehouse}>
           <div className="hm-case-heading">
             <svg
               width={24}
@@ -95,7 +98,8 @@ export function UseCases({
             <h2>{t("warehouse")}</h2>
           </div>
           <p>{t("warehouseDescription")}</p>
-          <span className="hm-case-state">{t("planned")}</span>
+          <span className="hm-case-link">{t("warehouse")} →</span>
+          </button>
           {pin("warehouse")}
         </article>
         <article className="hm-case-card" id="case-supermarket" tabIndex={-1}>

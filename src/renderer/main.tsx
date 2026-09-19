@@ -83,11 +83,12 @@ import {
   type ShortcutId,
 } from "../home/shortcuts";
 import { UseCases } from "../home/UseCases";
+import { Warehouse } from "../warehouse/Warehouse";
 import { HomeLabels } from "../home/HomeLabels";
 import { text as homeText } from "../home/i18n";
 
 type Tab =
-  "scenarios" | "home" | "design" | "batch" | "labels" | "library" | "scan";
+  "scenarios" | "home" | "warehouse" | "design" | "batch" | "labels" | "library" | "scan";
 type Modal = "import" | "sequence" | "assistant" | "about" | null;
 const errorText = (e: unknown) => (e instanceof Error ? e.message : String(e));
 const presets = [
@@ -405,6 +406,10 @@ function App() {
     () =>
       window.desktop.menu((action) => {
         if (tab === "scenarios") return;
+        if (tab === "warehouse") {
+          window.dispatchEvent(new CustomEvent("warehouse-menu", {detail: action}));
+          return;
+        }
         if (tab === "home") {
           window.dispatchEvent(
             new CustomEvent("home-menu", { detail: action }),
@@ -776,7 +781,7 @@ function App() {
       />
     </label>
   );
-  const isScenario = tab === "scenarios" || tab === "home";
+  const isScenario = tab === "scenarios" || tab === "home" || tab === "warehouse";
   const navs: [Tab, typeof Barcode, string, string][] = [
     [
       "scenarios",
@@ -837,6 +842,7 @@ function App() {
                   >
                     {homeText(language, "homeCategory")}
                   </button>
+                  <button data-workspace="warehouse" className={tab === "warehouse" ? "nav-item active" : "nav-item"} onClick={() => setTab("warehouse")} aria-current={tab === "warehouse" ? "page" : undefined}>{homeText(language,"warehouse")}</button>
                 </div>
               )}
             </div>
@@ -845,12 +851,12 @@ function App() {
             <div className="bm-shortcut" data-shortcut={id} key={id}>
               <button
                 className={
-                  id === "home" && tab === "home"
+                  (id === "home" || id === "warehouse") && tab === id
                     ? "nav-item active"
                     : "nav-item"
                 }
                 onClick={() => {
-                  setTab(id === "home" ? "home" : "scenarios");
+                  setTab(id === "home" || id === "warehouse" ? id : "scenarios");
                   setFocusCase(id);
                   requestAnimationFrame(() =>
                     document.getElementById("case-" + id)?.focus(),
@@ -955,7 +961,7 @@ function App() {
           <div className="breadcrumb">
             {L("Workspace", "工作空间")}
             <ChevronRight size={15} />
-            {tab === "home" ? (
+            {tab === "home" || tab === "warehouse" ? (
               <>
                 <button
                   className="breadcrumb-link"
@@ -964,7 +970,7 @@ function App() {
                   {homeText(language, "useCases")}
                 </button>
                 <ChevronRight size={15} />
-                <strong>{homeText(language, "homeCategory")}</strong>
+                <strong>{homeText(language, tab === "warehouse" ? "warehouse" : "homeCategory")}</strong>
               </>
             ) : (
               <strong>
@@ -1113,6 +1119,7 @@ function App() {
             <UseCases
               language={language}
               onHome={() => setTab("home")}
+              onWarehouse={() => setTab("warehouse")}
               shortcuts={shortcuts}
               onAdd={(id) => {
                 if (!shortcuts.includes(id)) writeShortcuts([...shortcuts, id]);
@@ -1120,6 +1127,7 @@ function App() {
               focusCase={focusCase}
             />
           )}
+          {tab === "warehouse" && <Warehouse language={language} desktop={window.desktop} />}
           {tab === "home" && (
             <HomeLabels
               language={language}

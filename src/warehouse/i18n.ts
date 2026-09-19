@@ -1,0 +1,432 @@
+import { text as homeText, type HomeKey } from "../home/i18n";
+import { translate } from "../i18n";
+const en = {
+  httpGeometryNote:
+    "Each HTTP job sets its print width, page length and dot units from your paper size and dpi, with device offsets reset to zero. Load matching media before sending.",
+  httpAddressExample: "Example: 192.168.1.100",
+  httpConfirmRequired:
+    "To enable sending, tick the printer and media verification checkbox above.",
+  httpTitle: "Zebra ZPL · Direct HTTP printing",
+  httpNeedsAddress:
+    "Enter the printer IP address. Its HTTP connection will be checked automatically.",
+  httpAddressError:
+    "Enter a private IPv4 address and an HTTP port from 1 to 65535.",
+  httpChecking: "Checking HTTP access to the printer…",
+  httpReachable:
+    "HTTP check completed. Verify the printer settings before sending a test page.",
+  httpCheckFailed:
+    "Could not reach the printer from this browser. Check the IP address, HTTP port and local network permission, then check again.",
+  httpPort: "HTTP port",
+  httpOpenPrinter: "Open printer page",
+  httpCheckHelp:
+    "This read-only check does not print. Allow local network access if the browser asks. An HTTP response does not confirm ZPL support; check the printer page and try one page first.",
+  httpDestination: "ZPL destination",
+  httpDeviceDetails: "Printer model, status and settings",
+  httpUnreadable:
+    "Unavailable to this page because cross-origin responses cannot be read. Use “Open printer page” to verify.",
+  httpConfirm:
+    "I verified this is my Zebra ZPL printer, the selected dpi matches it, and the layout fits the loaded media and configured print area.",
+  httpSendOne: "Send test page (ZPL)",
+  httpSendAll: "Send all labels (ZPL)",
+  httpSent:
+    "The HTTP request completed. This browser cannot read the printer’s response or confirm printing. Check the physical labels before sending again.",
+  httpSendFailed:
+    "Delivery is uncertain: the printer may have received the job. Check the physical printer before trying again. Nothing will be resent automatically.",
+
+  checkTitle: "Zebra ZPL · Print check",
+  checkWebUnavailable:
+    "Direct ZPL printing is unavailable in this web version.",
+  checkNeedsAddress:
+    "Enter the printer address to check ZPL printing automatically.",
+  checkRunning: "Checking printer connection and ZPL settings…",
+  checkCompatible:
+    "Connection and layout checks passed. Confirm the loaded media before sending.",
+  checkIncompatible: "This layout is not ready for direct ZPL printing.",
+  checkReadOnly:
+    "Automatic read-only check; no labels are printed. Checks connection and settings, not paper, ribbon or physical printer readiness.",
+  checkModel: "Printer model",
+  checkSelected: "Selected",
+  checkDimensions: "Configured print area",
+  checkRequired: "Required print area",
+  checkLanguageMismatch:
+    "The printer does not report ZPL as an active language. Check its protocol settings.",
+  checkDpiMismatch:
+    "Select the printer’s resolution. Direct printing supports 203 or 300 dpi.",
+  checkSizeMismatch:
+    "The label job exceeds the printer’s configured width or label length. Check the layout and printer settings.",
+  checkLayoutInvalid:
+    "Resolve the label layout errors or add labels before sending.",
+  checkWebHelp:
+    "You can export a ZPL file or use the system print dialog below. To check a network printer and send ZPL directly, use the desktop app. Installing Browser Print alone will not enable direct printing in this version.",
+
+  label: "Labels",
+  page: "Page",
+  rollRows: "Rows",
+  printOne: "Print One",
+  printAll: "Print All",
+  printOneHelp:
+    "Print the first page to check label layout, spacing and alignment on your paper.",
+  printAllHelp:
+    "After checking the sample page, print all pages using the quantities in your list.",
+  across: "columns",
+  twoRows: "2 rows",
+  printer: "Printer",
+  rackTerm: "Rack",
+  levelTerm: "Level",
+  binTerm: "Bin",
+  rackDiagram: "Each rack has levels, with bins on each level.",
+  office: "Office printer",
+  officeHelp: "Inkjet, laser and more · System print dialog",
+  thermalHelp: "Label rolls · PDF or a printer protocol",
+  protocol: "Brand / protocol",
+  genericPdf: "Generic · PDF / system printing",
+  paperType: "Paper type",
+  paperSettings: "Dimensions & alignment",
+  thermal: "Thermal printer",
+  zebra: "Zebra · ZPL",
+  shelf: "Shelf locations",
+  sku: "SKU labels",
+  zone: "Zone",
+  firstRack: "First rack",
+  racks: "Racks",
+  levels: "Levels",
+  bins: "Bins per level",
+  generate: "Generate locations",
+  code: "Code",
+  location: "Location",
+  import: "Import CSV / TSV",
+  paste: "Paste CSV / TSV",
+  header: "First row is a header",
+  column: "Column",
+  skip: "Skip",
+  apply: "Replace current list",
+  sample: "Download sample CSV",
+  width: "Label width",
+  height: "Label height",
+  pageWidth: "Paper width",
+  pageHeight: "Paper height",
+  start: "Skip labels on first page",
+  preset: "Paper preset",
+  roll: "Roll",
+  format: "Barcode",
+  auto: "Automatic",
+  dpi: "Resolution (dpi)",
+  addRow: "Add row",
+  importError: "Check the file, field mapping and whole-number quantities.",
+  sequenceError: "Use a zone and positive whole numbers; at most 1,000 labels.",
+  paperError:
+    "Check dimensions, margins, gaps and columns. Labels must fit on the paper.",
+  barcodeError:
+    "This content does not fit. Use a larger label, shorter text or QR code.",
+  codeError: "Enter a code for every label.",
+  limit: "At most 1,000 labels per list.",
+  invalid: "This warehouse project is invalid.",
+  dpiError: "Zebra supports 203 or 300 dpi here.",
+  storageError: "Could not autosave. Export a backup before leaving.",
+  empty: "Add locations or import SKU data.",
+  rollNote:
+    "Paper width and height define one physical print page. Set label size, columns and rows within it. Use the measured stock dimensions; presets are examples.",
+  zpl: "Export ZPL",
+  check: "Check connection",
+  send: "Send labels",
+  host: "Printer IPv4 address",
+  port: "Port",
+  connectionError:
+    "Connection failed. Check the address and printer; no automatic retry.",
+  sendError:
+    "Delivery is uncertain. Inspect the printer before sending again; no automatic retry.",
+  sent: "Sent to the printer. Verify the printed labels; transport success is not print confirmation.",
+  confirmMedia:
+    "I have checked the loaded label dimensions, columns and gap/mark media settings.",
+  deviceMismatch:
+    "Printer resolution, configured width or label length does not match this layout. Check the printer and paper settings.",
+  browserNote:
+    "Web printing uses the system dialog or a ZPL file. Browser Print direct printing is not installed in this build.",
+  browserLink: "Zebra Browser Print setup",
+  sizeError: "ZPL exceeds 2 MB. Reduce the number or size of labels.",
+  connected: "Connection checked (read only)",
+  zplNote:
+    "For gap/mark media configured on the printer. ZPL preserves printer width, length and sensor settings. Verify media before sending.",
+  localConnection:
+    "Connection details stay on this device and are excluded from backups.",
+  confirmSend: "Send this label job to the selected printer?",
+};
+const zh: Record<keyof typeof en, string> = {
+  httpGeometryNote:
+    "每次 HTTP 打印按所选纸张尺寸和分辨率设置打印宽度、页长及点阵单位，并将机器偏移归零。请确认装入的耗材尺寸一致。",
+  httpAddressExample: "示例：192.168.1.100",
+  httpConfirmRequired: "请勾选上方的打印机与耗材核对项，即可启用发送按钮。",
+  httpTitle: "Zebra ZPL · HTTP 直接打印",
+  httpNeedsAddress: "请输入打印机 IP 地址，将自动检查 HTTP 连接。",
+  httpAddressError: "请输入局域网 IPv4 地址及 1–65535 的 HTTP 端口。",
+  httpChecking: "正在检查浏览器到打印机的 HTTP 连接…",
+  httpReachable: "HTTP 检查已完成。请核对打印机设置后发送测试页。",
+  httpCheckFailed:
+    "浏览器无法连接打印机。请检查 IP、HTTP 端口及本地网络访问权限，再重新检查。",
+  httpPort: "HTTP 端口",
+  httpOpenPrinter: "打开打印机页面",
+  httpCheckHelp:
+    "此检查为只读，不会打印。如浏览器询问，请允许访问本地网络。收到 HTTP 响应不代表支持 ZPL；请打开打印机页面核对，并先打印一页。",
+  httpDestination: "ZPL 发送地址",
+  httpDeviceDetails: "打印机型号、状态与设置",
+  httpUnreadable:
+    "跨域响应无法读取，本页面无法获取这些信息。请通过“打开打印机页面”核对。",
+  httpConfirm:
+    "我已确认这是我的 Zebra ZPL 打印机，所选分辨率一致，排版符合装入的耗材及打印机配置的打印范围。",
+  httpSendOne: "发送测试页（ZPL）",
+  httpSendAll: "发送全部标签（ZPL）",
+  httpSent:
+    "HTTP 请求已完成。浏览器无法读取打印机响应或确认出纸，请检查实物标签后再继续发送。",
+  httpSendFailed:
+    "无法确定是否送达：打印机可能已收到任务，请先检查机器再决定是否重发。不会自动重试。",
+
+  checkTitle: "Zebra ZPL · 打印自检",
+  checkWebUnavailable: "当前网页版无法直接使用 ZPL 连接打印机。",
+  checkNeedsAddress: "请输入打印机地址，自动检查能否使用 ZPL 打印。",
+  checkRunning: "正在检查打印机连接与 ZPL 设置…",
+  checkCompatible: "连接与排版检查通过，确认装入的耗材后即可发送。",
+  checkIncompatible: "当前排版尚不能直接使用 ZPL 打印。",
+  checkReadOnly:
+    "自动进行只读检查，不会打印标签。检测连接与设置，不检测缺纸、碳带或机器实际就绪状态。",
+  checkModel: "打印机型号",
+  checkSelected: "当前选择",
+  checkDimensions: "打印机配置范围",
+  checkRequired: "任务所需范围",
+  checkLanguageMismatch: "打印机未报告已启用 ZPL，请检查协议设置。",
+  checkDpiMismatch: "请选择与打印机一致的分辨率，直印支持 203 或 300 dpi。",
+  checkSizeMismatch:
+    "标签任务超出打印机配置的宽度或标签长度，请检查排版与打印机设置。",
+  checkLayoutInvalid: "请先修正标签排版错误或添加标签。",
+  checkWebHelp:
+    "可使用下方的“导出 ZPL”或系统打印。要检测网络打印机并直接发送 ZPL，请使用桌面版。仅安装 Browser Print 不能启用此版本的网页直印。",
+
+  label: "标签",
+  page: "页",
+  rollRows: "排",
+  printOne: "打印一页",
+  printAll: "打印全部",
+  printOneHelp: "打印第一页样本，检查标签在纸上的排布、间距和对齐。",
+  printAllHelp: "确认样本页无误后，按清单数量打印全部页面。",
+  across: "列",
+  twoRows: "2 行",
+  printer: "打印机",
+  rackTerm: "货架",
+  levelTerm: "层",
+  binTerm: "格位",
+  rackDiagram: "一座货架分为多层，每层包含多个格位。",
+  office: "办公打印机",
+  officeHelp: "喷墨、激光等 · 使用系统打印",
+  thermalHelp: "卷式标签 · PDF 或打印机协议",
+  protocol: "品牌 / 协议",
+  genericPdf: "通用 · PDF / 系统打印",
+  paperType: "纸张类型",
+  paperSettings: "尺寸与对齐设置",
+  thermal: "热敏标签打印机",
+  zebra: "Zebra · ZPL",
+  shelf: "货架 / 库位标签",
+  sku: "SKU 标签",
+  zone: "区域",
+  firstRack: "起始货架号",
+  racks: "货架数",
+  levels: "层数",
+  bins: "每层格数",
+  generate: "生成库位",
+  code: "编码",
+  location: "库位",
+  import: "导入 CSV / TSV",
+  paste: "粘贴 CSV / TSV",
+  header: "首行为表头",
+  column: "列",
+  skip: "忽略",
+  apply: "替换当前清单",
+  sample: "下载示例 CSV",
+  width: "标签宽度",
+  height: "标签高度",
+  pageWidth: "纸张宽度",
+  pageHeight: "纸张高度",
+  start: "首页跳过标签数",
+  preset: "纸张预设",
+  roll: "卷纸",
+  format: "条码格式",
+  auto: "自动",
+  dpi: "分辨率（dpi）",
+  addRow: "添加一行",
+  importError: "请检查文件、字段映射及整数数量。",
+  sequenceError: "请输入区域和正整数，每份清单最多 1000 个标签。",
+  paperError: "请检查尺寸、边距、间隙和列数，标签必须能放入纸张。",
+  barcodeError: "内容放不下，请增大标签、缩短文字或使用二维码。",
+  codeError: "请为每个标签填写编码。",
+  limit: "每份清单最多 1000 个标签。",
+  invalid: "仓库项目格式无效。",
+  dpiError: "此处 Zebra 支持 203 或 300 dpi。",
+  storageError: "自动保存失败，请在离开前导出备份。",
+  empty: "请生成库位或导入 SKU 数据。",
+  rollNote:
+    "纸张宽高定义一张实际打印页，可在其中设置标签尺寸、列数和行数。请按实测耗材填写，预设仅供参考。",
+  zpl: "导出 ZPL",
+  check: "检查连接",
+  send: "发送标签",
+  host: "打印机 IPv4 地址",
+  port: "端口",
+  connectionError: "连接失败，请检查地址和打印机；不会自动重试。",
+  sendError: "无法确定是否已送达，请先查看打印机再决定是否重发；不会自动重试。",
+  sent: "已发送至打印机，请检查实际出纸；发送成功不等于打印成功。",
+  confirmMedia: "我已核对装入标签的尺寸、列数及间隙 / 黑标介质设置。",
+  deviceMismatch:
+    "打印机分辨率、配置宽度或标签长度与当前排版不符，请检查打印机及纸张设置。",
+  browserNote:
+    "网页版使用系统打印窗口或导出 ZPL 文件。此版本尚未安装 Browser Print 直印组件。",
+  browserLink: "Zebra Browser Print 安装说明",
+  sizeError: "ZPL 超过 2 MB，请减少标签数量或尺寸。",
+  connected: "连接检查完成（只读）",
+  zplNote:
+    "适用于打印机已配置好的间隙 / 黑标纸。ZPL 保留机器现有宽度、长度和传感器设置；发送前请核对耗材。",
+  localConnection: "连接信息仅保存在本机，不包含在项目备份中。",
+  confirmSend: "确认将这份标签任务发送到所选打印机？",
+};
+const hant: Record<keyof typeof en, string> = {
+  ...zh,
+  httpGeometryNote:
+    "每次 HTTP 列印依所選紙張尺寸和解析度設定列印寬度、頁長及點陣單位，並將機器偏移歸零。請確認裝入的耗材尺寸一致。",
+  httpAddressExample: "範例：192.168.1.100",
+  httpConfirmRequired: "請勾選上方的印表機與耗材核對項，即可啟用傳送按鈕。",
+  httpTitle: "Zebra ZPL · HTTP 直接列印",
+  httpNeedsAddress: "請輸入印表機 IP 位址，將自動檢查 HTTP 連線。",
+  httpAddressError: "請輸入區域網路 IPv4 位址及 1–65535 的 HTTP 連接埠。",
+  httpChecking: "正在檢查瀏覽器到印表機的 HTTP 連線…",
+  httpReachable: "HTTP 檢查已完成。請核對印表機設定後傳送測試頁。",
+  httpCheckFailed:
+    "瀏覽器無法連接印表機。請檢查 IP、HTTP 連接埠及本機網路存取權限，再重新檢查。",
+  httpPort: "HTTP 連接埠",
+  httpOpenPrinter: "開啟印表機頁面",
+  httpCheckHelp:
+    "此檢查為唯讀，不會列印。如瀏覽器詢問，請允許存取本機網路。收到 HTTP 回應不代表支援 ZPL；請開啟印表機頁面核對，並先列印一頁。",
+  httpDestination: "ZPL 傳送位址",
+  httpDeviceDetails: "印表機型號、狀態與設定",
+  httpUnreadable:
+    "跨來源回應無法讀取，本頁面無法取得這些資訊。請透過「開啟印表機頁面」核對。",
+  httpConfirm:
+    "我已確認這是我的 Zebra ZPL 印表機，所選解析度一致，排版符合裝入的耗材及印表機設定的列印範圍。",
+  httpSendOne: "傳送測試頁（ZPL）",
+  httpSendAll: "傳送全部標籤（ZPL）",
+  httpSent:
+    "HTTP 請求已完成。瀏覽器無法讀取印表機回應或確認出紙，請檢查實體標籤後再繼續傳送。",
+  httpSendFailed:
+    "無法確定是否送達：印表機可能已收到工作，請先檢查機器再決定是否重送。不會自動重試。",
+
+  checkTitle: "Zebra ZPL · 列印自檢",
+  checkWebUnavailable: "目前網頁版無法直接使用 ZPL 連接印表機。",
+  checkNeedsAddress: "請輸入印表機位址，自動檢查能否使用 ZPL 列印。",
+  checkRunning: "正在檢查印表機連線與 ZPL 設定…",
+  checkCompatible: "連線與排版檢查通過，確認裝入的耗材後即可傳送。",
+  checkIncompatible: "目前排版尚不能直接使用 ZPL 列印。",
+  checkReadOnly:
+    "自動進行唯讀檢查，不會列印標籤。檢測連線與設定，不檢測缺紙、碳帶或機器實際就緒狀態。",
+  checkModel: "印表機型號",
+  checkSelected: "目前選擇",
+  checkDimensions: "印表機設定範圍",
+  checkRequired: "工作所需範圍",
+  checkLanguageMismatch: "印表機未回報已啟用 ZPL，請檢查協定設定。",
+  checkDpiMismatch: "請選擇與印表機一致的解析度，直印支援 203 或 300 dpi。",
+  checkSizeMismatch:
+    "標籤工作超出印表機設定的寬度或標籤長度，請檢查排版與印表機設定。",
+  checkLayoutInvalid: "請先修正標籤排版錯誤或新增標籤。",
+  checkWebHelp:
+    "可使用下方的「匯出 ZPL」或系統列印。要檢測網路印表機並直接傳送 ZPL，請使用桌面版。僅安裝 Browser Print 無法啟用此版本的網頁直印。",
+
+  label: "標籤",
+  page: "頁",
+  rollRows: "排",
+  printOne: "列印一頁",
+  printAll: "列印全部",
+  printOneHelp: "列印第一頁樣本，檢查標籤在紙上的排列、間距與對齊。",
+  printAllHelp: "確認樣本頁無誤後，依清單數量列印全部頁面。",
+  across: "欄",
+  twoRows: "2 列",
+  printer: "印表機",
+  rackTerm: "貨架",
+  levelTerm: "層",
+  binTerm: "格位",
+  rackDiagram: "一座貨架分為多層，每層包含多個格位。",
+  office: "辦公印表機",
+  officeHelp: "噴墨、雷射等 · 使用系統列印",
+  thermalHelp: "捲式標籤 · PDF 或印表機協定",
+  protocol: "品牌 / 協定",
+  genericPdf: "通用 · PDF / 系統列印",
+  paperType: "紙張類型",
+  paperSettings: "尺寸與對齊設定",
+  thermal: "熱感標籤印表機",
+  shelf: "貨架 / 儲位標籤",
+  sku: "SKU 標籤",
+  zone: "區域",
+  firstRack: "起始貨架號",
+  racks: "貨架數",
+  levels: "層數",
+  bins: "每層格數",
+  generate: "產生儲位",
+  code: "編碼",
+  location: "儲位",
+  import: "匯入 CSV / TSV",
+  paste: "貼上 CSV / TSV",
+  header: "首列為標題",
+  column: "欄",
+  skip: "略過",
+  apply: "取代目前清單",
+  sample: "下載範例 CSV",
+  width: "標籤寬度",
+  height: "標籤高度",
+  pageWidth: "紙張寬度",
+  pageHeight: "紙張高度",
+  start: "首頁略過標籤數",
+  preset: "紙張預設",
+  roll: "捲紙",
+  format: "條碼格式",
+  auto: "自動",
+  dpi: "解析度（dpi）",
+  addRow: "新增一列",
+  importError: "請檢查檔案、欄位對應及整數數量。",
+  sequenceError: "請輸入區域及正整數，每份清單最多 1000 個標籤。",
+  paperError: "請檢查尺寸、邊距、間距及欄數，標籤必須能放入紙張。",
+  barcodeError: "內容放不下，請加大標籤、縮短文字或使用 QR 碼。",
+  codeError: "請為每個標籤填寫編碼。",
+  limit: "每份清單最多 1000 個標籤。",
+  invalid: "倉庫專案格式無效。",
+  dpiError: "此處 Zebra 支援 203 或 300 dpi。",
+  storageError: "自動儲存失敗，請在離開前匯出備份。",
+  empty: "請產生儲位或匯入 SKU 資料。",
+  rollNote:
+    "紙張寬高定義一張實際列印頁，可在其中設定標籤尺寸、欄數及列數。請按實測耗材填寫，預設僅供參考。",
+  zpl: "匯出 ZPL",
+  check: "檢查連線",
+  send: "傳送標籤",
+  host: "印表機 IPv4 位址",
+  port: "連接埠",
+  connectionError: "連線失敗，請檢查位址和印表機；不會自動重試。",
+  sendError: "無法確定是否已送達，請先查看印表機再決定是否重送；不會自動重試。",
+  sent: "已傳送至印表機，請檢查實際出紙；傳送成功不等於列印成功。",
+  confirmMedia: "我已核對裝入標籤的尺寸、欄數及間隙 / 黑標媒體設定。",
+  deviceMismatch:
+    "印表機解析度、設定寬度或標籤長度與目前排版不符，請檢查印表機及紙張設定。",
+  browserNote:
+    "網頁版使用系統列印視窗或匯出 ZPL 檔案。此版本尚未安裝 Browser Print 直印元件。",
+  browserLink: "Zebra Browser Print 安裝說明",
+  sizeError: "ZPL 超過 2 MB，請減少標籤數量或尺寸。",
+  connected: "連線檢查完成（唯讀）",
+  zplNote:
+    "適用於印表機已設定好的間隙 / 黑標紙。ZPL 保留機器現有寬度、長度和感測器設定；傳送前請核對耗材。",
+  localConnection: "連線資訊僅儲存在本機，不包含在專案備份中。",
+  confirmSend: "確認將這份標籤工作傳送到所選印表機？",
+};
+export type WarehouseKey = keyof typeof en;
+export const warehouseMessages = { en, "zh-Hans": zh, "zh-Hant": hant };
+export function text(language: string, key: WarehouseKey | HomeKey): string {
+  if (key in en) {
+    const messages =
+      warehouseMessages[language as keyof typeof warehouseMessages];
+    return (
+      messages?.[key as WarehouseKey] ??
+      translate(language, en[key as WarehouseKey])
+    );
+  }
+  return homeText(language, key as HomeKey);
+}

@@ -1,3 +1,4 @@
+import {readPrinterInfo,sendPrinter} from "./warehouse-printer";
 import {
   app,
   BrowserWindow,
@@ -151,6 +152,8 @@ app.whenReady().then(async () => {
     if (!response.ok) throw Error("Voice service is unavailable.");
     return response.json();
   };
+  safeHandler("warehouse:check", (address) => readPrinterInfo(address, testMode));
+  safeHandler("warehouse:send", (address, zpl, dpi) => sendPrinter(address, zpl, dpi, testMode));
   safeHandler("home:capabilities", () => homeRequest("capabilities"));
   safeHandler("home:voice", (body: unknown) => homeRequest("voice", body));
   safeHandler("home:pair", async (method: string, path: string, token?: string, body?: unknown) => {
@@ -382,6 +385,7 @@ app.whenReady().then(async () => {
           "zip",
           "csv",
           "json",
+          "zpl",
         ].includes(p.extension) ||
         !(p.bytes instanceof Uint8Array) ||
         p.bytes.length > 256_000_000 ||

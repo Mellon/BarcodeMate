@@ -11,7 +11,7 @@ test('scenario shortcuts persist, follow the interface language, and can be remo
   await expect(p.locator('.rail [data-shortcut]')).toHaveCount(3);
   await p.locator('[data-pin-case=home]').click();await expect(p.locator('.rail [data-shortcut]')).toHaveCount(3);
   await p.reload();await expect(p.locator('.rail [data-shortcut]')).toHaveCount(3);
-  await p.locator('.rail [data-shortcut=warehouse] > .nav-item').click();await expect(p.locator('#case-warehouse')).toBeFocused();
+  await p.locator('.rail [data-shortcut=warehouse] > .nav-item').click();await expect(p.locator('.wh-root')).toBeVisible();
   await p.locator('#language-select').selectOption('en');await expect(p.locator('.rail [data-shortcut=home] > .nav-item')).toHaveText('Home organization');
   await p.locator('.rail [data-shortcut=home] > .nav-item').click();await expect(p.locator('.hm-editor > section')).toHaveCount(2);
   await expect(p.locator('.hm-voice svg rect')).toHaveAttribute('rx','3');

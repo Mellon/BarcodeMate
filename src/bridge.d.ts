@@ -1,5 +1,7 @@
 import type { Project } from "./core/model";
 export interface DesktopAPI {
+  warehouseCheck(address: {host:string;port:number}): Promise<import("../electron/warehouse-printer").PrinterInfo>;
+  warehouseSend(address: {host:string;port:number}, zpl:string, dpi:number): Promise<{sent:true;pages:number}>;
   homePair: import("./home/pairing").PairRequest;
   homeCapabilities(): Promise<{ voice: boolean; country?: string }>;
   homeVoice(

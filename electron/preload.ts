@@ -1,5 +1,7 @@
 import { contextBridge, ipcRenderer } from "electron";
 contextBridge.exposeInMainWorld("desktop", {
+  warehouseCheck: (address: unknown) => ipcRenderer.invoke("warehouse:check", address),
+  warehouseSend: (address: unknown, zpl: string, dpi: number) => ipcRenderer.invoke("warehouse:send", address, zpl, dpi),
   homePair: (method: string, path: string, token?: string, body?: unknown) => ipcRenderer.invoke("home:pair", method, path, token, body),
   homeCapabilities: () => ipcRenderer.invoke("home:capabilities"),
   homeVoice: (body: unknown) => ipcRenderer.invoke("home:voice", body),
