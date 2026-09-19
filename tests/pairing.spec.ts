@@ -9,6 +9,7 @@ test("desktop pairing uses the native gateway and receives a phone edit without 
     revision = 1,
     origin = "",
     writes = 0,
+    attempts = 0,
     creates = 0,
     paired = false,
     gone = false;
@@ -28,6 +29,10 @@ test("desktop pairing uses the native gateway and receives a phone edit without 
     let input = "";
     for await (const c of req) input += c;
     if (req.method === "POST") {
+      if (++attempts === 1) {
+        res.writeHead(503).end("{}");
+        return;
+      }
       creates++;
       gone = false;
       id = String(creates).padStart(32, "a");
@@ -55,6 +60,13 @@ test("desktop pairing uses the native gateway and receives a phone edit without 
     }
     if (gone) {
       res.writeHead(410).end("{}");
+      return;
+    }
+    if (req.method === "DELETE") {
+      paired = false;
+      project = undefined;
+      revision = 1;
+      res.end(JSON.stringify({ closed: true }));
       return;
     }
     if (req.method === "PUT") {
@@ -96,7 +108,12 @@ test("desktop pairing uses the native gateway and receives a phone edit without 
     await p.locator("#language-select").selectOption("en");
     await p.locator("[data-workspace=scenarios]").click();
     await p.locator("[data-workspace=home]").click();
-    await expect(p.locator(".hm-pair-qr")).toBeVisible();
+    await expect(p.locator(".hm-pair-qr")).toBeVisible({ timeout: 15000 });
+    expect(attempts).toBe(2);
+    await expect(p.locator(".hm-pair button")).toHaveCount(1);
+    await expect(p.locator("#hm-pair-copy-hint")).toHaveText(
+      "Open this link on another computer to sync your list.",
+    );
     await expect(p.locator(".hm-pair-title")).toHaveText("Sync with phone");
     expect(creates).toBe(1);
     expect(writes).toBe(0);
@@ -130,6 +147,11 @@ test("desktop pairing uses the native gateway and receives a phone edit without 
       "Phone basil",
     );
     expect(await p.evaluate(() => location.protocol)).toBe("barcodemate:");
+    await p
+      .getByRole("button", { name: "End sharing · keep local copy" })
+      .click();
+    await expect(p.locator(".hm-pair-qr")).toBeVisible({ timeout: 15000 });
+    expect(creates).toBe(3);
   } finally {
     await app.close();
     await new Promise<void>((resolve) => server.close(() => resolve()));

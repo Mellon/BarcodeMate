@@ -22,7 +22,11 @@
     "phone": "Phone inventory · print from computer",
     "peerAway": "Other device away · changes saved",
     "storage": "Local storage unavailable. Export a backup before leaving.",
-    "review": "This choice includes items, dates and paper settings. Export a backup first if you need both versions."
+    "review": "This choice includes items, dates and paper settings. Export a backup first if you need both versions.",
+    "intro": "Scan to count items on your phone and print from your computer.",
+    "preparing": "Preparing QR code…",
+    "reconnecting": "Reconnecting automatically…",
+    "copyHint": "Open this link on another computer to sync your list."
   },
   "zh-Hans": {
     "start": "与手机同步",
@@ -47,7 +51,11 @@
     "phone": "手机清点 · 在电脑上打印",
     "peerAway": "另一台设备暂离 · 修改已保存",
     "storage": "本机存储不可用，离开前请导出备份。",
-    "review": "选择将包含物品、日期和纸张设置。若要保留两份，请先导出备份。"
+    "review": "选择将包含物品、日期和纸张设置。若要保留两份，请先导出备份。",
+    "intro": "手机扫码清点物品，电脑同步预览并打印。",
+    "preparing": "正在准备二维码…",
+    "reconnecting": "正在自动重连…",
+    "copyHint": "在另一台电脑打开此链接，即可同步清单。"
   },
   "zh-Hant": {
     "start": "與手機同步",
@@ -72,7 +80,11 @@
     "phone": "手機清點 · 在電腦上列印",
     "peerAway": "另一台裝置暫離 · 修改已儲存",
     "storage": "本機儲存空間無法使用，離開前請匯出備份。",
-    "review": "選擇將包含物品、日期和紙張設定。若要保留兩份，請先匯出備份。"
+    "review": "選擇將包含物品、日期和紙張設定。若要保留兩份，請先匯出備份。",
+    "intro": "手機掃碼清點物品，電腦同步預覽並列印。",
+    "preparing": "正在準備二維碼…",
+    "reconnecting": "正在自動重新連線…",
+    "copyHint": "在另一台電腦開啟此連結，即可同步清單。"
   },
   "fr": {
     "start": "Synchroniser avec le téléphone",
@@ -97,7 +109,11 @@
     "phone": "Inventaire sur téléphone · impression sur ordinateur",
     "peerAway": "Autre appareil absent · modifications enregistrées",
     "storage": "Stockage local indisponible. Exportez une sauvegarde avant de quitter.",
-    "review": "Ce choix inclut les articles, les dates et le papier. Exportez une sauvegarde pour conserver les deux versions."
+    "review": "Ce choix inclut les articles, les dates et le papier. Exportez une sauvegarde pour conserver les deux versions.",
+    "intro": "Scannez pour compter les articles sur votre téléphone et imprimer depuis votre ordinateur.",
+    "preparing": "Préparation du QR code…",
+    "reconnecting": "Reconnexion automatique…",
+    "copyHint": "Ouvrez ce lien sur un autre ordinateur pour synchroniser votre liste."
   },
   "es": {
     "start": "Sincronizar con el móvil",
@@ -122,7 +138,11 @@
     "phone": "Inventario móvil · imprimir desde el ordenador",
     "peerAway": "Otro dispositivo ausente · cambios guardados",
     "storage": "Almacenamiento local no disponible. Exporta una copia antes de salir.",
-    "review": "La elección incluye artículos, fechas y papel. Exporta una copia si necesitas ambas versiones."
+    "review": "La elección incluye artículos, fechas y papel. Exporta una copia si necesitas ambas versiones.",
+    "intro": "Escanea para contar artículos en el móvil e imprimir desde el ordenador.",
+    "preparing": "Preparando código QR…",
+    "reconnecting": "Reconectando automáticamente…",
+    "copyHint": "Abre este enlace en otro ordenador para sincronizar tu lista."
   },
   "de": {
     "start": "Mit Handy synchronisieren",
@@ -147,7 +167,11 @@
     "phone": "Am Handy erfassen · am Computer drucken",
     "peerAway": "Anderes Gerät abwesend · Änderungen gespeichert",
     "storage": "Lokaler Speicher nicht verfügbar. Vor dem Verlassen eine Sicherung exportieren.",
-    "review": "Die Auswahl umfasst Artikel, Daten und Papier. Für beide Versionen zuerst eine Sicherung exportieren."
+    "review": "Die Auswahl umfasst Artikel, Daten und Papier. Für beide Versionen zuerst eine Sicherung exportieren.",
+    "intro": "Scannen, Artikel am Handy erfassen und am Computer drucken.",
+    "preparing": "QR-Code wird vorbereitet…",
+    "reconnecting": "Verbindung wird wiederhergestellt…",
+    "copyHint": "Diesen Link auf einem anderen Computer öffnen, um die Liste zu synchronisieren."
   },
   "pt": {
     "start": "Sincronizar com o celular",
@@ -172,7 +196,11 @@
     "phone": "Inventário no celular · impressão no computador",
     "peerAway": "Outro dispositivo ausente · alterações salvas",
     "storage": "Armazenamento local indisponível. Exporte uma cópia antes de sair.",
-    "review": "A escolha inclui itens, datas e papel. Exporte uma cópia para manter as duas versões."
+    "review": "A escolha inclui itens, datas e papel. Exporte uma cópia para manter as duas versões.",
+    "intro": "Escaneie para contar itens no celular e imprimir pelo computador.",
+    "preparing": "Preparando código QR…",
+    "reconnecting": "Reconectando automaticamente…",
+    "copyHint": "Abra este link em outro computador para sincronizar sua lista."
   },
   "ja": {
     "start": "スマートフォンと同期",
@@ -197,7 +225,11 @@
     "phone": "スマートフォンで棚卸し · パソコンで印刷",
     "peerAway": "相手の端末は離席中 · 変更は保存済み",
     "storage": "端末に保存できません。終了前にバックアップをエクスポートしてください。",
-    "review": "品目、日付、用紙設定を含む選択です。両方を残すには先にバックアップしてください。"
+    "review": "品目、日付、用紙設定を含む選択です。両方を残すには先にバックアップしてください。",
+    "intro": "スマホで読み取って品物を数え、パソコンで印刷。",
+    "preparing": "QRコードを準備中…",
+    "reconnecting": "自動で再接続中…",
+    "copyHint": "別のパソコンでこのリンクを開くと、リストを同期できます。"
   },
   "ko": {
     "start": "휴대폰과 동기화",
@@ -222,7 +254,11 @@
     "phone": "휴대폰으로 확인 · 컴퓨터에서 인쇄",
     "peerAway": "다른 기기 부재 · 변경 사항 저장됨",
     "storage": "로컬 저장소를 사용할 수 없습니다. 나가기 전에 백업을 내보내세요.",
-    "review": "항목, 날짜, 용지 설정을 모두 선택합니다. 두 버전이 필요하면 먼저 백업하세요."
+    "review": "항목, 날짜, 용지 설정을 모두 선택합니다. 두 버전이 필요하면 먼저 백업하세요.",
+    "intro": "스캔하여 휴대폰으로 물품을 세고 컴퓨터에서 인쇄하세요.",
+    "preparing": "QR 코드 준비 중…",
+    "reconnecting": "자동으로 다시 연결 중…",
+    "copyHint": "다른 컴퓨터에서 이 링크를 열면 목록을 동기화할 수 있습니다."
   },
   "it": {
     "start": "Sincronizza con il telefono",
@@ -247,7 +283,11 @@
     "phone": "Inventario sul telefono · stampa dal computer",
     "peerAway": "Altro dispositivo assente · modifiche salvate",
     "storage": "Memoria locale non disponibile. Esporta una copia prima di uscire.",
-    "review": "La scelta include articoli, date e carta. Esporta una copia per conservare entrambe le versioni."
+    "review": "La scelta include articoli, date e carta. Esporta una copia per conservare entrambe le versioni.",
+    "intro": "Scansiona per contare gli articoli sul telefono e stampare dal computer.",
+    "preparing": "Preparazione del codice QR…",
+    "reconnecting": "Riconnessione automatica…",
+    "copyHint": "Apri questo link su un altro computer per sincronizzare l’elenco."
   },
   "ru": {
     "start": "Синхронизация с телефоном",
@@ -272,7 +312,11 @@
     "phone": "Учёт на телефоне · печать с компьютера",
     "peerAway": "Другое устройство недоступно · изменения сохранены",
     "storage": "Локальное хранилище недоступно. Экспортируйте копию перед выходом.",
-    "review": "Выбор включает предметы, даты и бумагу. Для сохранения обеих версий сначала экспортируйте копию."
+    "review": "Выбор включает предметы, даты и бумагу. Для сохранения обеих версий сначала экспортируйте копию.",
+    "intro": "Сканируйте, чтобы учитывать вещи на телефоне и печатать с компьютера.",
+    "preparing": "Подготовка QR-кода…",
+    "reconnecting": "Автоматическое переподключение…",
+    "copyHint": "Откройте эту ссылку на другом компьютере, чтобы синхронизировать список."
   },
   "ar": {
     "start": "المزامنة مع الهاتف",
@@ -297,7 +341,11 @@
     "phone": "الجرد بالهاتف · الطباعة من الكمبيوتر",
     "peerAway": "الجهاز الآخر غير متاح · التغييرات محفوظة",
     "storage": "التخزين المحلي غير متاح. صدّر نسخة احتياطية قبل المغادرة.",
-    "review": "يشمل الاختيار العناصر والتواريخ والورق. صدّر نسخة احتياطية أولًا إذا أردت الاحتفاظ بالنسختين."
+    "review": "يشمل الاختيار العناصر والتواريخ والورق. صدّر نسخة احتياطية أولًا إذا أردت الاحتفاظ بالنسختين.",
+    "intro": "امسح الرمز لجرد الأغراض بهاتفك والطباعة من الكمبيوتر.",
+    "preparing": "جارٍ تجهيز رمز QR…",
+    "reconnecting": "جارٍ إعادة الاتصال تلقائيًا…",
+    "copyHint": "افتح هذا الرابط على كمبيوتر آخر لمزامنة قائمتك."
   },
   "hi": {
     "start": "फ़ोन से सिंक करें",
@@ -322,7 +370,11 @@
     "phone": "फ़ोन पर गिनती · कंप्यूटर से प्रिंट",
     "peerAway": "दूसरा डिवाइस अनुपलब्ध · बदलाव सुरक्षित",
     "storage": "स्थानीय संग्रहण उपलब्ध नहीं है। जाने से पहले बैकअप निर्यात करें।",
-    "review": "इस चुनाव में वस्तुएँ, तारीखें और कागज़ की सेटिंग शामिल हैं। दोनों संस्करण चाहिए तो पहले बैकअप निर्यात करें।"
+    "review": "इस चुनाव में वस्तुएँ, तारीखें और कागज़ की सेटिंग शामिल हैं। दोनों संस्करण चाहिए तो पहले बैकअप निर्यात करें।",
+    "intro": "फ़ोन से स्कैन करके सामान गिनें और कंप्यूटर से प्रिंट करें।",
+    "preparing": "QR कोड तैयार हो रहा है…",
+    "reconnecting": "अपने आप फिर से कनेक्ट हो रहा है…",
+    "copyHint": "अपनी सूची सिंक करने के लिए यह लिंक दूसरे कंप्यूटर पर खोलें।"
   },
   "id": {
     "start": "Sinkronkan dengan ponsel",
@@ -347,7 +399,11 @@
     "phone": "Inventaris di ponsel · cetak dari komputer",
     "peerAway": "Perangkat lain tidak aktif · perubahan tersimpan",
     "storage": "Penyimpanan lokal tidak tersedia. Ekspor cadangan sebelum keluar.",
-    "review": "Pilihan ini mencakup barang, tanggal, dan kertas. Ekspor cadangan dahulu jika memerlukan kedua versi."
+    "review": "Pilihan ini mencakup barang, tanggal, dan kertas. Ekspor cadangan dahulu jika memerlukan kedua versi.",
+    "intro": "Pindai untuk menghitung barang di ponsel dan mencetak dari komputer.",
+    "preparing": "Menyiapkan kode QR…",
+    "reconnecting": "Menyambungkan kembali secara otomatis…",
+    "copyHint": "Buka tautan ini di komputer lain untuk menyinkronkan daftar Anda."
   },
   "tr": {
     "start": "Telefonla eşitle",
@@ -372,7 +428,11 @@
     "phone": "Telefonda sayım · bilgisayardan yazdırma",
     "peerAway": "Diğer cihaz uzakta · değişiklikler kaydedildi",
     "storage": "Yerel depolama kullanılamıyor. Ayrılmadan önce yedek dışa aktarın.",
-    "review": "Bu seçim öğeleri, tarihleri ve kâğıdı içerir. İki sürümü de istiyorsanız önce yedek dışa aktarın."
+    "review": "Bu seçim öğeleri, tarihleri ve kâğıdı içerir. İki sürümü de istiyorsanız önce yedek dışa aktarın.",
+    "intro": "Telefonunuzda eşyaları saymak ve bilgisayarınızdan yazdırmak için tarayın.",
+    "preparing": "QR kodu hazırlanıyor…",
+    "reconnecting": "Otomatik olarak yeniden bağlanılıyor…",
+    "copyHint": "Listenizi eşitlemek için bu bağlantıyı başka bir bilgisayarda açın."
   },
   "vi": {
     "start": "Đồng bộ với điện thoại",
@@ -397,7 +457,11 @@
     "phone": "Kiểm kê trên điện thoại · in từ máy tính",
     "peerAway": "Thiết bị kia vắng mặt · thay đổi đã lưu",
     "storage": "Không thể lưu cục bộ. Hãy xuất bản sao lưu trước khi rời đi.",
-    "review": "Lựa chọn gồm vật phẩm, ngày và giấy. Hãy xuất bản sao lưu trước nếu cần cả hai phiên bản."
+    "review": "Lựa chọn gồm vật phẩm, ngày và giấy. Hãy xuất bản sao lưu trước nếu cần cả hai phiên bản.",
+    "intro": "Quét để kiểm kê đồ dùng trên điện thoại và in từ máy tính.",
+    "preparing": "Đang chuẩn bị mã QR…",
+    "reconnecting": "Đang tự động kết nối lại…",
+    "copyHint": "Mở liên kết này trên máy tính khác để đồng bộ danh sách."
   },
   "th": {
     "start": "ซิงค์กับโทรศัพท์",
@@ -422,7 +486,11 @@
     "phone": "ตรวจนับบนโทรศัพท์ · พิมพ์จากคอมพิวเตอร์",
     "peerAway": "อีกอุปกรณ์ไม่อยู่ · บันทึกการเปลี่ยนแปลงแล้ว",
     "storage": "พื้นที่จัดเก็บในเครื่องใช้ไม่ได้ ส่งออกข้อมูลสำรองก่อนออก",
-    "review": "การเลือกนี้รวมรายการ วันที่ และกระดาษ หากต้องการทั้งสองเวอร์ชันให้ส่งออกข้อมูลสำรองก่อน"
+    "review": "การเลือกนี้รวมรายการ วันที่ และกระดาษ หากต้องการทั้งสองเวอร์ชันให้ส่งออกข้อมูลสำรองก่อน",
+    "intro": "สแกนเพื่อนับสิ่งของบนโทรศัพท์ แล้วพิมพ์จากคอมพิวเตอร์",
+    "preparing": "กำลังเตรียมคิวอาร์โค้ด…",
+    "reconnecting": "กำลังเชื่อมต่อใหม่อัตโนมัติ…",
+    "copyHint": "เปิดลิงก์นี้บนคอมพิวเตอร์อีกเครื่องเพื่อซิงค์รายการ"
   },
   "pl": {
     "start": "Synchronizuj z telefonem",
@@ -447,7 +515,11 @@
     "phone": "Spis na telefonie · drukowanie z komputera",
     "peerAway": "Drugie urządzenie nieobecne · zmiany zapisane",
     "storage": "Pamięć lokalna niedostępna. Wyeksportuj kopię przed wyjściem.",
-    "review": "Wybór obejmuje przedmioty, daty i papier. Aby zachować obie wersje, najpierw wyeksportuj kopię."
+    "review": "Wybór obejmuje przedmioty, daty i papier. Aby zachować obie wersje, najpierw wyeksportuj kopię.",
+    "intro": "Zeskanuj, aby policzyć rzeczy na telefonie i wydrukować z komputera.",
+    "preparing": "Przygotowywanie kodu QR…",
+    "reconnecting": "Automatyczne ponowne łączenie…",
+    "copyHint": "Otwórz ten link na innym komputerze, aby zsynchronizować listę."
   },
   "nl": {
     "start": "Synchroniseren met telefoon",
@@ -472,7 +544,11 @@
     "phone": "Tellen op telefoon · afdrukken vanaf computer",
     "peerAway": "Ander apparaat afwezig · wijzigingen opgeslagen",
     "storage": "Lokale opslag niet beschikbaar. Exporteer een back-up voordat u vertrekt.",
-    "review": "Deze keuze omvat artikelen, datums en papier. Exporteer eerst een back-up om beide versies te bewaren."
+    "review": "Deze keuze omvat artikelen, datums en papier. Exporteer eerst een back-up om beide versies te bewaren.",
+    "intro": "Scan om spullen op je telefoon te tellen en vanaf je computer te printen.",
+    "preparing": "QR-code voorbereiden…",
+    "reconnecting": "Automatisch opnieuw verbinden…",
+    "copyHint": "Open deze link op een andere computer om je lijst te synchroniseren."
   },
   "uk": {
     "start": "Синхронізація з телефоном",
@@ -497,7 +573,11 @@
     "phone": "Облік на телефоні · друк із комп’ютера",
     "peerAway": "Інший пристрій відсутній · зміни збережено",
     "storage": "Локальне сховище недоступне. Експортуйте резервну копію перед виходом.",
-    "review": "Вибір містить предмети, дати й папір. Щоб зберегти обидві версії, спершу експортуйте копію."
+    "review": "Вибір містить предмети, дати й папір. Щоб зберегти обидві версії, спершу експортуйте копію.",
+    "intro": "Скануйте, щоб обліковувати речі на телефоні й друкувати з комп’ютера.",
+    "preparing": "Підготовка QR-коду…",
+    "reconnecting": "Автоматичне повторне підключення…",
+    "copyHint": "Відкрийте це посилання на іншому комп’ютері, щоб синхронізувати список."
   },
   "ms": {
     "start": "Segerakkan dengan telefon",
@@ -522,7 +602,11 @@
     "phone": "Inventori di telefon · cetak dari komputer",
     "peerAway": "Peranti lain tiada · perubahan disimpan",
     "storage": "Storan setempat tidak tersedia. Eksport sandaran sebelum keluar.",
-    "review": "Pilihan ini termasuk item, tarikh dan kertas. Eksport sandaran dahulu jika memerlukan kedua-dua versi."
+    "review": "Pilihan ini termasuk item, tarikh dan kertas. Eksport sandaran dahulu jika memerlukan kedua-dua versi.",
+    "intro": "Imbas untuk mengira barang di telefon dan mencetak dari komputer.",
+    "preparing": "Menyediakan kod QR…",
+    "reconnecting": "Menyambung semula secara automatik…",
+    "copyHint": "Buka pautan ini pada komputer lain untuk menyegerakkan senarai anda."
   },
   "bn": {
     "start": "ফোনের সঙ্গে সিঙ্ক করুন",
@@ -547,7 +631,11 @@
     "phone": "ফোনে গণনা · কম্পিউটার থেকে প্রিন্ট",
     "peerAway": "অন্য ডিভাইস অনুপস্থিত · পরিবর্তন সংরক্ষিত",
     "storage": "স্থানীয় স্টোরেজ পাওয়া যাচ্ছে না। বের হওয়ার আগে ব্যাকআপ রপ্তানি করুন।",
-    "review": "এই পছন্দে জিনিসপত্র, তারিখ ও কাগজের সেটিং অন্তর্ভুক্ত। দুটো সংস্করণ চাইলে আগে ব্যাকআপ রপ্তানি করুন।"
+    "review": "এই পছন্দে জিনিসপত্র, তারিখ ও কাগজের সেটিং অন্তর্ভুক্ত। দুটো সংস্করণ চাইলে আগে ব্যাকআপ রপ্তানি করুন।",
+    "intro": "ফোন দিয়ে স্ক্যান করে জিনিস গুনুন এবং কম্পিউটার থেকে প্রিন্ট করুন।",
+    "preparing": "QR কোড তৈরি হচ্ছে…",
+    "reconnecting": "স্বয়ংক্রিয়ভাবে আবার সংযোগ হচ্ছে…",
+    "copyHint": "তালিকা সিঙ্ক করতে অন্য কম্পিউটারে এই লিংকটি খুলুন।"
   },
   "fa": {
     "start": "همگام‌سازی با تلفن",
@@ -572,7 +660,11 @@
     "phone": "شمارش در تلفن · چاپ از رایانه",
     "peerAway": "دستگاه دیگر در دسترس نیست · تغییرات ذخیره شد",
     "storage": "ذخیره‌سازی محلی در دسترس نیست. پیش از خروج نسخهٔ پشتیبان بگیرید.",
-    "review": "این انتخاب شامل اقلام، تاریخ‌ها و کاغذ است. برای نگه‌داشتن هر دو نسخه، ابتدا نسخهٔ پشتیبان بگیرید."
+    "review": "این انتخاب شامل اقلام، تاریخ‌ها و کاغذ است. برای نگه‌داشتن هر دو نسخه، ابتدا نسخهٔ پشتیبان بگیرید.",
+    "intro": "اسکن کنید، وسایل را با تلفن بشمارید و از رایانه چاپ کنید.",
+    "preparing": "در حال آماده‌سازی کد QR…",
+    "reconnecting": "در حال اتصال مجدد خودکار…",
+    "copyHint": "این پیوند را در رایانه‌ای دیگر باز کنید تا فهرست همگام شود."
   },
   "he": {
     "start": "סנכרון עם הטלפון",
@@ -597,6 +689,10 @@
     "phone": "ספירה בטלפון · הדפסה מהמחשב",
     "peerAway": "המכשיר האחר לא זמין · השינויים נשמרו",
     "storage": "האחסון המקומי אינו זמין. ייצאו גיבוי לפני היציאה.",
-    "review": "הבחירה כוללת פריטים, תאריכים ונייר. כדי לשמור את שתי הגרסאות, ייצאו גיבוי קודם."
+    "review": "הבחירה כוללת פריטים, תאריכים ונייר. כדי לשמור את שתי הגרסאות, ייצאו גיבוי קודם.",
+    "intro": "סרקו כדי לספור פריטים בטלפון ולהדפיס מהמחשב.",
+    "preparing": "מכין קוד QR…",
+    "reconnecting": "מתחבר מחדש אוטומטית…",
+    "copyHint": "פתחו את הקישור במחשב אחר כדי לסנכרן את הרשימה."
   }
 }

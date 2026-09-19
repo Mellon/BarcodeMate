@@ -75,7 +75,7 @@ export function usePairing(
   receiver.current = apply;
   const [status, setStatus] = useState("idle"),
     [peer, setPeer] = useState(false),
-    [paired, setPaired] = useState(false);
+    [paired, setPaired] = useState(!!connection?.paired);
   const [conflict, setConflict] = useState<{
     revision: number;
     project: HomeProject;
@@ -92,6 +92,8 @@ export function usePairing(
     () => new URLSearchParams(location.hash.slice(1)).get("pair") || "",
   );
   const [opening, setOpening] = useState(false);
+  const openingRef = useRef(false);
+  const autoOwner = useRef(!invite && connection?.role !== "phone");
   useEffect(() => {
     const changed = () => {
       if (!state.current?.paired)
@@ -142,15 +144,24 @@ export function usePairing(
   };
   const run = async () => {
     const s = state.current;
+    if (!s && autoOwner.current && !invite) {
+      if (
+        !openingRef.current &&
+        Date.now() >= retryAt.current &&
+        document.visibilityState !== "hidden"
+      )
+        await create();
+      return;
+    }
     if (
       s?.role === "owner" &&
       !s.paired &&
       !invite &&
-      (status === "expired" || Date.now() >= s.expires)
+      (status === "expired" || status === "failed" || Date.now() >= s.expires)
     ) {
       if (
         !busy.current &&
-        !opening &&
+        !openingRef.current &&
         Date.now() >= retryAt.current &&
         document.visibilityState !== "hidden"
       ) {
@@ -282,7 +293,6 @@ export function usePairing(
   const runner = useRef(run);
   runner.current = run;
   useEffect(() => {
-    if (!connection) return;
     const tick = () => void runner.current();
     tick();
     const timer = setInterval(tick, 1500);
@@ -293,13 +303,16 @@ export function usePairing(
       window.removeEventListener("online", tick);
       document.removeEventListener("visibilitychange", tick);
     };
-  }, [connection?.id]);
+  }, []);
   const create = async () => {
-    if (opening) return;
+    if (openingRef.current) return;
+    openingRef.current = true;
+    retryAt.current = Date.now() + 5000;
     setOpening(true);
     setStatus("syncing");
     try {
       const r = await request("POST", "", undefined, {});
+      if (r.status === 429) retryAt.current = Date.now() + 60000;
       if (r.status !== 200) throw Error();
       if (!mounted.current) return;
       const p = validateHome(current.current);
@@ -310,6 +323,7 @@ export function usePairing(
     } catch {
       setStatus("failed");
     } finally {
+      openingRef.current = false;
       setOpening(false);
     }
   };
@@ -330,6 +344,7 @@ export function usePairing(
       });
       if (r.status !== 200) throw Error();
       const old = state.current;
+      autoOwner.current = false;
       const p = r.data.ready
         ? validateHome(r.data.project)
         : validateHome(current.current);
@@ -347,14 +362,8 @@ export function usePairing(
       setOpening(false);
     }
   };
-  const autoStarted = useRef(false);
-  useEffect(() => {
-    if (!state.current && !invite && !autoStarted.current) {
-      autoStarted.current = true;
-      void create();
-    }
-  }, [invite]);
   const cancelJoin = () => {
+    autoOwner.current = true;
     setInvite("");
     history.replaceState(null, "", location.pathname + location.search);
     setStatus("idle");
@@ -391,6 +400,8 @@ export function usePairing(
         JSON.stringify(current.current),
       );
       save(null);
+      autoOwner.current = true;
+      retryAt.current = 0;
       setConflict(null);
       conflictRef.current = null;
       setStatus("idle");

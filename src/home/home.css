@@ -641,10 +641,20 @@
 .hm-root .hm-pair button { display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:9px 14px; cursor:pointer; }
 .hm-pair-state { font-size:13px; color:var(--hm-muted); }
 .hm-pair-offline,.hm-pair-conflict,.hm-pair-expired { color:#7b4214; }
-.hm-pair-body { padding:4px 18px 18px; display:grid; gap:14px; font-size:14px; }
+.hm-pair-body { padding:16px 18px; display:grid; gap:12px; font-size:14px; }
 .hm-pair-body > button { justify-self:start; }
 .hm-pair-invite { display:flex; align-items:center; gap:24px; }
-.hm-pair-qr { flex:none; width:160px; height:160px; background:white; }
+.hm-pair-qr,.hm-pair-placeholder { flex:none; width:144px; height:144px; background:white; }
+.hm-pair-placeholder { display:grid; place-items:center; color:var(--hm-muted); }
+.hm-pair-placeholder svg { animation:hm-pair-spin 1.5s linear infinite; }
+@keyframes hm-pair-spin { to { transform:rotate(360deg); } }
+@media (prefers-reduced-motion:reduce) { .hm-pair-placeholder svg { animation:none; } }
+.hm-pair-description { min-width:0; }
+.hm-root .hm-pair-description p { margin:6px 0 0; color:var(--hm-muted); }
+.hm-pair-description .hm-pair-state { display:block; margin-top:6px; }
+.hm-pair-copy-row { display:flex; align-items:center; flex-wrap:wrap; gap:8px 12px; margin-top:10px; }
+.hm-pair-copy-row small { font-size:12px; color:var(--hm-muted); }
+.hm-root .hm-pair .hm-pair-copy { padding:6px 10px; font-size:12px; font-weight:400; }
 .hm-pair-invite p { margin-bottom:10px; }
 .hm-pair .hm-pair-code { font:600 24px/1.5 ui-monospace,monospace; letter-spacing:3px; }
 .hm-pair-join summary { cursor:pointer; padding:8px 0; }
