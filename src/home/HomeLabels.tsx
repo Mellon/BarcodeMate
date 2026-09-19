@@ -35,6 +35,8 @@ import { BadgeNameInput } from "./BadgeNameInput";
 import { voiceWav } from "./audio";
 import { useScreenPreview } from "./ScreenPreview";
 import { countryForTimeZone, regionChoices, regionCodes } from "./regional";
+import { usePairing, restoredPair, type PairRequest } from "./pairing";
+import { PairPanel } from "./PairPanel";
 const REGION_STORE = "barcodemate.home.region.v1";
 const STORE = "barcodemate.home.v1";
 const languageName = (code: string) => {
@@ -48,6 +50,7 @@ interface Props {
   onSave?: (content: string) => Promise<unknown>;
   language: string;
   onPrint?: (html: string, paper: Paper, pdf: boolean) => Promise<unknown>;
+  pairingAPI?: PairRequest;
   voiceAPI?: {
     capabilities: () => Promise<{ voice: boolean; country?: string }>;
     recognize: (
@@ -55,7 +58,7 @@ interface Props {
     ) => Promise<{ items: HomeItem[]; language: string; bilingual: boolean }>;
   };
 }
-export function HomeLabels({ language, onPrint, onSave, voiceAPI }: Props) {
+export function HomeLabels({ language, onPrint, onSave, voiceAPI, pairingAPI }: Props) {
   const t = (k: HomeKey) => text(language, k);
   const screenPreview = useScreenPreview(language);
   const regionLocked = useRef(false);
@@ -70,6 +73,8 @@ export function HomeLabels({ language, onPrint, onSave, voiceAPI }: Props) {
   }, []);
   const [detectedRegion, setDetectedRegion] = useState("");
   const [project, setProject] = useState<HomeProject>(() => {
+    const paired = restoredPair();
+    if (paired) return paired.draft;
     let saved: HomeProject | undefined;
     try {
       const value = localStorage.getItem(STORE);
@@ -108,6 +113,7 @@ export function HomeLabels({ language, onPrint, onSave, voiceAPI }: Props) {
       0,
     );
   });
+  const pair = usePairing(project, p => { undo.current = []; setProject(p); }, pairingAPI);
   const [stored, setStored] = useState(false);
   const [addingDate, setAddingDate] = useState(false);
   const [draftDate, setDraftDate] = useState(sixMonthsFrom);
@@ -117,6 +123,7 @@ export function HomeLabels({ language, onPrint, onSave, voiceAPI }: Props) {
     [recording, setRecording] = useState(false),
     [cloud, setCloud] = useState(false),
     [page, setPage] = useState(1);
+  pair.hold.current = busy || recording;
   const group = project.activeGroup ?? 0;
   const undo = useRef<HomeProject[]>([]),
     backupMenu = useRef<HTMLDetailsElement>(null),
@@ -130,6 +137,7 @@ export function HomeLabels({ language, onPrint, onSave, voiceAPI }: Props) {
   const priorLanguage = useRef(language);
   useEffect(() => {
     if (priorLanguage.current === language) return;
+    if (pair.connection) { priorLanguage.current = language; return; }
     priorLanguage.current = language;
     try {
       setProject(
@@ -183,7 +191,7 @@ export function HomeLabels({ language, onPrint, onSave, voiceAPI }: Props) {
         setCloud(c.voice);
         if (c.country && regionCodes.includes(c.country)) {
           setDetectedRegion(c.country);
-          if (!regionLocked.current)
+          if (!regionLocked.current && !pair.connection)
             setProject((p) => ({ ...p, region: c.country! }));
         }
       })
@@ -196,7 +204,7 @@ export function HomeLabels({ language, onPrint, onSave, voiceAPI }: Props) {
   useEffect(() => {
     try {
       validateHome(project);
-      localStorage.setItem(STORE, JSON.stringify(project));
+      if (pair.connection?.role !== "phone" && !pair.invite) localStorage.setItem(STORE, JSON.stringify(project));
       setStored(true);
     } catch {
       setStored(false);
@@ -380,6 +388,7 @@ export function HomeLabels({ language, onPrint, onSave, voiceAPI }: Props) {
     }
   };
   const print = async (pdf: boolean, calibration = false) => {
+    if (pair.connection?.role === "phone" || pair.conflict) return;
     setBusy(true);
     setNotice("");
     let check: HTMLIFrameElement | undefined;
@@ -466,6 +475,11 @@ export function HomeLabels({ language, onPrint, onSave, voiceAPI }: Props) {
     window.addEventListener("home-menu", handle);
     return () => window.removeEventListener("home-menu", handle);
   }, [project, group, busy, recording]);
+  useEffect(() => {
+    const pause = () => { if (document.visibilityState === "hidden" && recording) stop.current?.(); };
+    document.addEventListener("visibilitychange", pause);
+    return () => document.removeEventListener("visibilitychange", pause);
+  }, [recording]);
   const speak = async () => {
     if (recording) {
       stop.current?.();
@@ -496,6 +510,7 @@ export function HomeLabels({ language, onPrint, onSave, voiceAPI }: Props) {
         const finish = () => {
           if (recorder.state !== "inactive") recorder.stop();
         };
+        stream.getAudioTracks().forEach(track => { track.onended = finish; });
         const timer = setTimeout(finish, 60000);
         const clean = () => {
           clearTimeout(timer);
@@ -538,7 +553,7 @@ export function HomeLabels({ language, onPrint, onSave, voiceAPI }: Props) {
               seconds: Math.min(60, (Date.now() - started) / 1000),
               language: current.outputLanguage,
               bilingual: current.bilingual,
-              items: current.items
+              items: groupedQuantities(current.items)
                 .filter((item) => item.quantity > 0)
                 .map(({ name, second, quantity }) => ({
                   name,
@@ -560,14 +575,19 @@ export function HomeLabels({ language, onPrint, onSave, voiceAPI }: Props) {
               },
               bilingual: response.bilingual,
               items: [
-                ...response.items.map((i: HomeItem) => {
+                ...response.items.flatMap((i: HomeItem) => {
                   const prior = current.items.find(
                     (item) =>
                       item.name.toLocaleLowerCase() ===
                       i.name.toLocaleLowerCase(),
                   );
+                  if (prior && group === 0 && response.language === "en" && current.outputLanguage === "en") {
+                    const copies = current.items.filter(item => quantityKey(item) === quantityKey(prior));
+                    return withTotalQuantity({ ...current, items: copies }, prior, i.quantity).items.map(item => ({ ...item, second: i.second }));
+                  }
                   return {
                     ...i,
+                    ...(prior?.originalName ? { originalName: prior.originalName } : {}),
                     id: crypto.randomUUID(),
                     ...(prior?.bestBefore !== undefined
                       ? {
@@ -692,7 +712,7 @@ export function HomeLabels({ language, onPrint, onSave, voiceAPI }: Props) {
   };
   return (
     <div
-      className={screenPreview.physical ? "hm-root hm-physical" : "hm-root"}
+      className={(screenPreview.physical ? "hm-root hm-physical" : "hm-root") + (pair.connection?.role === "phone" ? " hm-phone" : "")}
       dir={isRTL(language) ? "rtl" : "ltr"}
     >
       <div className="hm-heading">
@@ -757,10 +777,11 @@ export function HomeLabels({ language, onPrint, onSave, voiceAPI }: Props) {
           />
         </div>
       </div>
+      <PairPanel pair={pair} language={language} />
       <div className="hm-status" role="status">
         {notice || (busy ? t("working") : "")}
       </div>
-      <div className="hm-grid" inert={busy}>
+      <div className="hm-grid" inert={busy || !!pair.conflict || !!pair.invite}>
         <div className="hm-editor">
           <section className="hm-panel">
             <h2>
@@ -965,6 +986,7 @@ export function HomeLabels({ language, onPrint, onSave, voiceAPI }: Props) {
                 </div>
               </div>
             )}
+            <div className="hm-capture">
             <label className="hm-input-label">
               {t("items")}
               <textarea
@@ -1043,6 +1065,7 @@ export function HomeLabels({ language, onPrint, onSave, voiceAPI }: Props) {
               {t("voiceNote")}
               {!cloud ? " " + t("listHelp") : ""}
             </p>
+            </div>
           </section>
           <section className="hm-panel">
             <h2>

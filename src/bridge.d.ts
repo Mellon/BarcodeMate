@@ -1,5 +1,6 @@
 import type { Project } from "./core/model";
 export interface DesktopAPI {
+  homePair: import("./home/pairing").PairRequest;
   homeCapabilities(): Promise<{ voice: boolean; country?: string }>;
   homeVoice(
     body: unknown,

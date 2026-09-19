@@ -78,3 +78,9 @@ Kitchen 与 Storage boxes 按语言和分类独立保存。名称与数量可直
 0.3.0默认连接BarcodeMate的HTTPS语音网关；只有主动使用语音时才发送录音和当前清单，API key始终留在服务端。可通过 `BARCODEMATE_HOME_API` 改用自己的网关，设为空字符串可禁用云端语音。基本编辑和打印不依赖网络。本地已用合成中文、英文、法文通过云端识别，桌面录音编码与原生 PDF 流程也已验证；真实硬件麦克风、其他语音语言和实体耗材仍待实测。旧版用户需安装 0.3.0 才能使用家庭标签。
 
 家庭预览支持手动等比缩放：拿实物纸张对齐屏幕中的左右边缘，再保存此屏幕比例。仅预览的标签边框包含空白格；超出窗口时滚动查看，不改变 PDF 或打印尺寸。换屏幕/缩放后重新比对，打印先做普通纸对位测试。
+
+## Phone inventory (0.4.0 source)
+
+In Home labels, choose **Count with phone**, scan the QR with the phone camera, and connect. The mobile web page can edit the shared list or record speech; the computer updates its preview and keeps control of printing. Pairing does not use IP addresses as identity and works across different networks.
+
+One phone can join each session. Codes expire in 10 minutes; the shared project is held temporarily in server memory for at most 24 hours and disappears when sharing ends or the service restarts. Both devices retain working drafts in their current tab's session storage. Reconnect to deliver queued changes; export a backup before closing an unsynchronized tab. Concurrent edits require choosing the whole project version after reviewing the conflict. Pairing and voice are optional online features, with keys kept on the gateway server.

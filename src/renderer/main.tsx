@@ -811,10 +811,14 @@ function App() {
               <button
                 data-workspace={id}
                 className={
-                  tab === id || (id === "scenarios" && isScenario)
+                  tab === id
                     ? "nav-item active"
-                    : "nav-item"
+                    : id === "scenarios" && isScenario
+                      ? "nav-item ancestor"
+                      : "nav-item"
                 }
+                aria-current={tab === id ? "page" : undefined}
+                aria-expanded={id === "scenarios" ? isScenario : undefined}
                 onClick={() => setTab(id)}
               >
                 <Icon size={19} />
@@ -954,7 +958,7 @@ function App() {
             {tab === "home" ? (
               <>
                 <button
-                  className="text-button"
+                  className="breadcrumb-link"
                   onClick={() => setTab("scenarios")}
                 >
                   {homeText(language, "useCases")}
@@ -1135,6 +1139,7 @@ function App() {
                   extension: "json",
                 })
               }
+              pairingAPI={window.desktop.homePair}
               voiceAPI={homeVoiceAPI}
             />
           )}
@@ -1276,7 +1281,7 @@ function App() {
                     </select>
                   </label>
                 </div>
-                <details>
+                <details className="design-options">
                   <summary>
                     <SlidersHorizontal size={16} />
                     {L(

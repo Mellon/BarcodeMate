@@ -71,7 +71,7 @@
   font-size: 12px;
   color: var(--hm-muted);
 }
-.hm-backup { position: relative; }
+.hm-root .hm-backup { position: relative; border: 0; margin: 0; padding: 0; }
 .hm-root .hm-backup > summary {
   display: flex;
   align-items: center;
@@ -87,6 +87,8 @@
 }
 .hm-backup summary::-webkit-details-marker { display: none; }
 .hm-backup summary::marker { content: ""; }
+.hm-root .hm-backup > summary::after { content: none; }
+.hm-root .hm-backup[open] > summary { margin-bottom: 0; }
 .hm-backup-chevron { flex: none; transition: transform 120ms ease; }
 .hm-backup[open] .hm-backup-chevron { transform: rotate(180deg); }
 .hm-backup summary:hover { background: #eaf0df; }
@@ -112,6 +114,7 @@
   min-height: 42px;
   border-radius: 8px;
   font-family: inherit;
+  font-weight: 400;
   font-size: 15px;
   line-height: 1.6;
 }
@@ -631,3 +634,38 @@
 .hm-root .hm-chip-content input {
   cursor: pointer;
 }
+
+/* Explicit phone pairing; the print document has its own independent styles. */
+.hm-pair { margin: 0 0 18px; border: 1px solid var(--hm-line); border-radius: 12px; background: #fff; overflow: hidden; }
+.hm-pair-bar { display:flex; align-items:center; flex-wrap:wrap; gap:12px; padding:10px 14px; }
+.hm-root .hm-pair button { display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:9px 14px; cursor:pointer; }
+.hm-pair-state { font-size:13px; color:var(--hm-muted); }
+.hm-pair-offline,.hm-pair-conflict,.hm-pair-expired { color:#7b4214; }
+.hm-pair-body { padding:4px 18px 18px; display:grid; gap:14px; font-size:14px; }
+.hm-pair-body > button { justify-self:start; }
+.hm-pair-invite { display:flex; align-items:center; gap:24px; }
+.hm-pair-qr { flex:none; width:196px; height:196px; background:white; }
+.hm-pair-invite p { margin-bottom:10px; }
+.hm-pair .hm-pair-code { font:600 24px/1.5 ui-monospace,monospace; letter-spacing:3px; }
+.hm-pair-join summary { cursor:pointer; padding:8px 0; }
+.hm-pair-join form { display:flex; align-items:end; gap:10px; flex-wrap:wrap; }
+.hm-pair-join input { display:block; max-width:200px; font:20px ui-monospace,monospace; }
+.hm-pair-compare { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:12px 0; }
+.hm-pair-compare pre { white-space:pre-wrap; overflow-wrap:anywhere; max-height:180px; overflow:auto; font:13px/1.6 system-ui; background:#f5f7f3; padding:12px; color:var(--hm-ink); }
+.hm-pair-conflict button { margin:10px 10px 0 0; }
+.hm-phone .hm-grid { display:block; }
+.hm-phone .hm-editor > section:nth-child(2),.hm-phone .hm-preview-panel { display:none; }
+.hm-phone .hm-editor { max-width:760px; margin:auto; }
+@media(max-width:600px) {
+  .hm-pair-invite { flex-direction:column; align-items:start; gap:10px; }
+  .hm-pair-compare { grid-template-columns:1fr; }
+  .hm-phone .hm-chip { min-height:44px; }
+  .hm-phone .hm-chip button { min-width:32px; min-height:36px; }
+}
+.hm-capture .hm-hint { margin:8px 0; }
+.hm-phone .hm-editor > .hm-panel:first-child { display:flex; flex-direction:column; }
+.hm-phone .hm-editor > .hm-panel:first-child > h2 { order:-3; }
+.hm-phone .hm-capture { order:-2; margin-bottom:18px; display:flex; flex-direction:column; gap:8px; }
+.hm-phone .hm-capture .hm-actions { order:-1; }
+.hm-phone .hm-capture .hm-voice { min-height:48px; flex:1; }
+.hm-phone .hm-capture textarea { min-height:72px; height:72px; }

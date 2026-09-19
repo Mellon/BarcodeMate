@@ -153,6 +153,18 @@ app.whenReady().then(async () => {
   };
   safeHandler("home:capabilities", () => homeRequest("capabilities"));
   safeHandler("home:voice", (body: unknown) => homeRequest("voice", body));
+  safeHandler("home:pair", async (method: string, path: string, token?: string, body?: unknown) => {
+    if (!homeEnabled || !["GET","POST","PUT","DELETE"].includes(method)
+      || typeof path !== "string" || !/^(|\/join|\/[A-Za-z0-9_-]{32}(\?since=[0-9]+)?)$/.test(path)
+      || (token !== undefined && !/^[A-Za-z0-9_-]{32}$/.test(token))) throw Error("Invalid pairing request");
+    const serialized=body === undefined ? undefined : JSON.stringify(body);
+    if(serialized && Buffer.byteLength(serialized)>262144)throw Error("Project too large");
+    const response=await fetch(homeEndpoint+"/api/home-labels/sessions"+path,{
+      method,headers:{"Content-Type":"application/json",Origin:homeEndpoint,...(token?{Authorization:"Bearer "+token}:{})},
+      body:serialized,signal:AbortSignal.timeout(12000),redirect:"error",
+    });
+    return {status:response.status,data:await response.json().catch(()=>({}))};
+  });
   session.defaultSession.webRequest.onBeforeRequest((details, callback) =>
     callback({
       cancel: !/^(barcodemate:|data:|blob:|devtools:)/.test(details.url),
