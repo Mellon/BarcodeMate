@@ -41,7 +41,13 @@ import {
 import "@fontsource-variable/dm-sans";
 import "@fontsource-variable/manrope";
 import "./style.css";
-import { languages, negotiateLanguage, translate, diagnostic, direction } from "../i18n";
+import {
+  languages,
+  negotiateLanguage,
+  translate,
+  diagnostic,
+  direction,
+} from "../i18n";
 import {
   catalog,
   newProject,
@@ -68,7 +74,20 @@ import { wifi, vcard, gs1 } from "../core/assistants";
 import { batchZip, imageBytes } from "./export";
 import type {} from "../bridge";
 
-type Tab = "design" | "batch" | "labels" | "library" | "scan";
+import {
+  readShortcuts,
+  writeShortcuts,
+  SHORTCUT_EVENT,
+  SHORTCUT_STORE,
+  shortcutKeys,
+  type ShortcutId,
+} from "../home/shortcuts";
+import { UseCases } from "../home/UseCases";
+import { HomeLabels } from "../home/HomeLabels";
+import { text as homeText } from "../home/i18n";
+
+type Tab =
+  "scenarios" | "home" | "design" | "batch" | "labels" | "library" | "scan";
 type Modal = "import" | "sequence" | "assistant" | "about" | null;
 const errorText = (e: unknown) => (e instanceof Error ? e.message : String(e));
 const presets = [
@@ -140,7 +159,9 @@ const presets = [
 ];
 function initialLanguage() {
   const saved = localStorage.getItem("language");
-  return saved && languages.some(l => l.code === saved) ? saved : negotiateLanguage(navigator.languages);
+  return saved && languages.some((l) => l.code === saved)
+    ? saved
+    : negotiateLanguage(navigator.languages);
 }
 function freshProject(language: string) {
   const project = newProject();
@@ -148,13 +169,31 @@ function freshProject(language: string) {
   project.design.name = translate(language, "Inventory label");
   return project;
 }
+const homeVoiceAPI = {
+  capabilities: () => window.desktop.homeCapabilities(),
+  recognize: (body: unknown) => window.desktop.homeVoice(body),
+};
 function App() {
+  const [shortcuts, setShortcuts] = useState(readShortcuts);
+  const [focusCase, setFocusCase] = useState<ShortcutId | null>(null);
+  useEffect(() => {
+    const changed = (event: Event) =>
+      setShortcuts((event as CustomEvent<ShortcutId[]>).detail);
+    const stored = (event: StorageEvent) => {
+      if (event.key === SHORTCUT_STORE || event.key === null)
+        setShortcuts(readShortcuts());
+    };
+    window.addEventListener(SHORTCUT_EVENT, changed);
+    window.addEventListener("storage", stored);
+    return () => {
+      window.removeEventListener(SHORTCUT_EVENT, changed);
+      window.removeEventListener("storage", stored);
+    };
+  }, []);
   const [project, setProject] = useState(() => freshProject(initialLanguage())),
     [tab, setTab] = useState<Tab>("design"),
     [modal, setModal] = useState<Modal>(null),
-    [language, setLanguage] = useState(
-      initialLanguage,
-    ),
+    [language, setLanguage] = useState(initialLanguage),
     [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
   const [toast, setToast] = useState(""),
     [failure, setFailure] = useState(""),
@@ -213,7 +252,11 @@ function App() {
     fileInput = useRef<HTMLInputElement>(null),
     logoInput = useRef<HTMLInputElement>(null),
     toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const L = (en: string, _zh?: string, values?: Record<string, string | number>) => translate(language, en, values);
+  const L = (
+    en: string,
+    _zh?: string,
+    values?: Record<string, string | number>,
+  ) => translate(language, en, values);
   const D = (text: string) => diagnostic(language, text);
   const notify = (text: string) => {
     setToast(text);
@@ -315,7 +358,8 @@ function App() {
     run(async () => {
       const i = await window.desktop.info();
       setInfo(i);
-      if (!savedLanguageAtLaunch.current) setLanguage(i.language || negotiateLanguage([i.locale]));
+      if (!savedLanguageAtLaunch.current)
+        setLanguage(i.language || negotiateLanguage([i.locale]));
       const [p, projects] = await Promise.all([
         window.desktop.recover(),
         window.desktop.loadLibrary(),
@@ -337,7 +381,9 @@ function App() {
     localStorage.setItem("theme", theme);
     document.documentElement.lang = language;
     document.documentElement.dir = direction(language);
-    void window.desktop.setLanguage(language).catch(e => setFailure(errorText(e)));
+    void window.desktop
+      .setLanguage(language)
+      .catch((e) => setFailure(errorText(e)));
     localStorage.setItem("language", language);
   }, [theme, language]);
   useEffect(() => {
@@ -358,6 +404,13 @@ function App() {
   useEffect(
     () =>
       window.desktop.menu((action) => {
+        if (tab === "scenarios") return;
+        if (tab === "home") {
+          window.dispatchEvent(
+            new CustomEvent("home-menu", { detail: action }),
+          );
+          return;
+        }
         if (action === "new") {
           change(freshProject(language));
           setTab("design");
@@ -369,7 +422,7 @@ function App() {
         if (action === "undo") undoAction();
         if (action === "redo") redoAction();
       }),
-    [project, language],
+    [project, language, tab],
   );
   useEffect(() => {
     const handle = (e: KeyboardEvent) => {
@@ -723,7 +776,14 @@ function App() {
       />
     </label>
   );
+  const isScenario = tab === "scenarios" || tab === "home";
   const navs: [Tab, typeof Barcode, string, string][] = [
+    [
+      "scenarios",
+      LayoutGrid,
+      homeText(language, "useCases"),
+      homeText(language, "useCases"),
+    ],
     ["design", Barcode, "Design", "设计条码"],
     ["batch", Layers3, "Batch data", "批量数据"],
     ["labels", LayoutGrid, "Labels & print", "标签与打印"],
@@ -731,7 +791,7 @@ function App() {
     ["scan", ScanLine, "Read a barcode", "识别条码"],
   ];
   return (
-    <div className="app-shell">
+    <div className={navigator.maxTouchPoints > 0 ? "app-shell bm-touch" : "app-shell"}>
       <aside className="rail" inert={!!modal || !!busy}>
         <div className="brand">
           <div className="brand-mark">
@@ -747,42 +807,126 @@ function App() {
         <div className="workspace-caption">{L("WORKSPACE", "工作空间")}</div>
         <nav>
           {navs.map(([id, Icon, en, zh]) => (
-            <button
-              key={id}
-              className={tab === id ? "nav-item active" : "nav-item"}
-              onClick={() => setTab(id)}
-            >
-              <Icon size={19} />
-              <span>{L(en, zh)}</span>
-              {id === "batch" && project.rows.length > 0 && (
-                <b>{project.rows.length}</b>
+            <div key={id}>
+              <button
+                data-workspace={id}
+                className={
+                  tab === id || (id === "scenarios" && isScenario)
+                    ? "nav-item active"
+                    : "nav-item"
+                }
+                onClick={() => setTab(id)}
+              >
+                <Icon size={19} />
+                <span>{L(en, zh)}</span>
+                {id === "batch" && project.rows.length > 0 && (
+                  <b>{project.rows.length}</b>
+                )}
+              </button>
+              {id === "scenarios" && isScenario && (
+                <div className="scenario-subnav">
+                  <button
+                    data-workspace="home"
+                    className={tab === "home" ? "nav-item active" : "nav-item"}
+                    onClick={() => setTab("home")}
+                    aria-current={tab === "home" ? "page" : undefined}
+                  >
+                    {homeText(language, "homeCategory")}
+                  </button>
+                </div>
               )}
-            </button>
+            </div>
+          ))}
+          {shortcuts.map((id) => (
+            <div className="bm-shortcut" data-shortcut={id} key={id}>
+              <button
+                className={
+                  id === "home" && tab === "home"
+                    ? "nav-item active"
+                    : "nav-item"
+                }
+                onClick={() => {
+                  setTab(id === "home" ? "home" : "scenarios");
+                  setFocusCase(id);
+                  requestAnimationFrame(() =>
+                    document.getElementById("case-" + id)?.focus(),
+                  );
+                }}
+              >
+                {homeText(language, shortcutKeys[id])}
+              </button>
+              <button
+                type="button"
+                className="bm-shortcut-remove"
+                aria-label={
+                  homeText(language, "removeShortcut") +
+                  ": " +
+                  homeText(language, shortcutKeys[id])
+                }
+                title={
+                  homeText(language, "removeShortcut") +
+                  ": " +
+                  homeText(language, shortcutKeys[id])
+                }
+                onClick={() => {
+                  writeShortcuts(shortcuts.filter((value) => value !== id));
+                  requestAnimationFrame(() =>
+                    document
+                      .querySelector<HTMLButtonElement>(
+                        '[data-workspace="scenarios"]',
+                      )
+                      ?.focus(),
+                  );
+                }}
+              >
+                ×
+              </button>
+            </div>
           ))}
         </nav>
-        <div className="rail-project">
-          <div className="project-icon">
-            <FolderOpen size={20} />
+        {!isScenario && (
+          <div className="rail-project">
+            <div className="project-icon">
+              <FolderOpen size={20} />
+            </div>
+            <small>{L("CURRENT PROJECT", "当前项目")}</small>
+            <strong>{project.name}</strong>
+            <span>
+              {project.rows.length || 1}{" "}
+              {L("records · stored locally", "条记录 · 本地保存")}
+            </span>
+            <button className="text-button" onClick={save}>
+              {L("Save project file", "保存项目文件")} <ArrowRight size={14} />
+            </button>
           </div>
-          <small>{L("CURRENT PROJECT", "当前项目")}</small>
-          <strong>{project.name}</strong>
-          <span>
-            {project.rows.length || 1}{" "}
-            {L("records · stored locally", "条记录 · 本地保存")}
-          </span>
-          <button className="text-button" onClick={save}>
-            {L("Save project file", "保存项目文件")} <ArrowRight size={14} />
-          </button>
-        </div>
+        )}
         <div className="rail-bottom">
-          <div className="offline">
-            <span />
-            {L("Offline & private", "离线使用 · 数据私有")}
-          </div>
-          <label className="app-language-picker" title={L("Language follows your system on first launch.")}>
+          {!isScenario && (
+            <div className="offline">
+              <span />
+              {L("Offline & private", "离线使用 · 数据私有")}
+            </div>
+          )}
+          <label
+            className="app-language-picker"
+            title={L("Language follows your system on first launch.")}
+          >
             <Globe size={18} />
-            <select id="language-select" aria-label={L("Language")} value={language} onChange={e => setLanguage(e.target.value)}>
-              {languages.map(choice => <option key={choice.code} value={choice.code} lang={choice.code}>{choice.name}</option>)}
+            <select
+              id="language-select"
+              aria-label={L("Language")}
+              value={language}
+              onChange={(e) => setLanguage(e.target.value)}
+            >
+              {languages.map((choice) => (
+                <option
+                  key={choice.code}
+                  value={choice.code}
+                  lang={choice.code}
+                >
+                  {choice.name}
+                </option>
+              ))}
             </select>
           </label>
           <div className="rail-controls">
@@ -807,134 +951,151 @@ function App() {
           <div className="breadcrumb">
             {L("Workspace", "工作空间")}
             <ChevronRight size={15} />
-            <strong>
-              {L(
-                navs.find((n) => n[0] === tab)![2],
-                navs.find((n) => n[0] === tab)![3],
-              )}
-            </strong>
+            {tab === "home" ? (
+              <>
+                <button
+                  className="text-button"
+                  onClick={() => setTab("scenarios")}
+                >
+                  {homeText(language, "useCases")}
+                </button>
+                <ChevronRight size={15} />
+                <strong>{homeText(language, "homeCategory")}</strong>
+              </>
+            ) : (
+              <strong>
+                {L(
+                  navs.find((n) => n[0] === tab)![2],
+                  navs.find((n) => n[0] === tab)![3],
+                )}
+              </strong>
+            )}
           </div>
-          <div className="top-actions">
-            <span className="save-state">
-              <CheckCircle2 size={14} />
-              {saveState || L("Local workspace", "本地工作空间")}
-            </span>
-            <button
-              title={L("Undo", "撤销")}
-              disabled={!undo.current.length}
-              onClick={undoAction}
-            >
-              <Undo2 size={17} />
-            </button>
-            <button
-              title={L("Redo", "重做")}
-              disabled={!redo.current.length}
-              onClick={redoAction}
-            >
-              <Redo2 size={17} />
-            </button>
-            <i />
-            <button onClick={open}>
-              <FolderOpen size={17} />
-              {L("Open", "打开")}
-            </button>
-            <button onClick={save}>
-              <Save size={17} />
-              {L("Save", "保存")}
-            </button>
-          </div>
+          {!isScenario && (
+            <div className="top-actions">
+              <span className="save-state">
+                <CheckCircle2 size={14} />
+                {saveState || L("Local workspace", "本地工作空间")}
+              </span>
+              <button
+                title={L("Undo", "撤销")}
+                disabled={!undo.current.length}
+                onClick={undoAction}
+              >
+                <Undo2 size={17} />
+              </button>
+              <button
+                title={L("Redo", "重做")}
+                disabled={!redo.current.length}
+                onClick={redoAction}
+              >
+                <Redo2 size={17} />
+              </button>
+              <i />
+              <button onClick={open}>
+                <FolderOpen size={17} />
+                {L("Open", "打开")}
+              </button>
+              <button onClick={save}>
+                <Save size={17} />
+                {L("Save", "保存")}
+              </button>
+            </div>
+          )}
         </header>
         <div className="workspace">
-          <div className="page-heading">
-            <div>
-              <div className="eyebrow">
-                {L(
-                  "A LITTLE MORE ORDER. A LOT LESS WORK.",
-                  "更有条理，更省力。",
-                )}
+          {!isScenario && (
+            <div className="page-heading">
+              <div>
+                <div className="eyebrow">
+                  {L(
+                    "A LITTLE MORE ORDER. A LOT LESS WORK.",
+                    "更有条理，更省力。",
+                  )}
+                </div>
+                <h1>
+                  {tab === "design"
+                    ? L("Make your next barcode.", "设计你的下一个条码。")
+                    : tab === "batch"
+                      ? L(
+                          "One workflow. Every barcode.",
+                          "一个流程，处理所有条码。",
+                        )
+                      : tab === "labels"
+                        ? L(
+                            "From data to ready-to-print.",
+                            "从数据到可打印的标签。",
+                          )
+                        : tab === "library"
+                          ? L(
+                              "Good work, ready to reuse.",
+                              "保存好设计，下次直接用。",
+                            )
+                          : L(
+                              "Find the data in any image.",
+                              "读出图片里的条码。",
+                            )}
+                </h1>
+                <p>
+                  {tab === "design"
+                    ? L(
+                        "Precise controls. Instant preview. Everything stays on your device.",
+                        "精细设置，即时预览。所有数据留在你的设备。",
+                      )
+                    : tab === "batch"
+                      ? L(
+                          "Import a list, create a sequence, and catch errors before you export.",
+                          "导入列表、生成流水号，在导出之前定位错误。",
+                        )
+                      : tab === "labels"
+                        ? L(
+                            "Actual dimensions, reusable layouts, and a preview of every sheet.",
+                            "真实物理尺寸、可复用排版，每一页都看得见。",
+                          )
+                        : tab === "library"
+                          ? L(
+                              "Keep complete designs, data, and print layouts together.",
+                              "将设计、数据和打印布局一起保存。",
+                            )
+                          : L(
+                              "Read barcodes locally. Images are never uploaded.",
+                              "在本机识别条码，图片不会上传。",
+                            )}
+                </p>
               </div>
-              <h1>
-                {tab === "design"
-                  ? L("Make your next barcode.", "设计你的下一个条码。")
-                  : tab === "batch"
-                    ? L(
-                        "One workflow. Every barcode.",
-                        "一个流程，处理所有条码。",
-                      )
-                    : tab === "labels"
-                      ? L(
-                          "From data to ready-to-print.",
-                          "从数据到可打印的标签。",
-                        )
-                      : tab === "library"
-                        ? L(
-                            "Good work, ready to reuse.",
-                            "保存好设计，下次直接用。",
-                          )
-                        : L(
-                            "Find the data in any image.",
-                            "读出图片里的条码。",
-                          )}
-              </h1>
-              <p>
-                {tab === "design"
-                  ? L(
-                      "Precise controls. Instant preview. Everything stays on your device.",
-                      "精细设置，即时预览。所有数据留在你的设备。",
-                    )
-                  : tab === "batch"
-                    ? L(
-                        "Import a list, create a sequence, and catch errors before you export.",
-                        "导入列表、生成流水号，在导出之前定位错误。",
-                      )
-                    : tab === "labels"
-                      ? L(
-                          "Actual dimensions, reusable layouts, and a preview of every sheet.",
-                          "真实物理尺寸、可复用排版，每一页都看得见。",
-                        )
-                      : tab === "library"
-                        ? L(
-                            "Keep complete designs, data, and print layouts together.",
-                            "将设计、数据和打印布局一起保存。",
-                          )
-                        : L(
-                            "Read barcodes locally. Images are never uploaded.",
-                            "在本机识别条码，图片不会上传。",
-                          )}
-              </p>
+              {tab === "design" ? (
+                <button
+                  className="secondary"
+                  onClick={() => {
+                    change(freshProject(language));
+                    setTab("design");
+                  }}
+                >
+                  <Plus size={17} />
+                  {L("New project", "新建项目")}
+                </button>
+              ) : tab === "batch" ? (
+                <button className="primary" onClick={importFile}>
+                  <ArrowUpFromLine size={17} />
+                  {L("Import data", "导入数据")}
+                </button>
+              ) : tab === "labels" ? (
+                <button
+                  className="primary"
+                  disabled={!!labelResult.error || !!busy}
+                  onClick={() => printLabels(false)}
+                >
+                  <Printer size={17} />
+                  {L("Print labels", "打印标签")}
+                </button>
+              ) : tab === "library" ? (
+                <button className="primary" onClick={addLibrary}>
+                  <Plus size={17} />
+                  {L("Save current project", "保存当前项目")}
+                </button>
+              ) : null}
             </div>
-            {tab === "design" ? (
-              <button
-                className="secondary"
-                onClick={() => {
-                  change(freshProject(language));
-                  setTab("design");
-                }}
-              >
-                <Plus size={17} />
-                {L("New project", "新建项目")}
-              </button>
-            ) : tab === "batch" ? (
-              <button className="primary" onClick={importFile}>
-                <ArrowUpFromLine size={17} />
-                {L("Import data", "导入数据")}
-              </button>
-            ) : tab === "labels" ? (
-              <button
-                className="primary"
-                disabled={!!labelResult.error || !!busy}
-                onClick={() => printLabels(false)}
-              >
-                <Printer size={17} />
-                {L("Print labels", "打印标签")}
-              </button>
-            ) : tab === "library" ? (
-              <button className="primary" onClick={addLibrary}>
-                <Plus size={17} />
-                {L("Save current project", "保存当前项目")}
-              </button>
-            ) : null}
-          </div>
+          )}
           {failure && (
             <div role="alert" className="error-banner">
               <AlertTriangle size={18} />
@@ -943,6 +1104,39 @@ function App() {
                 <X size={17} />
               </button>
             </div>
+          )}
+          {tab === "scenarios" && (
+            <UseCases
+              language={language}
+              onHome={() => setTab("home")}
+              shortcuts={shortcuts}
+              onAdd={(id) => {
+                if (!shortcuts.includes(id)) writeShortcuts([...shortcuts, id]);
+              }}
+              focusCase={focusCase}
+            />
+          )}
+          {tab === "home" && (
+            <HomeLabels
+              language={language}
+              onPrint={(html, paper, pdf) =>
+                window.desktop.print({
+                  html,
+                  width: paper.pageWidth,
+                  height: paper.pageHeight,
+                  pdf,
+                  name: "BarcodeMate-home",
+                })
+              }
+              onSave={(content) =>
+                window.desktop.saveFile({
+                  name: "BarcodeMate-home.json",
+                  bytes: new TextEncoder().encode(content),
+                  extension: "json",
+                })
+              }
+              voiceAPI={homeVoiceAPI}
+            />
           )}
           {tab === "design" && (
             <div className="design-grid">
@@ -1618,7 +1812,11 @@ function App() {
                               <td>
                                 <input
                                   type="checkbox"
-                                  aria-label={L("Select row {number}", undefined, {number: batchPage * 100 + i + 1})}
+                                  aria-label={L(
+                                    "Select row {number}",
+                                    undefined,
+                                    { number: batchPage * 100 + i + 1 },
+                                  )}
                                   checked={selected.has(row.id)}
                                   onChange={(e) =>
                                     setSelected((s) => {
@@ -1636,7 +1834,11 @@ function App() {
                               </td>
                               <td>
                                 <input
-                                  aria-label={L("Data row {number}", undefined, {number: batchPage * 100 + i + 1})}
+                                  aria-label={L(
+                                    "Data row {number}",
+                                    undefined,
+                                    { number: batchPage * 100 + i + 1 },
+                                  )}
                                   value={row.data}
                                   onChange={(e) =>
                                     updateRow(row.id, { data: e.target.value })
@@ -1645,7 +1847,11 @@ function App() {
                               </td>
                               <td>
                                 <input
-                                  aria-label={L("Name row {number}", undefined, {number: batchPage * 100 + i + 1})}
+                                  aria-label={L(
+                                    "Name row {number}",
+                                    undefined,
+                                    { number: batchPage * 100 + i + 1 },
+                                  )}
                                   value={row.name}
                                   placeholder="—"
                                   onChange={(e) =>
@@ -1660,7 +1866,11 @@ function App() {
                                   min="1"
                                   max="10000"
                                   value={row.quantity}
-                                  aria-label={L("Copies row {number}", undefined, {number: batchPage * 100 + i + 1})}
+                                  aria-label={L(
+                                    "Copies row {number}",
+                                    undefined,
+                                    { number: batchPage * 100 + i + 1 },
+                                  )}
                                   onChange={(e) =>
                                     updateRow(row.id, {
                                       quantity: Number(e.target.value),
@@ -1671,7 +1881,11 @@ function App() {
                               <td>
                                 <select
                                   value={row.type}
-                                  aria-label={L("Format row {number}", undefined, {number: batchPage * 100 + i + 1})}
+                                  aria-label={L(
+                                    "Format row {number}",
+                                    undefined,
+                                    { number: batchPage * 100 + i + 1 },
+                                  )}
                                   onChange={(e) =>
                                     updateRow(row.id, { type: e.target.value })
                                   }
@@ -2197,18 +2411,20 @@ function App() {
             </div>
           )}
         </div>
-        <footer className="statusbar">
-          <span>
-            <ShieldCheck size={13} />
-            {L(
-              "No account. No upload. Your work stays yours.",
-              "无需账号，无需上传。你的数据由你掌握。",
-            )}
-          </span>
-          <span>
-            BarcodeMate · {catalog.length} {L("formats", "种格式")}
-          </span>
-        </footer>
+        {!isScenario && (
+          <footer className="statusbar">
+            <span>
+              <ShieldCheck size={13} />
+              {L(
+                "No account. No upload. Your work stays yours.",
+                "无需账号，无需上传。你的数据由你掌握。",
+              )}
+            </span>
+            <span>
+              BarcodeMate · {catalog.length} {L("formats", "种格式")}
+            </span>
+          </footer>
+        )}
       </main>
       {toast && (
         <div className="toast" role="status">

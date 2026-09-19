@@ -1,11 +1,14 @@
 import { contextBridge, ipcRenderer } from "electron";
 contextBridge.exposeInMainWorld("desktop", {
+  homeCapabilities: () => ipcRenderer.invoke("home:capabilities"),
+  homeVoice: (body: unknown) => ipcRenderer.invoke("home:voice", body),
   security: () => ({
     contextIsolation: process.contextIsolated,
     sandbox: process.sandboxed,
     nodeIntegration: false,
   }),
-  setLanguage: (language: string) => ipcRenderer.invoke("language:set", language),
+  setLanguage: (language: string) =>
+    ipcRenderer.invoke("language:set", language),
   info: () => ipcRenderer.invoke("info"),
   openProject: () => ipcRenderer.invoke("project:open"),
   saveProject: (p: unknown) => ipcRenderer.invoke("project:save", p),

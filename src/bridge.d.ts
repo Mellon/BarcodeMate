@@ -1,5 +1,13 @@
 import type { Project } from "./core/model";
 export interface DesktopAPI {
+  homeCapabilities(): Promise<{ voice: boolean; country?: string }>;
+  homeVoice(
+    body: unknown,
+  ): Promise<{
+    items: import("./home/core").HomeItem[];
+    language: string;
+    bilingual: boolean;
+  }>;
   setLanguage(language: string): Promise<void>;
   security(): {
     contextIsolation: boolean;

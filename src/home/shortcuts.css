@@ -1,0 +1,160 @@
+.hm-root .hm-case-card {
+  position: relative;
+}
+.hm-case-card .hm-case-heading {
+  padding-inline-end: 28px;
+}
+.hm-root .hm-pin {
+  position: absolute;
+  inset-block-start: 12px;
+  inset-inline-end: 12px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  min-height: 32px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: #577264;
+}
+.hm-pin svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.hm-root .hm-pin:hover,
+.hm-root .hm-pin:focus-visible {
+  background: #e4edd8;
+  border-color: #bdc9b9;
+}
+.hm-root .hm-pin[aria-pressed="true"] {
+  color: #285b44;
+  background: #e4edd8;
+}
+.hm-root .hm-case-open {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  color: inherit;
+  text-decoration: none;
+  text-align: start;
+  font: inherit;
+  border: 0;
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  width: 100%;
+}
+.hm-root .hm-case-open:hover {
+  background: none;
+}
+.hm-case-card:target,
+.hm-case-card:focus {
+  outline: 2px solid #739980;
+  outline-offset: 3px;
+}
+.bm-shortcut {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+}
+.bm-shortcut .bm-shortcut-remove {
+  position: absolute;
+  z-index: 2;
+  top: -4px;
+  right: -8px;
+  width: 24px;
+  height: 24px;
+  min-height: 24px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  border: 1px solid #dce4dd;
+  border-radius: 50%;
+  background: #fff;
+  color: #526258;
+  font:
+    18px/1 system-ui,
+    sans-serif;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+}
+.bm-shortcut:hover .bm-shortcut-remove,
+.bm-shortcut:focus-within .bm-shortcut-remove,
+.bm-shortcut-remove:focus-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+.bm-shortcut .bm-shortcut-remove:hover {
+  background: #f3f5ef;
+  color: #203c32;
+}
+.bm-shortcut :focus-visible {
+  outline: 2px solid #4552e8;
+  outline-offset: 3px;
+}
+.site-header.has-case-shortcuts {
+  height: auto;
+}
+.has-case-shortcuts .header-inner {
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  padding-block: 16px;
+}
+.has-case-shortcuts .header-inner > nav[data-main-navigation] {
+  order: 4;
+  flex-basis: 100%;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  min-width: 0;
+  min-height: 40px;
+  align-self: auto;
+}
+.header-inner [data-shortcuts] {
+  display: contents;
+}
+.has-case-shortcuts [data-main-navigation] > a,
+.has-case-shortcuts .bm-shortcut > a {
+  min-height: 40px;
+  height: auto;
+}
+.has-case-shortcuts .bm-shortcut {
+  padding-inline-end: 8px;
+}
+.has-case-shortcuts .bm-shortcut > a {
+  white-space: normal;
+}
+.rail .bm-shortcut {
+  display: flex;
+}
+.rail .bm-shortcut > .nav-item {
+  padding-inline-end: 26px;
+  margin: 0 0 7px;
+}
+.rail .bm-shortcut .bm-shortcut-remove {
+  top: 0;
+  right: 0;
+}
+@media (hover: none) {
+  .bm-shortcut .bm-shortcut-remove {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+@media (max-width: 600px) {
+  .has-case-shortcuts .header-inner {
+    column-gap: 12px;
+  }
+}
+
+.bm-touch .bm-shortcut .bm-shortcut-remove { opacity:1; pointer-events:auto; }

@@ -1,7 +1,7 @@
 {
   "name": "barcodemate",
   "productName": "BarcodeMate",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Offline barcode design, batch generation and label printing for macOS and Windows.",
   "private": true,
   "type": "module",
@@ -72,7 +72,10 @@
           ]
         }
       ],
-      "identity": null
+      "identity": null,
+      "extendInfo": {
+        "NSMicrophoneUsageDescription": "Record a short list of items to prepare household labels when you choose voice input."
+      }
     },
     "win": {
       "target": [

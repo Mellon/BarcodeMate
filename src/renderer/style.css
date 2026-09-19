@@ -1445,3 +1445,6 @@ progress {
 [dir=rtl] .breadcrumb>svg,[dir=rtl] .text-button>svg{transform:scaleX(-1)}
 @media(max-width:1200px){[dir=rtl] main{margin-left:0;margin-right:195px}.top-actions .save-state{display:none}}
 .preview-stats strong,.sheet-scale,.sheet-paper,.paper-sheet{direction:ltr;unicode-bidi:isolate}
+
+.scenario-subnav { margin-inline-start:22px; padding-inline-start:10px; border-inline-start:1px solid #dce4dd; }
+.scenario-subnav .nav-item { font-size:13px; min-height:36px; height:auto; padding:8px 12px; }

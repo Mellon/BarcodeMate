@@ -23,7 +23,7 @@ Installers are not publisher-signed; Mac packages are not notarized. The operati
 - GS1 common-field, Wi-Fi, vCard and URL assistants. Raster logos on selected 2D formats and dot styling where supported.
 - Portable `.barcodemate` project files, local project library, recovery autosave and undo/redo.
 - Local image decoding via ZXing WASM in a worker; file, drop and paste input. Decoder supports fewer formats than generation.
-- 24 interface languages and light/dark themes. No telemetry, account, remote fonts or network uploads.
+- 24 interface languages and light/dark themes. No telemetry, account or remote fonts. Barcode work stays local; optional household voice input sends audio and the current label list to the configured gateway.
 
 Generation is not registration of a product number. Design diagnostics are not an ISO/IEC quality grade. Use an actual printed sample and scanner before production.
 
@@ -67,3 +67,14 @@ BarcodeMate is licensed under the [MIT License](LICENSE). Third-party components
 English, Simplified Chinese, Traditional Chinese, Spanish, French, German, Portuguese, Japanese, Korean, Italian, Russian, Arabic, Hindi, Indonesian, Turkish, Vietnamese, Thai, Polish, Dutch, Ukrainian, Malay, Bengali, Persian and Hebrew.
 
 The language selector is at the bottom of the sidebar. Switching language also updates application menus and keeps your project data, barcodes and print geometry unchanged. Native OS dialogs follow OS settings. Dictionaries ship inside the application; language switching works offline. Technical error details from third-party encoders may retain their original wording. Translation corrections are welcome in `src/i18n/`.
+
+
+## 家庭收纳标签（0.3.0 源码，安装包待发布）
+
+新增独立家庭标签工作区，24 种界面语言、厨房/收纳盒基础名称、批量清单、可编辑双语与数量、完整尺寸目录、自定义毫米布局、对位测试、PDF 和本地项目保存。地区仅影响尺寸排序，不过滤选项。家庭项目使用独立 JSON 格式，不修改条码项目。
+
+Kitchen 与 Storage boxes 按语言和分类独立保存。名称与数量可直接编辑，默认厨房集合按24种语言分别提供；零数量保留。英文厨房每张标签可以有独立的 Best before 日期，预览名称、日期及背景随当前日期选择高亮，打印仍为黑白。浏览器和桌面共用组件，自动保存、撤销和备份导入导出均已验证。
+
+0.3.0默认连接BarcodeMate的HTTPS语音网关；只有主动使用语音时才发送录音和当前清单，API key始终留在服务端。可通过 `BARCODEMATE_HOME_API` 改用自己的网关，设为空字符串可禁用云端语音。基本编辑和打印不依赖网络。本地已用合成中文、英文、法文通过云端识别，桌面录音编码与原生 PDF 流程也已验证；真实硬件麦克风、其他语音语言和实体耗材仍待实测；公开 0.2.0 安装包尚未包含此开发功能。
+
+家庭预览支持手动等比缩放：拿实物纸张对齐屏幕中的左右边缘，再保存此屏幕比例。仅预览的标签边框包含空白格；超出窗口时滚动查看，不改变 PDF 或打印尺寸。换屏幕/缩放后重新比对，打印先做普通纸对位测试。

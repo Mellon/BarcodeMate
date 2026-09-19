@@ -52,3 +52,7 @@ All 24 dictionaries contain the same 408 nonempty messages with matching substit
 The final translation correction is included in source `b3667ffbab105eeade45c82e6cfef74637b776b7`. [Validation run 35305495373](https://github.com/Mellon/BarcodeMate/actions/runs/35305495373) passed twelve core/localization tests and six Electron workflows on both Windows and macOS, then repeated all six workflows against the installed Windows app and extracted Mac package. Dictionary checks now also reject untranslated English sentences outside an explicit technical-term allowance; native-speaker review is still welcome.
 
 [Publication run 35305836938](https://github.com/Mellon/BarcodeMate/actions/runs/35305836938) downloaded those exact validated artifacts, inspected the Mac app archive and notices, checked every uploaded SHA-256 digest and published [0.2.0](https://github.com/Mellon/BarcodeMate/releases/tag/v0.2.0). The public tag matches the validated source. Anonymous download links and the checksum manifest were independently checked after publication. Existing physical-device and signing limitations above still apply.
+
+## 0.3.0 local candidate (2026-09-18)
+
+33 core tests and 8 Electron workflows passed. The Mac ARM64 DMG and ZIP were built locally; all 8 workflows passed again using the packaged executable, including household PDF/JSON export and scenario shortcuts. Package metadata and credential scans passed. Windows/Intel Mac 0.3.0 packages and public release remain pending repository confirmation and CI.

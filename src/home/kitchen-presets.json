@@ -1,0 +1,1586 @@
+{
+  "en": [
+    {
+      "name": "BASIL",
+      "english": "Basil"
+    },
+    {
+      "name": "PARSLEY",
+      "english": "Parsley"
+    },
+    {
+      "name": "THYME",
+      "english": "Thyme"
+    },
+    {
+      "name": "PEPPER",
+      "english": "Pepper"
+    },
+    {
+      "name": "ROSEMARY",
+      "english": "Rosemary"
+    },
+    {
+      "name": "CINNAMON",
+      "english": "Cinnamon"
+    },
+    {
+      "name": "CURRY",
+      "english": "Curry"
+    },
+    {
+      "name": "TURMERIC",
+      "english": "Turmeric"
+    },
+    {
+      "name": "HONEY",
+      "english": "Honey"
+    },
+    {
+      "name": "GINGER",
+      "english": "Ginger"
+    },
+    {
+      "name": "OREGANO",
+      "english": "Oregano"
+    },
+    {
+      "name": "CHILLI",
+      "english": "Chilli"
+    },
+    {
+      "name": "CORIANDER",
+      "english": "Coriander"
+    },
+    {
+      "name": "SUGAR",
+      "english": "Sugar"
+    },
+    {
+      "name": "SALT",
+      "english": "Salt"
+    },
+    {
+      "name": "GARLIC",
+      "english": "Garlic"
+    }
+  ],
+  "zh-Hans": [
+    {
+      "name": "盐",
+      "english": "Salt"
+    },
+    {
+      "name": "糖",
+      "english": "Sugar"
+    },
+    {
+      "name": "生抽",
+      "english": "Light soy sauce"
+    },
+    {
+      "name": "老抽",
+      "english": "Dark soy sauce"
+    },
+    {
+      "name": "醋",
+      "english": "Vinegar"
+    },
+    {
+      "name": "料酒",
+      "english": "Cooking wine"
+    },
+    {
+      "name": "蚝油",
+      "english": "Oyster sauce"
+    },
+    {
+      "name": "香油",
+      "english": "Sesame oil"
+    },
+    {
+      "name": "花椒",
+      "english": "Sichuan pepper"
+    },
+    {
+      "name": "八角",
+      "english": "Star anise"
+    },
+    {
+      "name": "桂皮",
+      "english": "Cassia"
+    },
+    {
+      "name": "香叶",
+      "english": "Bay leaves"
+    },
+    {
+      "name": "辣椒粉",
+      "english": "Chilli powder"
+    },
+    {
+      "name": "孜然",
+      "english": "Cumin"
+    },
+    {
+      "name": "白胡椒",
+      "english": "White pepper"
+    },
+    {
+      "name": "五香粉",
+      "english": "Five-spice powder"
+    }
+  ],
+  "zh-Hant": [
+    {
+      "name": "鹽",
+      "english": "Salt"
+    },
+    {
+      "name": "糖",
+      "english": "Sugar"
+    },
+    {
+      "name": "醬油",
+      "english": "Soy sauce"
+    },
+    {
+      "name": "醬油膏",
+      "english": "Thick soy sauce"
+    },
+    {
+      "name": "米酒",
+      "english": "Rice wine"
+    },
+    {
+      "name": "烏醋",
+      "english": "Black vinegar"
+    },
+    {
+      "name": "白醋",
+      "english": "White vinegar"
+    },
+    {
+      "name": "香油",
+      "english": "Sesame oil"
+    },
+    {
+      "name": "麻油",
+      "english": "Toasted sesame oil"
+    },
+    {
+      "name": "白胡椒粉",
+      "english": "White pepper"
+    },
+    {
+      "name": "五香粉",
+      "english": "Five-spice powder"
+    },
+    {
+      "name": "八角",
+      "english": "Star anise"
+    },
+    {
+      "name": "花椒",
+      "english": "Sichuan pepper"
+    },
+    {
+      "name": "辣椒粉",
+      "english": "Chilli powder"
+    },
+    {
+      "name": "沙茶醬",
+      "english": "Shacha sauce"
+    },
+    {
+      "name": "豆瓣醬",
+      "english": "Chilli bean paste"
+    }
+  ],
+  "es": [
+    {
+      "name": "Sal",
+      "english": "Salt"
+    },
+    {
+      "name": "Azúcar",
+      "english": "Sugar"
+    },
+    {
+      "name": "Pimienta negra",
+      "english": "Black pepper"
+    },
+    {
+      "name": "Pimentón",
+      "english": "Paprika"
+    },
+    {
+      "name": "Comino",
+      "english": "Cumin"
+    },
+    {
+      "name": "Orégano",
+      "english": "Oregano"
+    },
+    {
+      "name": "Laurel",
+      "english": "Bay leaves"
+    },
+    {
+      "name": "Ajo en polvo",
+      "english": "Garlic powder"
+    },
+    {
+      "name": "Canela",
+      "english": "Cinnamon"
+    },
+    {
+      "name": "Clavo",
+      "english": "Cloves"
+    },
+    {
+      "name": "Azafrán",
+      "english": "Saffron"
+    },
+    {
+      "name": "Tomillo",
+      "english": "Thyme"
+    },
+    {
+      "name": "Romero",
+      "english": "Rosemary"
+    },
+    {
+      "name": "Perejil",
+      "english": "Parsley"
+    },
+    {
+      "name": "Cilantro",
+      "english": "Coriander leaves"
+    },
+    {
+      "name": "Chile en polvo",
+      "english": "Chilli powder"
+    }
+  ],
+  "fr": [
+    {
+      "name": "Sel",
+      "english": "Salt"
+    },
+    {
+      "name": "Sucre",
+      "english": "Sugar"
+    },
+    {
+      "name": "Poivre noir",
+      "english": "Black pepper"
+    },
+    {
+      "name": "Thym",
+      "english": "Thyme"
+    },
+    {
+      "name": "Laurier",
+      "english": "Bay leaves"
+    },
+    {
+      "name": "Romarin",
+      "english": "Rosemary"
+    },
+    {
+      "name": "Persil",
+      "english": "Parsley"
+    },
+    {
+      "name": "Basilic",
+      "english": "Basil"
+    },
+    {
+      "name": "Estragon",
+      "english": "Tarragon"
+    },
+    {
+      "name": "Herbes de Provence",
+      "english": "Herbes de Provence"
+    },
+    {
+      "name": "Muscade",
+      "english": "Nutmeg"
+    },
+    {
+      "name": "Paprika",
+      "english": "Paprika"
+    },
+    {
+      "name": "Cumin",
+      "english": "Cumin"
+    },
+    {
+      "name": "Cannelle",
+      "english": "Cinnamon"
+    },
+    {
+      "name": "Clous de girofle",
+      "english": "Cloves"
+    },
+    {
+      "name": "Quatre-épices",
+      "english": "Quatre-épices"
+    }
+  ],
+  "de": [
+    {
+      "name": "Salz",
+      "english": "Salt"
+    },
+    {
+      "name": "Zucker",
+      "english": "Sugar"
+    },
+    {
+      "name": "Schwarzer Pfeffer",
+      "english": "Black pepper"
+    },
+    {
+      "name": "Paprika edelsüß",
+      "english": "Sweet paprika"
+    },
+    {
+      "name": "Kümmel",
+      "english": "Caraway"
+    },
+    {
+      "name": "Majoran",
+      "english": "Marjoram"
+    },
+    {
+      "name": "Lorbeer",
+      "english": "Bay leaves"
+    },
+    {
+      "name": "Muskatnuss",
+      "english": "Nutmeg"
+    },
+    {
+      "name": "Wacholder",
+      "english": "Juniper berries"
+    },
+    {
+      "name": "Dill",
+      "english": "Dill"
+    },
+    {
+      "name": "Petersilie",
+      "english": "Parsley"
+    },
+    {
+      "name": "Schnittlauch",
+      "english": "Chives"
+    },
+    {
+      "name": "Thymian",
+      "english": "Thyme"
+    },
+    {
+      "name": "Senfkörner",
+      "english": "Mustard seeds"
+    },
+    {
+      "name": "Zimt",
+      "english": "Cinnamon"
+    },
+    {
+      "name": "Gewürznelken",
+      "english": "Cloves"
+    }
+  ],
+  "pt": [
+    {
+      "name": "Sal",
+      "english": "Salt"
+    },
+    {
+      "name": "Açúcar",
+      "english": "Sugar"
+    },
+    {
+      "name": "Pimenta-preta",
+      "english": "Black pepper"
+    },
+    {
+      "name": "Alho em pó",
+      "english": "Garlic powder"
+    },
+    {
+      "name": "Louro",
+      "english": "Bay leaves"
+    },
+    {
+      "name": "Orégãos",
+      "english": "Oregano"
+    },
+    {
+      "name": "Cominhos",
+      "english": "Cumin"
+    },
+    {
+      "name": "Páprica",
+      "english": "Paprika"
+    },
+    {
+      "name": "Coentros",
+      "english": "Coriander leaves"
+    },
+    {
+      "name": "Salsa",
+      "english": "Parsley"
+    },
+    {
+      "name": "Alecrim",
+      "english": "Rosemary"
+    },
+    {
+      "name": "Canela",
+      "english": "Cinnamon"
+    },
+    {
+      "name": "Cravinho",
+      "english": "Cloves"
+    },
+    {
+      "name": "Noz-moscada",
+      "english": "Nutmeg"
+    },
+    {
+      "name": "Curcuma",
+      "english": "Turmeric"
+    },
+    {
+      "name": "Piri-piri",
+      "english": "Piri-piri"
+    }
+  ],
+  "ja": [
+    {
+      "name": "塩",
+      "english": "Salt"
+    },
+    {
+      "name": "砂糖",
+      "english": "Sugar"
+    },
+    {
+      "name": "醤油",
+      "english": "Soy sauce"
+    },
+    {
+      "name": "味噌",
+      "english": "Miso"
+    },
+    {
+      "name": "みりん",
+      "english": "Mirin"
+    },
+    {
+      "name": "料理酒",
+      "english": "Cooking sake"
+    },
+    {
+      "name": "米酢",
+      "english": "Rice vinegar"
+    },
+    {
+      "name": "ごま油",
+      "english": "Sesame oil"
+    },
+    {
+      "name": "だし",
+      "english": "Dashi"
+    },
+    {
+      "name": "こしょう",
+      "english": "Pepper"
+    },
+    {
+      "name": "七味唐辛子",
+      "english": "Shichimi togarashi"
+    },
+    {
+      "name": "一味唐辛子",
+      "english": "Chilli powder"
+    },
+    {
+      "name": "山椒",
+      "english": "Sansho pepper"
+    },
+    {
+      "name": "白ごま",
+      "english": "White sesame seeds"
+    },
+    {
+      "name": "わさび",
+      "english": "Wasabi"
+    },
+    {
+      "name": "からし",
+      "english": "Japanese mustard"
+    }
+  ],
+  "ko": [
+    {
+      "name": "소금",
+      "english": "Salt"
+    },
+    {
+      "name": "설탕",
+      "english": "Sugar"
+    },
+    {
+      "name": "간장",
+      "english": "Soy sauce"
+    },
+    {
+      "name": "된장",
+      "english": "Doenjang"
+    },
+    {
+      "name": "고추장",
+      "english": "Gochujang"
+    },
+    {
+      "name": "고춧가루",
+      "english": "Gochugaru"
+    },
+    {
+      "name": "참기름",
+      "english": "Sesame oil"
+    },
+    {
+      "name": "들기름",
+      "english": "Perilla oil"
+    },
+    {
+      "name": "참깨",
+      "english": "Sesame seeds"
+    },
+    {
+      "name": "후추",
+      "english": "Black pepper"
+    },
+    {
+      "name": "식초",
+      "english": "Vinegar"
+    },
+    {
+      "name": "액젓",
+      "english": "Fish sauce"
+    },
+    {
+      "name": "새우젓",
+      "english": "Salted shrimp"
+    },
+    {
+      "name": "맛술",
+      "english": "Cooking wine"
+    },
+    {
+      "name": "다진 마늘",
+      "english": "Minced garlic"
+    },
+    {
+      "name": "생강가루",
+      "english": "Ginger powder"
+    }
+  ],
+  "it": [
+    {
+      "name": "Sale",
+      "english": "Salt"
+    },
+    {
+      "name": "Zucchero",
+      "english": "Sugar"
+    },
+    {
+      "name": "Pepe nero",
+      "english": "Black pepper"
+    },
+    {
+      "name": "Origano",
+      "english": "Oregano"
+    },
+    {
+      "name": "Basilico",
+      "english": "Basil"
+    },
+    {
+      "name": "Rosmarino",
+      "english": "Rosemary"
+    },
+    {
+      "name": "Salvia",
+      "english": "Sage"
+    },
+    {
+      "name": "Timo",
+      "english": "Thyme"
+    },
+    {
+      "name": "Alloro",
+      "english": "Bay leaves"
+    },
+    {
+      "name": "Prezzemolo",
+      "english": "Parsley"
+    },
+    {
+      "name": "Peperoncino",
+      "english": "Chilli flakes"
+    },
+    {
+      "name": "Noce moscata",
+      "english": "Nutmeg"
+    },
+    {
+      "name": "Cannella",
+      "english": "Cinnamon"
+    },
+    {
+      "name": "Semi di finocchio",
+      "english": "Fennel seeds"
+    },
+    {
+      "name": "Aglio in polvere",
+      "english": "Garlic powder"
+    },
+    {
+      "name": "Zafferano",
+      "english": "Saffron"
+    }
+  ],
+  "ru": [
+    {
+      "name": "Соль",
+      "english": "Salt"
+    },
+    {
+      "name": "Сахар",
+      "english": "Sugar"
+    },
+    {
+      "name": "Чёрный перец",
+      "english": "Black pepper"
+    },
+    {
+      "name": "Душистый перец",
+      "english": "Allspice"
+    },
+    {
+      "name": "Лавровый лист",
+      "english": "Bay leaves"
+    },
+    {
+      "name": "Укроп",
+      "english": "Dill"
+    },
+    {
+      "name": "Петрушка",
+      "english": "Parsley"
+    },
+    {
+      "name": "Кориандр",
+      "english": "Coriander seeds"
+    },
+    {
+      "name": "Тмин",
+      "english": "Caraway"
+    },
+    {
+      "name": "Горчица",
+      "english": "Mustard"
+    },
+    {
+      "name": "Хрен",
+      "english": "Horseradish"
+    },
+    {
+      "name": "Паприка",
+      "english": "Paprika"
+    },
+    {
+      "name": "Сушёный чеснок",
+      "english": "Dried garlic"
+    },
+    {
+      "name": "Корица",
+      "english": "Cinnamon"
+    },
+    {
+      "name": "Гвоздика",
+      "english": "Cloves"
+    },
+    {
+      "name": "Мускатный орех",
+      "english": "Nutmeg"
+    }
+  ],
+  "ar": [
+    {
+      "name": "ملح",
+      "english": "Salt"
+    },
+    {
+      "name": "سكر",
+      "english": "Sugar"
+    },
+    {
+      "name": "فلفل أسود",
+      "english": "Black pepper"
+    },
+    {
+      "name": "كمون",
+      "english": "Cumin"
+    },
+    {
+      "name": "كزبرة مطحونة",
+      "english": "Ground coriander"
+    },
+    {
+      "name": "قرفة",
+      "english": "Cinnamon"
+    },
+    {
+      "name": "هيل",
+      "english": "Cardamom"
+    },
+    {
+      "name": "كركم",
+      "english": "Turmeric"
+    },
+    {
+      "name": "بابريكا",
+      "english": "Paprika"
+    },
+    {
+      "name": "فلفل حار",
+      "english": "Chilli powder"
+    },
+    {
+      "name": "سماق",
+      "english": "Sumac"
+    },
+    {
+      "name": "زعتر",
+      "english": "Za'atar"
+    },
+    {
+      "name": "بهارات مشكلة",
+      "english": "Baharat"
+    },
+    {
+      "name": "ورق غار",
+      "english": "Bay leaves"
+    },
+    {
+      "name": "قرنفل",
+      "english": "Cloves"
+    },
+    {
+      "name": "نعناع مجفف",
+      "english": "Dried mint"
+    }
+  ],
+  "hi": [
+    {
+      "name": "नमक",
+      "english": "Salt"
+    },
+    {
+      "name": "चीनी",
+      "english": "Sugar"
+    },
+    {
+      "name": "हल्दी",
+      "english": "Turmeric"
+    },
+    {
+      "name": "जीरा",
+      "english": "Cumin"
+    },
+    {
+      "name": "धनिया पाउडर",
+      "english": "Ground coriander"
+    },
+    {
+      "name": "लाल मिर्च पाउडर",
+      "english": "Red chilli powder"
+    },
+    {
+      "name": "गरम मसाला",
+      "english": "Garam masala"
+    },
+    {
+      "name": "राई",
+      "english": "Mustard seeds"
+    },
+    {
+      "name": "हींग",
+      "english": "Asafoetida"
+    },
+    {
+      "name": "मेथी दाना",
+      "english": "Fenugreek seeds"
+    },
+    {
+      "name": "सौंफ",
+      "english": "Fennel seeds"
+    },
+    {
+      "name": "इलायची",
+      "english": "Cardamom"
+    },
+    {
+      "name": "दालचीनी",
+      "english": "Cinnamon"
+    },
+    {
+      "name": "लौंग",
+      "english": "Cloves"
+    },
+    {
+      "name": "तेज पत्ता",
+      "english": "Indian bay leaves"
+    },
+    {
+      "name": "काली मिर्च",
+      "english": "Black pepper"
+    }
+  ],
+  "id": [
+    {
+      "name": "Garam",
+      "english": "Salt"
+    },
+    {
+      "name": "Gula",
+      "english": "Sugar"
+    },
+    {
+      "name": "Kecap manis",
+      "english": "Sweet soy sauce"
+    },
+    {
+      "name": "Kecap asin",
+      "english": "Soy sauce"
+    },
+    {
+      "name": "Ketumbar",
+      "english": "Coriander seeds"
+    },
+    {
+      "name": "Merica",
+      "english": "Pepper"
+    },
+    {
+      "name": "Kunyit",
+      "english": "Turmeric"
+    },
+    {
+      "name": "Jahe",
+      "english": "Ginger"
+    },
+    {
+      "name": "Lengkuas",
+      "english": "Galangal"
+    },
+    {
+      "name": "Kemiri",
+      "english": "Candlenuts"
+    },
+    {
+      "name": "Jintan",
+      "english": "Cumin"
+    },
+    {
+      "name": "Pala",
+      "english": "Nutmeg"
+    },
+    {
+      "name": "Kayu manis",
+      "english": "Cinnamon"
+    },
+    {
+      "name": "Cengkeh",
+      "english": "Cloves"
+    },
+    {
+      "name": "Terasi",
+      "english": "Shrimp paste"
+    },
+    {
+      "name": "Daun salam",
+      "english": "Indonesian bay leaves"
+    }
+  ],
+  "tr": [
+    {
+      "name": "Tuz",
+      "english": "Salt"
+    },
+    {
+      "name": "Şeker",
+      "english": "Sugar"
+    },
+    {
+      "name": "Karabiber",
+      "english": "Black pepper"
+    },
+    {
+      "name": "Pul biber",
+      "english": "Red pepper flakes"
+    },
+    {
+      "name": "Kimyon",
+      "english": "Cumin"
+    },
+    {
+      "name": "Kekik",
+      "english": "Thyme"
+    },
+    {
+      "name": "Nane",
+      "english": "Mint"
+    },
+    {
+      "name": "Sumak",
+      "english": "Sumac"
+    },
+    {
+      "name": "Tatlı toz biber",
+      "english": "Sweet paprika"
+    },
+    {
+      "name": "Tarçın",
+      "english": "Cinnamon"
+    },
+    {
+      "name": "Yenibahar",
+      "english": "Allspice"
+    },
+    {
+      "name": "Defne yaprağı",
+      "english": "Bay leaves"
+    },
+    {
+      "name": "Çörek otu",
+      "english": "Nigella seeds"
+    },
+    {
+      "name": "Susam",
+      "english": "Sesame seeds"
+    },
+    {
+      "name": "Zerdeçal",
+      "english": "Turmeric"
+    },
+    {
+      "name": "Karanfil",
+      "english": "Cloves"
+    }
+  ],
+  "vi": [
+    {
+      "name": "Muối",
+      "english": "Salt"
+    },
+    {
+      "name": "Đường",
+      "english": "Sugar"
+    },
+    {
+      "name": "Nước mắm",
+      "english": "Fish sauce"
+    },
+    {
+      "name": "Nước tương",
+      "english": "Soy sauce"
+    },
+    {
+      "name": "Dầu hào",
+      "english": "Oyster sauce"
+    },
+    {
+      "name": "Tiêu đen",
+      "english": "Black pepper"
+    },
+    {
+      "name": "Ớt bột",
+      "english": "Chilli powder"
+    },
+    {
+      "name": "Bột nghệ",
+      "english": "Turmeric"
+    },
+    {
+      "name": "Bột ngũ vị hương",
+      "english": "Five-spice powder"
+    },
+    {
+      "name": "Quế",
+      "english": "Cinnamon"
+    },
+    {
+      "name": "Hoa hồi",
+      "english": "Star anise"
+    },
+    {
+      "name": "Hạt ngò",
+      "english": "Coriander seeds"
+    },
+    {
+      "name": "Giấm gạo",
+      "english": "Rice vinegar"
+    },
+    {
+      "name": "Dầu mè",
+      "english": "Sesame oil"
+    },
+    {
+      "name": "Mắm tôm",
+      "english": "Shrimp paste"
+    },
+    {
+      "name": "Hạt nêm",
+      "english": "Seasoning granules"
+    }
+  ],
+  "th": [
+    {
+      "name": "เกลือ",
+      "english": "Salt"
+    },
+    {
+      "name": "น้ำตาล",
+      "english": "Sugar"
+    },
+    {
+      "name": "น้ำปลา",
+      "english": "Fish sauce"
+    },
+    {
+      "name": "ซีอิ๊วขาว",
+      "english": "Light soy sauce"
+    },
+    {
+      "name": "ซีอิ๊วดำ",
+      "english": "Dark soy sauce"
+    },
+    {
+      "name": "ซอสหอยนางรม",
+      "english": "Oyster sauce"
+    },
+    {
+      "name": "กะปิ",
+      "english": "Shrimp paste"
+    },
+    {
+      "name": "พริกป่น",
+      "english": "Chilli powder"
+    },
+    {
+      "name": "พริกไทยขาว",
+      "english": "White pepper"
+    },
+    {
+      "name": "ขมิ้น",
+      "english": "Turmeric"
+    },
+    {
+      "name": "ลูกผักชี",
+      "english": "Coriander seeds"
+    },
+    {
+      "name": "ยี่หร่า",
+      "english": "Cumin"
+    },
+    {
+      "name": "น้ำมะขามเปียก",
+      "english": "Tamarind paste"
+    },
+    {
+      "name": "น้ำตาลปี๊บ",
+      "english": "Palm sugar"
+    },
+    {
+      "name": "พริกแกงแดง",
+      "english": "Red curry paste"
+    },
+    {
+      "name": "พริกแกงเขียวหวาน",
+      "english": "Green curry paste"
+    }
+  ],
+  "pl": [
+    {
+      "name": "Sól",
+      "english": "Salt"
+    },
+    {
+      "name": "Cukier",
+      "english": "Sugar"
+    },
+    {
+      "name": "Pieprz czarny",
+      "english": "Black pepper"
+    },
+    {
+      "name": "Ziele angielskie",
+      "english": "Allspice"
+    },
+    {
+      "name": "Liść laurowy",
+      "english": "Bay leaves"
+    },
+    {
+      "name": "Majeranek",
+      "english": "Marjoram"
+    },
+    {
+      "name": "Kminek",
+      "english": "Caraway"
+    },
+    {
+      "name": "Koperek",
+      "english": "Dill"
+    },
+    {
+      "name": "Natka pietruszki",
+      "english": "Parsley"
+    },
+    {
+      "name": "Papryka słodka",
+      "english": "Sweet paprika"
+    },
+    {
+      "name": "Czosnek granulowany",
+      "english": "Garlic granules"
+    },
+    {
+      "name": "Gorczyca",
+      "english": "Mustard seeds"
+    },
+    {
+      "name": "Jałowiec",
+      "english": "Juniper berries"
+    },
+    {
+      "name": "Cynamon",
+      "english": "Cinnamon"
+    },
+    {
+      "name": "Goździki",
+      "english": "Cloves"
+    },
+    {
+      "name": "Gałka muszkatołowa",
+      "english": "Nutmeg"
+    }
+  ],
+  "nl": [
+    {
+      "name": "Zout",
+      "english": "Salt"
+    },
+    {
+      "name": "Suiker",
+      "english": "Sugar"
+    },
+    {
+      "name": "Zwarte peper",
+      "english": "Black pepper"
+    },
+    {
+      "name": "Nootmuskaat",
+      "english": "Nutmeg"
+    },
+    {
+      "name": "Paprikapoeder",
+      "english": "Paprika"
+    },
+    {
+      "name": "Kerriepoeder",
+      "english": "Curry powder"
+    },
+    {
+      "name": "Kaneel",
+      "english": "Cinnamon"
+    },
+    {
+      "name": "Kruidnagel",
+      "english": "Cloves"
+    },
+    {
+      "name": "Laurier",
+      "english": "Bay leaves"
+    },
+    {
+      "name": "Peterselie",
+      "english": "Parsley"
+    },
+    {
+      "name": "Bieslook",
+      "english": "Chives"
+    },
+    {
+      "name": "Dille",
+      "english": "Dill"
+    },
+    {
+      "name": "Tijm",
+      "english": "Thyme"
+    },
+    {
+      "name": "Knoflookpoeder",
+      "english": "Garlic powder"
+    },
+    {
+      "name": "Komijn",
+      "english": "Cumin"
+    },
+    {
+      "name": "Gemberpoeder",
+      "english": "Ginger powder"
+    }
+  ],
+  "uk": [
+    {
+      "name": "Сіль",
+      "english": "Salt"
+    },
+    {
+      "name": "Цукор",
+      "english": "Sugar"
+    },
+    {
+      "name": "Чорний перець",
+      "english": "Black pepper"
+    },
+    {
+      "name": "Духмяний перець",
+      "english": "Allspice"
+    },
+    {
+      "name": "Лавровий лист",
+      "english": "Bay leaves"
+    },
+    {
+      "name": "Кріп",
+      "english": "Dill"
+    },
+    {
+      "name": "Петрушка",
+      "english": "Parsley"
+    },
+    {
+      "name": "Сушений часник",
+      "english": "Dried garlic"
+    },
+    {
+      "name": "Паприка",
+      "english": "Paprika"
+    },
+    {
+      "name": "Коріандр",
+      "english": "Coriander seeds"
+    },
+    {
+      "name": "Кмин",
+      "english": "Caraway"
+    },
+    {
+      "name": "Гірчиця",
+      "english": "Mustard"
+    },
+    {
+      "name": "Хрін",
+      "english": "Horseradish"
+    },
+    {
+      "name": "Чебрець",
+      "english": "Thyme"
+    },
+    {
+      "name": "Кориця",
+      "english": "Cinnamon"
+    },
+    {
+      "name": "Гвоздика",
+      "english": "Cloves"
+    }
+  ],
+  "ms": [
+    {
+      "name": "Garam",
+      "english": "Salt"
+    },
+    {
+      "name": "Gula",
+      "english": "Sugar"
+    },
+    {
+      "name": "Serbuk kunyit",
+      "english": "Turmeric powder"
+    },
+    {
+      "name": "Serbuk cili",
+      "english": "Chilli powder"
+    },
+    {
+      "name": "Serbuk kari",
+      "english": "Curry powder"
+    },
+    {
+      "name": "Ketumbar",
+      "english": "Coriander seeds"
+    },
+    {
+      "name": "Jintan putih",
+      "english": "Cumin"
+    },
+    {
+      "name": "Jintan manis",
+      "english": "Fennel seeds"
+    },
+    {
+      "name": "Lada hitam",
+      "english": "Black pepper"
+    },
+    {
+      "name": "Lada putih",
+      "english": "White pepper"
+    },
+    {
+      "name": "Kayu manis",
+      "english": "Cinnamon"
+    },
+    {
+      "name": "Bunga lawang",
+      "english": "Star anise"
+    },
+    {
+      "name": "Buah pelaga",
+      "english": "Cardamom"
+    },
+    {
+      "name": "Bunga cengkih",
+      "english": "Cloves"
+    },
+    {
+      "name": "Belacan",
+      "english": "Shrimp paste"
+    },
+    {
+      "name": "Asam jawa",
+      "english": "Tamarind"
+    }
+  ],
+  "bn": [
+    {
+      "name": "লবণ",
+      "english": "Salt"
+    },
+    {
+      "name": "চিনি",
+      "english": "Sugar"
+    },
+    {
+      "name": "হলুদ গুঁড়া",
+      "english": "Turmeric powder"
+    },
+    {
+      "name": "মরিচ গুঁড়া",
+      "english": "Chilli powder"
+    },
+    {
+      "name": "জিরা",
+      "english": "Cumin"
+    },
+    {
+      "name": "ধনে গুঁড়া",
+      "english": "Ground coriander"
+    },
+    {
+      "name": "পাঁচফোড়ন",
+      "english": "Panch phoron"
+    },
+    {
+      "name": "কালোজিরা",
+      "english": "Nigella seeds"
+    },
+    {
+      "name": "সরিষা",
+      "english": "Mustard seeds"
+    },
+    {
+      "name": "মেথি",
+      "english": "Fenugreek seeds"
+    },
+    {
+      "name": "মৌরি",
+      "english": "Fennel seeds"
+    },
+    {
+      "name": "তেজপাতা",
+      "english": "Indian bay leaves"
+    },
+    {
+      "name": "এলাচ",
+      "english": "Cardamom"
+    },
+    {
+      "name": "দারুচিনি",
+      "english": "Cinnamon"
+    },
+    {
+      "name": "লবঙ্গ",
+      "english": "Cloves"
+    },
+    {
+      "name": "গরম মসলা",
+      "english": "Garam masala"
+    }
+  ],
+  "fa": [
+    {
+      "name": "نمک",
+      "english": "Salt"
+    },
+    {
+      "name": "شکر",
+      "english": "Sugar"
+    },
+    {
+      "name": "فلفل سیاه",
+      "english": "Black pepper"
+    },
+    {
+      "name": "زردچوبه",
+      "english": "Turmeric"
+    },
+    {
+      "name": "زعفران",
+      "english": "Saffron"
+    },
+    {
+      "name": "دارچین",
+      "english": "Cinnamon"
+    },
+    {
+      "name": "هل",
+      "english": "Cardamom"
+    },
+    {
+      "name": "زیره",
+      "english": "Cumin"
+    },
+    {
+      "name": "سماق",
+      "english": "Sumac"
+    },
+    {
+      "name": "لیمو عمانی",
+      "english": "Dried lime"
+    },
+    {
+      "name": "گل محمدی",
+      "english": "Dried rose petals"
+    },
+    {
+      "name": "نعناع خشک",
+      "english": "Dried mint"
+    },
+    {
+      "name": "شوید خشک",
+      "english": "Dried dill"
+    },
+    {
+      "name": "پودر سیر",
+      "english": "Garlic powder"
+    },
+    {
+      "name": "پودر زنجبیل",
+      "english": "Ginger powder"
+    },
+    {
+      "name": "ادویه پلویی",
+      "english": "Persian rice spice"
+    }
+  ],
+  "he": [
+    {
+      "name": "מלח",
+      "english": "Salt"
+    },
+    {
+      "name": "סוכר",
+      "english": "Sugar"
+    },
+    {
+      "name": "פלפל שחור",
+      "english": "Black pepper"
+    },
+    {
+      "name": "פפריקה מתוקה",
+      "english": "Sweet paprika"
+    },
+    {
+      "name": "פפריקה חריפה",
+      "english": "Hot paprika"
+    },
+    {
+      "name": "כמון",
+      "english": "Cumin"
+    },
+    {
+      "name": "כורכום",
+      "english": "Turmeric"
+    },
+    {
+      "name": "כוסברה טחונה",
+      "english": "Ground coriander"
+    },
+    {
+      "name": "קינמון",
+      "english": "Cinnamon"
+    },
+    {
+      "name": "זעתר",
+      "english": "Za'atar"
+    },
+    {
+      "name": "סומאק",
+      "english": "Sumac"
+    },
+    {
+      "name": "בהרט",
+      "english": "Baharat"
+    },
+    {
+      "name": "חוויאג׳",
+      "english": "Hawaij"
+    },
+    {
+      "name": "אבקת שום",
+      "english": "Garlic powder"
+    },
+    {
+      "name": "עלי דפנה",
+      "english": "Bay leaves"
+    },
+    {
+      "name": "שומשום",
+      "english": "Sesame seeds"
+    }
+  ]
+}
