@@ -4,9 +4,9 @@ A local desktop workspace for barcode design, batch generation, reusable project
 
 ## Download
 
-[Download for Windows and Mac](https://barcodemate.com/desktop/) · [GitHub release and checksums](https://github.com/Mellon/BarcodeMate/releases/tag/v0.3.0)
+[Download for Windows and Mac](https://barcodemate.com/desktop/) · [GitHub release and checksums](https://github.com/Mellon/BarcodeMate/releases/tag/v0.4.0)
 
-Version 0.3.0 provides Windows x64, Mac Apple Silicon and Intel Mac packages, including household labels. Windows installation and app workflows, plus macOS packaged app workflows, passed automated tests. Intel Mac physical hardware and real printers remain unverified. App interface: 24 languages, automatic system-language selection on first launch, a persistent language selector, and right-to-left layouts for Arabic, Persian and Hebrew.
+Version 0.4.0 provides Windows x64, Mac Apple Silicon and Intel Mac packages, including household labels and phone synchronization. Windows installation and app workflows, plus macOS packaged app workflows, passed automated tests. Intel Mac physical hardware and real printers remain unverified. App interface: 24 languages, automatic system-language selection on first launch, a persistent language selector, and right-to-left layouts for Arabic, Persian and Hebrew.
 
 Installers are not publisher-signed; Mac packages are not notarized. The operating system may warn or block installation. Test a printed sample before a large print run.
 
@@ -79,8 +79,8 @@ Kitchen 与 Storage boxes 按语言和分类独立保存。名称与数量可直
 
 家庭预览支持手动等比缩放：拿实物纸张对齐屏幕中的左右边缘，再保存此屏幕比例。仅预览的标签边框包含空白格；超出窗口时滚动查看，不改变 PDF 或打印尺寸。换屏幕/缩放后重新比对，打印先做普通纸对位测试。
 
-## Phone inventory (0.4.0 source)
+## Phone synchronization (0.4.0)
 
-In Home labels, choose **Count with phone**, scan the QR with the phone camera, and connect. The mobile web page can edit the shared list or record speech; the computer updates its preview and keeps control of printing. Pairing does not use IP addresses as identity and works across different networks.
+Open Home labels: **Sync with phone** directly displays the QR code. Scan it with the phone camera and connect. The mobile web page can edit the shared list or record speech; the computer updates its preview and keeps control of printing. Pairing does not use IP addresses as identity and works across different networks. No project is uploaded until the phone joins.
 
-One phone can join each session. Codes expire in 10 minutes; the shared project is held temporarily in server memory for at most 24 hours and disappears when sharing ends or the service restarts. Both devices retain working drafts in their current tab's session storage. Reconnect to deliver queued changes; export a backup before closing an unsynchronized tab. Concurrent edits require choosing the whole project version after reviewing the conflict. Pairing and voice are optional online features, with keys kept on the gateway server.
+One phone can join each session. While the waiting computer page stays open, its code stays valid automatically. After a long absence, expired invitations are replaced automatically without affecting an established connection. The shared project is held temporarily in server memory for at most 24 hours and disappears when sharing ends or the service restarts. Both devices retain working drafts in their current tab's session storage. Reconnect to deliver queued changes; export a backup before closing an unsynchronized tab. Concurrent edits require choosing the whole project version after reviewing the conflict. Pairing and voice are optional online features, with keys kept on the gateway server.
