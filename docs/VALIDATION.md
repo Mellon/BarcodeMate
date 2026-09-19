@@ -56,3 +56,9 @@ The final translation correction is included in source `b3667ffbab105eeade45c82e
 ## 0.3.0 local candidate (2026-09-18)
 
 33 core tests and 8 Electron workflows passed. The Mac ARM64 DMG and ZIP were built locally; all 8 workflows passed again using the packaged executable, including household PDF/JSON export and scenario shortcuts. Package metadata and credential scans passed. Windows/Intel Mac 0.3.0 packages and public release remain pending repository confirmation and CI.
+
+## Public release 0.3.0 — 2026-09-19 UTC
+
+Supersedes the candidate status above. Source `ffea43db7e64e19685f4c5c154e699ca12799c9f` passed [validation run 35412597006](https://github.com/Mellon/BarcodeMate/actions/runs/35412597006): 33 core tests and 8 Electron workflows on Windows and macOS, followed by the same workflows on the installed Windows app and extracted Mac package. [Publication run 35413034921](https://github.com/Mellon/BarcodeMate/actions/runs/35413034921) verified those exact artifacts, package metadata, credential scans and all seven uploaded asset digests before publishing [0.3.0](https://github.com/Mellon/BarcodeMate/releases/tag/v0.3.0).
+
+The production voice gateway is enabled with a server-side daily limit of 100 requests. This release deployment checked service capabilities and invalid-input rejection without issuing a paid transcription request. The earlier local synthetic-audio checks do not replace verification with a hardware microphone. Signing and physical-printer limitations remain as described above.
