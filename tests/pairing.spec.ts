@@ -8,10 +8,13 @@ test("desktop pairing uses the native gateway and receives a phone edit without 
   let project: HomeProject | undefined,
     revision = 1,
     origin = "",
-    writes = 0;
-  const id = "a".repeat(32),
-    token = "b".repeat(32),
+    writes = 0,
+    creates = 0,
+    paired = false,
+    gone = false;
+  let id = "a".repeat(32),
     invite = "c".repeat(32);
+  const token = "b".repeat(32);
   const server = createServer(async (req, res) => {
     res.setHeader("Content-Type", "application/json");
     if (req.url?.endsWith("/capabilities")) {
@@ -25,7 +28,10 @@ test("desktop pairing uses the native gateway and receives a phone edit without 
     let input = "";
     for await (const c of req) input += c;
     if (req.method === "POST") {
-      project = JSON.parse(input).project;
+      creates++;
+      gone = false;
+      id = String(creates).padStart(32, "a");
+      project = undefined;
       res.end(
         JSON.stringify({
           id,
@@ -38,12 +44,17 @@ test("desktop pairing uses the native gateway and receives a phone edit without 
           revision,
           project,
           paired: false,
+          ready: false,
         }),
       );
       return;
     }
     if (req.headers.authorization !== "Bearer " + token) {
       res.writeHead(401).end("{}");
+      return;
+    }
+    if (gone) {
+      res.writeHead(410).end("{}");
       return;
     }
     if (req.method === "PUT") {
@@ -57,7 +68,11 @@ test("desktop pairing uses the native gateway and receives a phone edit without 
         id,
         revision,
         project,
-        paired: true,
+        ready: !!project,
+        paired,
+        ...(!paired
+          ? { invite, code: "12345678", inviteExpires: Date.now() + 600000 }
+          : {}),
         phoneOnline: true,
         ownerOnline: true,
       }),
@@ -81,11 +96,18 @@ test("desktop pairing uses the native gateway and receives a phone edit without 
     await p.locator("#language-select").selectOption("en");
     await p.locator("[data-workspace=scenarios]").click();
     await p.locator("[data-workspace=home]").click();
-    await p.locator(".hm-pair-toggle").click();
-    await p
-      .locator(".hm-pair-body")
-      .getByRole("button", { name: "Count with phone", exact: true })
-      .click();
+    await expect(p.locator(".hm-pair-qr")).toBeVisible();
+    await expect(p.locator(".hm-pair-title")).toHaveText("Sync with phone");
+    expect(creates).toBe(1);
+    expect(writes).toBe(0);
+    const firstQr = await p.locator(".hm-pair-qr").getAttribute("src");
+    invite = "d".repeat(32);
+    await expect(p.locator(".hm-pair-qr")).not.toHaveAttribute("src", firstQr!);
+    gone = true;
+    await expect.poll(() => creates, { timeout: 15000 }).toBe(2);
+    await expect(p.locator(".hm-pair-qr")).toBeVisible();
+    expect(writes).toBe(0);
+    paired = true;
     await expect.poll(() => project?.items.length).toBe(16);
     project!.items[0].originalName = project!.items[0].name;
     project!.items[0].name = "Phone basil";

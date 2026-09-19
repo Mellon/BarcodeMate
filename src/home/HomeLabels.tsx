@@ -781,7 +781,7 @@ export function HomeLabels({ language, onPrint, onSave, voiceAPI, pairingAPI }: 
       <div className="hm-status" role="status">
         {notice || (busy ? t("working") : "")}
       </div>
-      <div className="hm-grid" inert={busy || !!pair.conflict || !!pair.invite}>
+      <div className="hm-grid" hidden={pair.connection?.role === "phone" && !pair.connection.ready} inert={busy || !!pair.conflict || !!pair.invite}>
         <div className="hm-editor">
           <section className="hm-panel">
             <h2>

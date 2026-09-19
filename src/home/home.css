@@ -644,7 +644,7 @@
 .hm-pair-body { padding:4px 18px 18px; display:grid; gap:14px; font-size:14px; }
 .hm-pair-body > button { justify-self:start; }
 .hm-pair-invite { display:flex; align-items:center; gap:24px; }
-.hm-pair-qr { flex:none; width:196px; height:196px; background:white; }
+.hm-pair-qr { flex:none; width:160px; height:160px; background:white; }
 .hm-pair-invite p { margin-bottom:10px; }
 .hm-pair .hm-pair-code { font:600 24px/1.5 ui-monospace,monospace; letter-spacing:3px; }
 .hm-pair-join summary { cursor:pointer; padding:8px 0; }
@@ -669,3 +669,8 @@
 .hm-phone .hm-capture .hm-actions { order:-1; }
 .hm-phone .hm-capture .hm-voice { min-height:48px; flex:1; }
 .hm-phone .hm-capture textarea { min-height:72px; height:72px; }
+
+.hm-root .hm-pair .hm-pair-enter { border:0; background:transparent; color:var(--hm-muted); font-size:12px; padding:6px 4px; }
+
+.hm-root .hm-pair-title { margin:0; font-size:15px; font-weight:600; line-height:1.5; gap:8px; }
+.hm-root .hm-grid[hidden] { display:none; }

@@ -32,6 +32,8 @@ export interface PairState {
   role: "owner" | "phone";
   revision: number;
   expires: number;
+  ready: boolean;
+  paired: boolean;
   base: HomeProject;
   draft: HomeProject;
   invite?: string;
@@ -50,6 +52,8 @@ export function restoredPair(): PairState | null {
       !["owner", "phone"].includes(p.role)
     )
       return null;
+    p.ready = p.ready !== false;
+    p.paired = !!p.paired;
     p.base = validateHome(p.base);
     p.draft = validateHome(p.draft);
     return p;
@@ -80,6 +84,7 @@ export function usePairing(
   conflictRef.current = conflict;
   const [storageError, setStorageError] = useState(false);
   const busy = useRef(false),
+    retryAt = useRef(0),
     mounted = useRef(true),
     editAt = useRef(0),
     hold = useRef(false);
@@ -89,7 +94,7 @@ export function usePairing(
   const [opening, setOpening] = useState(false);
   useEffect(() => {
     const changed = () => {
-      if (!state.current)
+      if (!state.current?.paired)
         setInvite(
           new URLSearchParams(location.hash.slice(1)).get("pair") || "",
         );
@@ -113,14 +118,14 @@ export function usePairing(
     if (s && encode(s.draft) !== encode(project)) {
       editAt.current = Date.now();
       save({ ...s, draft: project });
-      if (!conflictRef.current) setStatus("syncing");
+      if (!conflictRef.current) setStatus(s.paired ? "syncing" : "synced");
     }
   }, [project]);
   useEffect(() => {
     mounted.current = true;
     const leaving = (e: BeforeUnloadEvent) => {
       const s = state.current;
-      if (s && (s.pending || encode(s.draft) !== encode(s.base))) {
+      if (s?.paired && (s.pending || encode(s.draft) !== encode(s.base))) {
         e.preventDefault();
         e.returnValue = "";
       }
@@ -138,6 +143,23 @@ export function usePairing(
   const run = async () => {
     const s = state.current;
     if (
+      s?.role === "owner" &&
+      !s.paired &&
+      !invite &&
+      (status === "expired" || Date.now() >= s.expires)
+    ) {
+      if (
+        !busy.current &&
+        !opening &&
+        Date.now() >= retryAt.current &&
+        document.visibilityState !== "hidden"
+      ) {
+        retryAt.current = Date.now() + 15000;
+        await create();
+      }
+      return;
+    }
+    if (
       !s ||
       busy.current ||
       hold.current ||
@@ -153,7 +175,10 @@ export function usePairing(
     busy.current = true;
     try {
       // Persist each operation before sending. Retrying a lost response cannot add a label twice.
-      if (s.pending || encode(s.draft) !== encode(s.base)) {
+      if (
+        (s.ready || (s.role === "owner" && s.paired)) &&
+        (s.pending || !s.ready || encode(s.draft) !== encode(s.base))
+      ) {
         if (!s.pending && Date.now() - editAt.current < 500) return;
         const pending = s.pending || {
           operation: crypto.randomUUID(),
@@ -184,6 +209,7 @@ export function usePairing(
           base: pending.project,
           revision: r.data.revision,
           pending: undefined,
+          ready: true,
         });
       }
       const latest = state.current!;
@@ -200,7 +226,22 @@ export function usePairing(
       if (r.status !== 200) throw Error("network");
       setPeer(s.role === "owner" ? r.data.phoneOnline : r.data.ownerOnline);
       setPaired(r.data.paired);
-      const now = state.current!;
+      const now = {
+        ...state.current!,
+        paired: !!r.data.paired,
+        ready: !!r.data.ready,
+        ...(typeof r.data.expires === "number"
+          ? { expires: r.data.expires }
+          : {}),
+        ...(r.data.invite
+          ? {
+              invite: r.data.invite,
+              code: r.data.code,
+              inviteExpires: r.data.inviteExpires,
+            }
+          : {}),
+      };
+      save(now);
       if (r.data.project) {
         const remote = validateHome(r.data.project);
         if (encode(now.draft) !== encode(now.base)) {
@@ -225,8 +266,11 @@ export function usePairing(
         receive(remote);
       }
       setStatus(
-        encode(state.current!.draft) === encode(state.current!.base)
-          ? "synced"
+        !state.current!.paired ||
+          encode(state.current!.draft) === encode(state.current!.base)
+          ? state.current!.role === "phone" && !state.current!.ready
+            ? "syncing"
+            : "synced"
           : "syncing",
       );
     } catch {
@@ -255,9 +299,10 @@ export function usePairing(
     setOpening(true);
     setStatus("syncing");
     try {
-      const p = validateHome(current.current);
-      const r = await request("POST", "", undefined, { project: p });
+      const r = await request("POST", "", undefined, {});
       if (r.status !== 200) throw Error();
+      if (!mounted.current) return;
+      const p = validateHome(current.current);
       save({ ...r.data, role: "owner", base: p, draft: p });
       setPaired(false);
       setPeer(false);
@@ -284,8 +329,13 @@ export function usePairing(
         nonce,
       });
       if (r.status !== 200) throw Error();
-      const p = validateHome(r.data.project);
+      const old = state.current;
+      const p = r.data.ready
+        ? validateHome(r.data.project)
+        : validateHome(current.current);
       save({ ...r.data, role: "phone", base: p, draft: p });
+      if (old && !old.paired)
+        void request("DELETE", "/" + old.id, old.token).catch(() => {});
       receive(p);
       setInvite("");
       history.replaceState(null, "", location.pathname + location.search);
@@ -297,6 +347,13 @@ export function usePairing(
       setOpening(false);
     }
   };
+  const autoStarted = useRef(false);
+  useEffect(() => {
+    if (!state.current && !invite && !autoStarted.current) {
+      autoStarted.current = true;
+      void create();
+    }
+  }, [invite]);
   const cancelJoin = () => {
     setInvite("");
     history.replaceState(null, "", location.pathname + location.search);
